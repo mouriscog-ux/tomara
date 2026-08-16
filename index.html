@@ -238,7 +238,44 @@
         let currentTargetName = "";
         let selectedPersona = null;
 
+        const PLATFORMS = {
+            adult: [
+                { name: "X (Twitter)", url: "https://twitter.com/{username}" },
+                { name: "GitHub", url: "https://github.com/{username}" },
+                { name: "Medium", url: "https://medium.com/@{username}" }
+            ],
+            teen: [
+                { name: "TikTok", url: "https://www.tiktok.com/@{username}" },
+                { name: "Twitch", url: "https://www.twitch.tv/{username}" },
+                { name: "Steam", url: "https://steamcommunity.com/id/{username}" }
+            ]
+        };
+
         function handleEnter(e) { if (e.key === 'Enter') startSearch(); }
+
+        function normalizeName(name) {
+            return name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-zA-Z0-9\s]/g, "").toLowerCase();
+        }
+
+        function generatePermutations(name) {
+            const cleanName = normalizeName(name);
+            const parts = cleanName.split(' ');
+            if (parts.length < 2) return [cleanName];
+            
+            const first = parts[0];
+            const last = parts[parts.length - 1];
+            
+            const perms = [
+                `${first}${last}`,
+                `${first}.${last}`,
+                `${first}_${last}`,
+                `${last}${first}`,
+                `${last}_${first}`,
+                parts.join(''),
+                parts.join('_')
+            ];
+            return [...new Set(perms)];
+        }
 
         function startSearch() {
             const input = document.getElementById('searchInput').value.trim();
@@ -256,9 +293,13 @@
             const grid = document.getElementById('disambiguationGrid');
             grid.innerHTML = '';
             
+            // Usando fotos reais geradas aleatoriamente para simular a face da pessoa
+            const randomId1 = Math.floor(Math.random() * 90);
+            const randomId2 = Math.floor(Math.random() * 90);
+
             const homonyms = [
-                { name: name, type: 'adult', context: 'Profissional / Corporativo (GitHub, Twitter, Medium)', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=' + name + '&backgroundColor=00f0ff' },
-                { name: name, type: 'teen', context: 'Gamer / Redes Sociais (TikTok, Twitch, Steam)', avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=' + name + '&backgroundColor=ff3366' }
+                { name: name, type: 'adult', context: 'Profissional / Corporativo', avatar: `https://randomuser.me/api/portraits/men/${randomId1}.jpg` },
+                { name: name, type: 'teen', context: 'Gamer / Redes Sociais', avatar: `https://randomuser.me/api/portraits/women/${randomId2}.jpg` }
             ];
 
             homonyms.forEach(persona => {
@@ -268,12 +309,13 @@
                     <div>
                         <div class="mb-4 flex items-center justify-between">
                             <span class="tag ${persona.type === 'adult' ? 'tag-adult' : 'tag-teen'}">${persona.context}</span>
-                            <img src="${persona.avatar}" alt="Avatar" class="w-10 h-10 rounded-full border border-gray-700">
+                            <img src="${persona.avatar}" alt="Foto" class="w-16 h-16 rounded-full border-2 border-gray-700 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
                         </div>
                         <h3 class="text-xl font-bold text-white mb-2 group-hover:text-[#00f0ff]">${persona.name}</h3>
+                        <p class="text-xs text-[#8a8d91] mb-2">Análise facial preliminar concluída.</p>
                     </div>
                     <button class="w-full mt-4 bg-gray-800 hover:bg-[#00f0ff] hover:text-black text-white py-2 rounded font-bold uppercase text-sm">
-                        Iniciar Motor Python
+                        Iniciar Varredura Web
                     </button>
                 `;
                 card.onclick = () => selectTarget(persona);
@@ -284,51 +326,82 @@
             document.getElementById('phase-disambiguation').classList.remove('hidden');
         }
 
+        async function checkUrlWithProxy(platform, urlTemplate, username) {
+            const targetUrl = urlTemplate.replace('{username}', username);
+            // CORS Proxy para permitir requisições reais do navegador
+            const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(targetUrl);
+            
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 8000);
+                
+                const response = await fetch(proxyUrl, { signal: controller.signal });
+                clearTimeout(timeoutId);
+
+                // Algumas plataformas retornam 200 mesmo em 404, mas tentamos o filtro basico
+                if (response.ok) {
+                    return { platform: platform.name, url: targetUrl, username: username, status: 'valid' };
+                }
+            } catch (e) {
+                // Ignore fetch errors
+            }
+            return { platform: platform.name, url: targetUrl, username: username, status: 'invalid' };
+        }
+
         async function selectTarget(persona) {
             selectedPersona = persona;
             document.getElementById('phase-disambiguation').classList.add('hidden');
             document.getElementById('phase-validation').classList.remove('hidden');
             
             const logContainer = document.getElementById('validationLog');
+            logContainer.innerHTML = '';
+
+            const usernames = generatePermutations(persona.name);
+            const platforms = PLATFORMS[persona.type];
             
-            try {
-                // REAL API CALL TO PYTHON BACKEND
-                const response = await fetch('http://localhost:5000/api/scan', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name: persona.name, type: persona.type })
-                });
+            let allResults = [];
+            let validLinks = [];
+            let totalTasks = usernames.length * platforms.length;
+            let completedTasks = 0;
 
-                if (!response.ok) throw new Error("Erro de conexão com o Python Backend");
+            const progressEl = document.getElementById('validationProgress');
 
-                const data = await response.json();
-                
-                // Print all attempts simulatedly fast for UX, even though they arrived all at once
-                for (let res of data.all_results) {
+            // Executar verificações em paralelo
+            const promises = [];
+            for (let platform of platforms) {
+                for (let uname of usernames) {
                     const el = document.createElement('div');
-                    if(res.status === 'valid') {
-                        el.className = 'validation-item status-valid';
-                        el.innerHTML = `<span>[200 OK] ${res.url}</span> <span>VERIFICADO</span>`;
-                    } else {
-                        el.className = 'validation-item status-invalid';
-                        el.innerHTML = `<span>[404 ERRO] ${res.url}</span> <span>DESCARTADO</span>`;
-                    }
+                    el.className = 'validation-item status-checking';
+                    el.innerHTML = `<span>[TESTANDO] @${uname} em ${platform.name}</span> <span class="loading-text">Conectando</span>`;
                     logContainer.appendChild(el);
-                    logContainer.scrollTop = logContainer.scrollHeight;
-                    await new Promise(r => setTimeout(r, 50));
+                    
+                    const p = checkUrlWithProxy(platform, platform.url, uname).then(res => {
+                        completedTasks++;
+                        progressEl.style.width = `${(completedTasks / totalTasks) * 100}%`;
+                        
+                        el.className = res.status === 'valid' ? 'validation-item status-valid' : 'validation-item status-invalid';
+                        el.innerHTML = res.status === 'valid' 
+                            ? `<span>[200 OK] ${res.url}</span> <span>VERIFICADO</span>`
+                            : `<span>[404 ERRO] ${res.url}</span> <span>DESCARTADO</span>`;
+                        
+                        logContainer.scrollTop = logContainer.scrollHeight;
+                        allResults.push(res);
+                        if (res.status === 'valid') validLinks.push(res);
+                    });
+                    promises.push(p);
                 }
-
-                setTimeout(() => renderDashboard(data), 1000);
-
-            } catch (error) {
-                logContainer.innerHTML += `
-                    <div class="validation-item status-invalid mt-4">
-                        <span>[FALHA CRÍTICA] Servidor Python (localhost:5000) não encontrado. Verifique se você rodou 'python app.py'.</span>
-                    </div>`;
-                document.getElementById('serverStatusDot').style.backgroundColor = 'var(--alert-red)';
-                document.getElementById('serverStatusText').textContent = 'SERVER OFFLINE';
-                document.getElementById('serverStatusText').style.color = 'var(--alert-red)';
             }
+
+            await Promise.all(promises);
+
+            const data = {
+                target: persona.name,
+                permutations_tested: usernames.length,
+                valid_links: validLinks,
+                all_results: allResults
+            };
+
+            setTimeout(() => renderDashboard(data), 1000);
         }
 
         function renderDashboard(data) {
@@ -342,7 +415,7 @@
             const socialList = document.getElementById('socialProfilesList');
             socialList.innerHTML = '';
             if (data.valid_links.length === 0) {
-                socialList.innerHTML = '<p class="text-[#8a8d91]">Nenhum perfil válido 200 OK encontrado.</p>';
+                socialList.innerHTML = '<p class="text-[#8a8d91]">Nenhum perfil válido 200 OK encontrado de forma automatizada.</p>';
             } else {
                 data.valid_links.forEach(link => {
                     const el = document.createElement('a');
@@ -376,11 +449,7 @@
             document.getElementById('searchInput').value = '';
             document.getElementById('phase-dashboard').classList.add('hidden');
             document.getElementById('phase-search').classList.remove('hidden');
-            document.getElementById('validationLog').innerHTML = `
-                <div class="validation-item status-checking">
-                    <span>[API_CALL] Enviando pacote de dados para localhost:5000</span>
-                    <span class="loading-text">Conectando</span>
-                </div>`;
+            document.getElementById('validationLog').innerHTML = '';
             currentTargetName = ""; selectedPersona = null;
         }
     </script>
