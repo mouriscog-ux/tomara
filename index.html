@@ -194,18 +194,18 @@
         let currentTargetName = "";
         let selectedPersona = null;
 
-        const PLATFORMS = {
-            adult: [
-                { name: "X (Twitter)", url: "https://twitter.com/{username}" },
-                { name: "GitHub", url: "https://github.com/{username}" },
-                { name: "Medium", url: "https://medium.com/@{username}" }
-            ],
-            teen: [
-                { name: "TikTok", url: "https://www.tiktok.com/@{username}" },
-                { name: "Twitch", url: "https://www.twitch.tv/{username}" },
-                { name: "Steam", url: "https://steamcommunity.com/id/{username}" }
-            ]
-        };
+        const PLATFORMS = [
+            { name: "X (Twitter)", url: "https://twitter.com/{username}" },
+            { name: "GitHub", url: "https://github.com/{username}" },
+            { name: "Medium", url: "https://medium.com/@{username}" },
+            { name: "TikTok", url: "https://www.tiktok.com/@{username}" },
+            { name: "Twitch", url: "https://www.twitch.tv/{username}" },
+            { name: "Steam", url: "https://steamcommunity.com/id/{username}" },
+            { name: "Pinterest", url: "https://br.pinterest.com/{username}" },
+            { name: "Reddit", url: "https://www.reddit.com/user/{username}" },
+            { name: "Vimeo", url: "https://vimeo.com/{username}" },
+            { name: "Patreon", url: "https://www.patreon.com/{username}" }
+        ];
 
         function handleEnter(e) { if (e.key === 'Enter') startSearch(); }
 
@@ -249,13 +249,27 @@
             const grid = document.getElementById('disambiguationGrid');
             grid.innerHTML = '';
             
-            const randomId1 = Math.floor(Math.random() * 90);
-            const randomId2 = Math.floor(Math.random() * 90);
-
-            const homonyms = [
-                { name: name, type: 'adult', context: 'Profissional / Corporativo', avatar: `https://randomuser.me/api/portraits/men/${randomId1}.jpg` },
-                { name: name, type: 'teen', context: 'Gamer / Redes Sociais', avatar: `https://randomuser.me/api/portraits/women/${randomId2}.jpg` }
+            const contexts = [
+                "Profissional / Setor Privado", "Servidor Público / Jusbrasil", 
+                "Estudante Universitário", "Empresário / CNPJ Ativo",
+                "Perfil Social Frequente", "Autônomo / Freelancer"
             ];
+
+            const homonyms = [];
+            // Gerar 4 perfis aleatórios para dar a impressão de busca global ampla
+            for(let i=0; i<4; i++) {
+                const isMale = Math.random() > 0.5;
+                const gender = isMale ? 'men' : 'women';
+                const randomId = Math.floor(Math.random() * 90);
+                const ctx = contexts[Math.floor(Math.random() * contexts.length)];
+                
+                homonyms.push({
+                    name: name,
+                    context: ctx,
+                    avatar: `https://randomuser.me/api/portraits/${gender}/${randomId}.jpg`,
+                    location: ['SP', 'RJ', 'MG', 'RS', 'PR', 'BA'][Math.floor(Math.random() * 6)]
+                });
+            }
 
             homonyms.forEach(persona => {
                 const card = document.createElement('div');
@@ -311,7 +325,7 @@
             document.getElementById('validationProgress').style.width = '0%';
 
             const usernames = generatePermutations(persona.name);
-            const platforms = PLATFORMS[persona.type];
+            const platforms = PLATFORMS; // Usa a lista global com todas as redes
             
             let allResults = [];
             let validLinks = [];
