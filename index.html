@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mourisco Founder — OSINT & Deep Social Recon Engine</title>
-    <meta name="description" content="Plataforma de inteligência avançada para varredura completa de redes sociais, menções públicas, variações de nomes e pegada digital.">
+    <title>Mourisco Founder — Sistema de Inteligência e Mapeamento OSINT</title>
+    <meta name="description" content="Varredura completa de redes sociais, usernames, menções públicas e pegada digital para qualquer pessoa.">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -24,18 +24,17 @@
                     colors: {
                         deep: {
                             950: '#020617',
-                            900: '#060a17',
+                            900: '#050a18',
                             850: '#0a1024',
                             800: '#0f172a',
-                            750: '#15203b',
+                            750: '#16223d',
                             700: '#1e293b'
                         },
                         electric: {
                             600: '#1d4ed8',
                             500: '#2563eb',
                             400: '#3b82f6',
-                            300: '#60a5fa',
-                            200: '#93c5fd'
+                            300: '#60a5fa'
                         },
                         cyber: {
                             600: '#0891b2',
@@ -53,8 +52,7 @@
                     boxShadow: {
                         'neon-blue': '0 0 25px -5px rgba(37, 99, 235, 0.5)',
                         'neon-cyan': '0 0 25px -5px rgba(6, 182, 212, 0.5)',
-                        'glow-lg': '0 0 50px -10px rgba(6, 182, 212, 0.3)',
-                        'glow-btn': '0 0 20px rgba(34, 211, 238, 0.4)'
+                        'glow-lg': '0 0 50px -10px rgba(6, 182, 212, 0.35)'
                     }
                 }
             }
@@ -69,14 +67,14 @@
         }
 
         .bg-grid-pattern {
-            background-size: 36px 36px;
+            background-size: 32px 32px;
             background-image: 
                 linear-gradient(to right, rgba(37, 99, 235, 0.05) 1px, transparent 1px),
                 linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
         }
 
         .glass-panel {
-            background: rgba(10, 16, 36, 0.75);
+            background: rgba(10, 16, 36, 0.8);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(59, 130, 246, 0.2);
@@ -87,9 +85,9 @@
         }
 
         .glass-panel-active {
-            background: rgba(15, 23, 42, 0.88);
+            background: rgba(15, 23, 42, 0.9);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(34, 211, 238, 0.45);
+            border: 1px solid rgba(34, 211, 238, 0.5);
             box-shadow: 0 0 35px -8px rgba(6, 182, 212, 0.35);
         }
 
@@ -99,7 +97,7 @@
         }
 
         .radar-spinner {
-            animation: radar-sweep 3s linear infinite;
+            animation: radar-sweep 2.5s linear infinite;
         }
 
         .scanline-bar {
@@ -130,17 +128,16 @@
 </head>
 <body class="min-h-screen font-sans bg-grid-pattern relative selection:bg-cyan-500/30 selection:text-cyan-200">
 
-    <!-- Ambient Glowing Blurs -->
-    <div class="fixed top-0 left-1/4 w-[600px] h-[300px] bg-electric-500/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
-    <div class="fixed bottom-10 right-1/4 w-[500px] h-[300px] bg-cyber-500/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
+    <!-- Ambient Glows -->
+    <div class="fixed top-0 left-1/3 w-[600px] h-[350px] bg-electric-500/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
+    <div class="fixed bottom-10 right-1/4 w-[500px] h-[350px] bg-cyber-500/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
 
-    <!-- Header Navigation -->
-    <header class="sticky top-0 z-40 border-b border-blue-900/30 bg-deep-950/85 backdrop-blur-xl">
+    <!-- Header -->
+    <header class="sticky top-0 z-40 border-b border-blue-900/30 bg-deep-950/90 backdrop-blur-xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- Brand -->
-            <div class="flex items-center gap-3">
-                <div class="relative flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-electric-500/20 to-cyber-500/20 border border-cyber-400/50 shadow-neon-cyan">
-                    <i data-lucide="crosshair" class="w-6 h-6 text-cyber-300"></i>
+            <div class="flex items-center gap-3 cursor-pointer" onclick="resetToHome()">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-electric-500/20 to-cyber-500/20 border border-cyber-400/50 flex items-center justify-center shadow-neon-cyan relative">
+                    <i data-lucide="crosshair" class="w-6 h-6 text-cyan-300"></i>
                     <span class="absolute -top-1 -right-1 flex h-3 w-3">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
@@ -148,184 +145,163 @@
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
-                        <span class="font-display font-bold text-xl tracking-wider text-white uppercase">Mourisco</span>
-                        <span class="font-mono text-xs px-2 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-500/50 text-cyan-300 font-semibold tracking-widest">FOUNDER v3.0</span>
+                        <span class="font-display font-extrabold text-xl tracking-wider text-white uppercase">Mourisco</span>
+                        <span class="font-mono text-xs px-2 py-0.5 rounded-full bg-cyan-950 border border-cyan-500/50 text-cyan-300 font-semibold tracking-wider">FOUNDER</span>
                     </div>
-                    <p class="text-xs text-slate-400 font-mono flex items-center gap-1.5">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                        Full OSINT & Social Footprint Matrix
-                    </p>
+                    <p class="text-xs text-slate-400 font-mono">Investigação e Mapeamento OSINT</p>
                 </div>
             </div>
 
-            <!-- Controls -->
             <div class="flex items-center gap-3">
-                <button id="soundToggleBtn" onclick="toggleAudio()" class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-800 bg-deep-900/60 hover:border-cyan-500/40 text-xs font-mono text-slate-300 hover:text-cyan-300 transition-all">
-                    <i data-lucide="volume-2" id="soundIcon" class="w-4 h-4 text-cyan-400"></i>
-                    <span id="soundText" class="hidden sm:inline">SFX: ON</span>
-                </button>
-
-                <button onclick="openHistoryModal()" class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg border border-blue-500/30 bg-blue-950/40 hover:bg-blue-900/50 text-xs font-mono text-blue-200 transition-all">
-                    <i data-lucide="history" class="w-4 h-4 text-cyan-400"></i>
-                    <span>Histórico</span>
-                    <span id="historyCountBadge" class="px-1.5 py-0.2 rounded bg-cyan-500/20 text-cyan-300 text-[10px] font-bold">0</span>
+                <button onclick="resetToHome()" class="px-3.5 py-1.5 rounded-lg border border-blue-900/60 bg-deep-900 hover:border-cyan-500/40 text-xs font-mono text-slate-300 hover:text-cyan-300 transition-all flex items-center gap-2">
+                    <i data-lucide="plus" class="w-4 h-4 text-cyan-400"></i>
+                    <span>Nova Pesquisa</span>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
-        <!-- Central Search Engine -->
-        <section class="relative mb-10">
-            <div class="text-center max-w-3xl mx-auto mb-8">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-950/80 border border-cyan-500/40 text-cyan-300 text-xs font-mono mb-4 shadow-neon-cyan">
-                    <i data-lucide="radar" class="w-3.5 h-3.5 animate-spin"></i>
-                    SISTEMA DE RASTREIO UNIVERSAL EM FONTES ABERTAS
-                </div>
-                <h1 class="font-display text-3xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-cyan-300 tracking-tight leading-tight">
-                    Varredura Total de Pegada Digital
-                </h1>
-                <p class="mt-3 text-sm sm:text-base text-slate-400 max-w-2xl mx-auto">
-                    Insira qualquer nome de pessoa para gerar automaticamente todas as permutações de <strong class="text-cyan-300">@handles</strong>, buscar em <strong class="text-cyan-300">todas as redes sociais</strong> (TikTok, Instagram, Facebook, YouTube, LinkedIn, X, etc.) e rastrear menções públicas.
-                </p>
+        <!-- Central Search Hero -->
+        <section class="max-w-4xl mx-auto mb-12 text-center">
+            
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-950/90 border border-cyan-500/40 text-cyan-300 text-xs font-mono mb-5 shadow-neon-cyan">
+                <i data-lucide="shield-search" class="w-4 h-4 text-cyan-400"></i>
+                VARREDURA UNIVERSAL DE PESSOAS
             </div>
 
-            <!-- Search Panel -->
-            <div class="max-w-4xl mx-auto">
-                <div class="glass-panel-active rounded-2xl p-2.5 sm:p-3 shadow-2xl relative overflow-hidden">
+            <h1 class="font-display text-4xl sm:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-cyan-300 tracking-tight leading-tight">
+                Quem você deseja procurar?
+            </h1>
+            
+            <p class="mt-4 text-sm sm:text-base text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                Digite o nome completo de qualquer pessoa para mapear instantaneamente suas <strong class="text-cyan-300">redes sociais</strong> (TikTok, Facebook, Instagram, YouTube, etc.), <strong class="text-cyan-300">variações de @usernames</strong> e <strong class="text-cyan-300">menções públicas</strong>.
+            </p>
+
+            <!-- Search Bar -->
+            <div class="mt-8">
+                <div class="glass-panel-active rounded-2xl p-3 shadow-2xl relative overflow-hidden text-left">
                     <div class="absolute inset-x-0 h-16 pointer-events-none scanline-bar opacity-25"></div>
 
                     <form id="searchForm" onsubmit="handleSearch(event)" class="relative z-10 flex flex-col sm:flex-row gap-2">
                         <div class="relative flex-1 flex items-center">
                             <div class="absolute left-4 pointer-events-none text-cyan-400">
-                                <i data-lucide="search" class="w-5 h-5"></i>
+                                <i data-lucide="user-search" class="w-6 h-6"></i>
                             </div>
                             <input 
                                 type="text" 
                                 id="targetInput" 
-                                placeholder="Digite o nome completo de qualquer pessoa (ex: Lucas Silva, Mariana Costa)..."
+                                placeholder="Digite o nome completo de quem você quer procurar..."
                                 value=""
                                 autocomplete="off"
                                 autofocus
-                                class="w-full pl-12 pr-10 py-4 rounded-xl bg-deep-950/90 border border-blue-900/60 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/20 text-white placeholder-slate-500 font-mono text-sm sm:text-base transition-all outline-none"
+                                class="w-full pl-14 pr-10 py-4.5 rounded-xl bg-deep-950/95 border border-blue-900/60 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/30 text-white placeholder-slate-500 font-mono text-base transition-all outline-none"
                             />
                             <button 
                                 type="button" 
                                 onclick="clearInput()" 
                                 id="clearBtn"
-                                class="absolute right-3 p-1 rounded-lg text-slate-500 hover:text-slate-300 hover:bg-slate-800/60 transition-all hidden"
+                                class="absolute right-3 p-1 rounded-lg text-slate-500 hover:text-slate-300 hover:bg-slate-800 transition-all hidden"
                                 title="Limpar"
                             >
-                                <i data-lucide="x" class="w-4 h-4"></i>
+                                <i data-lucide="x" class="w-5 h-5"></i>
                             </button>
                         </div>
 
                         <button 
                             type="submit" 
-                            id="submitSearchBtn"
-                            class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-electric-500 to-cyber-500 hover:from-electric-400 hover:to-cyber-400 text-white font-display font-semibold text-sm sm:text-base tracking-wide flex items-center justify-center gap-2.5 shadow-neon-cyan transition-all transform active:scale-95 cursor-pointer flex-shrink-0"
+                            class="w-full sm:w-auto px-8 py-4.5 rounded-xl bg-gradient-to-r from-electric-500 to-cyber-500 hover:from-electric-400 hover:to-cyber-400 text-white font-display font-bold text-base tracking-wide flex items-center justify-center gap-3 shadow-neon-cyan transition-all transform active:scale-95 cursor-pointer flex-shrink-0"
                         >
-                            <i data-lucide="sparkles" class="w-5 h-5"></i>
-                            <span>RASTREAR TUDO</span>
+                            <i data-lucide="search" class="w-5 h-5"></i>
+                            <span>PESQUISAR AGORA</span>
                         </button>
                     </form>
+                </div>
+            </div>
 
-                    <!-- Fast Mode Tags -->
-                    <div class="mt-3 pt-3 border-t border-blue-900/30 flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-slate-400 px-2">
-                        <div class="flex items-center gap-2">
-                            <i data-lucide="check-check" class="w-4 h-4 text-cyan-400"></i>
-                            <span>Busca profunda: TikTok, Instagram, Facebook, YouTube, X, Threads, LinkedIn, GitHub, Jusbrasil e Dorks</span>
-                        </div>
-                        <div class="flex items-center gap-1.5 text-cyan-400 text-[11px]">
-                            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
-                            <span>Motor Dinâmico Ativo</span>
-                        </div>
+        </section>
+
+        <!-- Initial Screen: Instructions & Categories -->
+        <section id="initialScreen" class="max-w-4xl mx-auto text-center">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                <div class="glass-panel rounded-2xl p-6 border border-blue-900/40 text-left space-y-2">
+                    <div class="w-10 h-10 rounded-xl bg-cyan-950/60 border border-cyan-500/30 flex items-center justify-center text-cyan-300 mb-3">
+                        <i data-lucide="share-2" class="w-5 h-5"></i>
                     </div>
+                    <h3 class="font-display font-bold text-base text-white">Todas as Redes Sociais</h3>
+                    <p class="text-xs font-mono text-slate-400">Varredura simultânea em TikTok, Facebook, Instagram, YouTube, LinkedIn, X, Threads, Reddit, GitHub, Twitch e Kwai.</p>
+                </div>
+
+                <div class="glass-panel rounded-2xl p-6 border border-blue-900/40 text-left space-y-2">
+                    <div class="w-10 h-10 rounded-xl bg-blue-950/60 border border-blue-500/30 flex items-center justify-center text-blue-300 mb-3">
+                        <i data-lucide="at-sign" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-base text-white">Permutador de @Usernames</h3>
+                    <p class="text-xs font-mono text-slate-400">Gera automaticamente todas as combinações de nomes com underlines, pontos e abreviações utilizadas em cadastros.</p>
+                </div>
+
+                <div class="glass-panel rounded-2xl p-6 border border-blue-900/40 text-left space-y-2">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-950/60 border border-emerald-500/30 flex items-center justify-center text-emerald-300 mb-3">
+                        <i data-lucide="message-square" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-base text-white">Menções & Posts Públicos</h3>
+                    <p class="text-xs font-mono text-slate-400">Rastreia onde o nome da pessoa foi citado em vídeos, comentários, diários oficiais ou processos judiciais.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Initial Placeholder State (When no search has been made yet) -->
-        <section id="initialEmptyState" class="max-w-4xl mx-auto my-12 text-center">
-            <div class="glass-panel rounded-2xl p-10 border border-blue-900/40 space-y-4">
-                <div class="w-16 h-16 rounded-2xl bg-deep-900 border border-cyan-500/30 flex items-center justify-center mx-auto text-cyan-400 shadow-neon-cyan">
-                    <i data-lucide="user-search" class="w-8 h-8"></i>
-                </div>
-                <h3 class="font-display font-bold text-xl text-white">Nenhum Alvo em Varredura Ativa</h3>
-                <p class="text-sm text-slate-400 max-w-md mx-auto">
-                    Digite o nome de uma pessoa no campo acima e clique em <strong>Rastrear Tudo</strong>. O sistema irá decompor o nome, gerar todas as variações de usernames (@handles) e criar os links diretos de investigação em todas as redes e menções públicas.
-                </p>
-                <div class="pt-2 flex flex-wrap justify-center gap-2 text-xs font-mono">
-                    <span class="px-3 py-1 rounded-lg bg-deep-900 border border-blue-900 text-slate-300">✓ Redes Sociais Completas</span>
-                    <span class="px-3 py-1 rounded-lg bg-deep-900 border border-blue-900 text-slate-300">✓ Variações de Nomes e Usernames</span>
-                    <span class="px-3 py-1 rounded-lg bg-deep-900 border border-blue-900 text-slate-300">✓ Menções em Vídeos & Posts</span>
-                    <span class="px-3 py-1 rounded-lg bg-deep-900 border border-blue-900 text-slate-300">✓ Diários Oficiais & Justiça</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Live Scanning Animation Terminal -->
-        <section id="scanningState" class="hidden mb-12 max-w-4xl mx-auto">
-            <div class="glass-panel rounded-2xl p-6 border border-cyan-500/50 relative overflow-hidden">
+        <!-- Scanning State Indicator -->
+        <section id="scanningState" class="hidden my-8 max-w-4xl mx-auto">
+            <div class="glass-panel rounded-2xl p-6 border border-cyan-500/50">
                 <div class="flex flex-col sm:flex-row items-center gap-6">
-                    <div class="relative w-24 h-24 flex-shrink-0 flex items-center justify-center">
+                    <div class="relative w-20 h-20 flex-shrink-0 flex items-center justify-center">
                         <div class="absolute inset-0 rounded-full border border-cyan-500/30"></div>
                         <div class="absolute inset-2 rounded-full border border-blue-500/20"></div>
-                        <div class="absolute inset-6 rounded-full border border-cyan-400/40"></div>
                         <div class="absolute inset-0 rounded-full radar-spinner bg-[conic-gradient(from_0deg,transparent_0_300deg,rgba(6,182,212,0.4)_360deg)]"></div>
                         <i data-lucide="satellite" class="w-6 h-6 text-cyan-300 z-10 animate-pulse"></i>
                     </div>
 
                     <div class="flex-1 w-full">
                         <div class="flex justify-between items-center mb-2">
-                            <div class="flex items-center gap-2">
-                                <span class="font-display font-bold text-white text-base" id="scanStageTitle">Executando Varredura Multiplataforma...</span>
-                                <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 text-xs font-mono animate-pulse" id="scanPercentText">0%</span>
-                            </div>
-                            <span class="font-mono text-xs text-slate-400" id="scanElapsedText">0.0s</span>
+                            <span class="font-display font-bold text-white text-base" id="scanStageTitle">Rastreando Alvo na Web...</span>
+                            <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 text-xs font-mono" id="scanPercentText">0%</span>
                         </div>
 
                         <div class="w-full h-2 rounded-full bg-deep-950 border border-blue-900/60 overflow-hidden mb-3">
                             <div id="scanProgressBar" class="h-full bg-gradient-to-r from-electric-500 via-cyber-400 to-cyan-300 transition-all duration-200" style="width: 0%;"></div>
                         </div>
 
-                        <div class="bg-deep-950/95 rounded-lg p-3 border border-blue-950 font-mono text-xs text-slate-400 h-28 overflow-y-auto space-y-1" id="terminalLogs">
-                            <p class="text-cyan-400">> [INIT] Inicializando rastreador neurônico...</p>
+                        <div class="bg-deep-950/95 rounded-lg p-3 border border-blue-950 font-mono text-xs text-slate-400 h-24 overflow-y-auto space-y-1" id="terminalLogs">
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Dynamic Results Container (Appears strictly on search) -->
+        <!-- Dynamic Results Container -->
         <section id="resultsSection" class="hidden space-y-8">
 
-            <!-- Target Header Overview Card -->
-            <div class="glass-panel-active rounded-2xl p-6 sm:p-8 relative overflow-hidden">
+            <!-- Target Header -->
+            <div class="glass-panel-active rounded-2xl p-6 sm:p-8">
                 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-blue-900/40">
-                    
                     <div class="flex items-start gap-4">
-                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-tr from-deep-900 via-blue-950 to-cyan-950 border-2 border-cyan-400/50 flex items-center justify-center shadow-neon-cyan flex-shrink-0 relative">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-deep-900 border-2 border-cyan-400/50 flex items-center justify-center shadow-neon-cyan flex-shrink-0">
                             <i data-lucide="user" class="w-8 h-8 sm:w-10 sm:h-10 text-cyan-300"></i>
-                            <span class="absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full bg-cyan-400 border-2 border-deep-950 animate-pulse"></span>
                         </div>
                         <div>
                             <div class="flex flex-wrap items-center gap-3">
                                 <h2 id="resTargetName" class="font-display text-2xl sm:text-3xl font-extrabold text-white">Nome do Alvo</h2>
-                                <span class="px-2.5 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-500/50 text-cyan-300 text-xs font-mono font-semibold flex items-center gap-1">
-                                    <i data-lucide="activity" class="w-3 h-3"></i> Varredura Concluída
+                                <span class="px-2.5 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-xs font-mono font-medium flex items-center gap-1">
+                                    <i data-lucide="check-circle" class="w-3 h-3"></i> Mapeamento Ativo
                                 </span>
                             </div>
-                            <p id="resTargetSubtitle" class="text-sm text-slate-400 font-mono mt-1 flex flex-wrap items-center gap-2">
-                                <!-- Dynamic subtitle -->
-                            </p>
+                            <p id="resTargetSubtitle" class="text-sm text-slate-400 font-mono mt-1"></p>
                         </div>
                     </div>
 
-                    <!-- Quick Actions -->
-                    <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+                    <div class="flex flex-wrap items-center gap-2">
                         <button onclick="copyFullReport()" class="px-3.5 py-2.5 rounded-xl border border-blue-800 bg-deep-850 hover:bg-blue-900/60 text-slate-200 hover:text-cyan-300 text-xs font-mono flex items-center gap-2 transition-all">
                             <i data-lucide="copy" class="w-4 h-4"></i>
                             <span>Copiar Dossiê</span>
@@ -337,127 +313,94 @@
                     </div>
                 </div>
 
-                <!-- Fast Metrics -->
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6">
-                    <div class="p-3.5 rounded-xl bg-deep-900/70 border border-blue-900/30">
-                        <span class="text-xs font-mono text-slate-400 block mb-1">Redes Mapeadas</span>
-                        <div class="flex items-baseline gap-2">
-                            <span class="text-2xl font-bold font-display text-cyan-300" id="metricNetworksCount">12 Plataformas</span>
-                        </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 text-xs font-mono">
+                    <div class="p-3 rounded-xl bg-deep-900/70 border border-blue-900/30">
+                        <span class="text-slate-400 block mb-1">Redes Mapeadas</span>
+                        <strong class="text-cyan-300 text-lg font-display">12 Plataformas</strong>
                     </div>
-                    <div class="p-3.5 rounded-xl bg-deep-900/70 border border-blue-900/30">
-                        <span class="text-xs font-mono text-slate-400 block mb-1">Variações de @Handles</span>
-                        <div class="flex items-baseline gap-2">
-                            <span class="text-2xl font-bold font-display text-white" id="metricHandlesCount">12 Variações</span>
-                        </div>
+                    <div class="p-3 rounded-xl bg-deep-900/70 border border-blue-900/30">
+                        <span class="text-slate-400 block mb-1">Permutações de Handles</span>
+                        <strong class="text-white text-lg font-display" id="metricHandlesCount">18 Variações</strong>
                     </div>
-                    <div class="p-3.5 rounded-xl bg-deep-900/70 border border-blue-900/30">
-                        <span class="text-xs font-mono text-slate-400 block mb-1">Menções & Posts</span>
-                        <div class="flex items-baseline gap-2">
-                            <span class="text-2xl font-bold font-display text-white" id="metricMentionsCount">Varredura Direta</span>
-                        </div>
+                    <div class="p-3 rounded-xl bg-deep-900/70 border border-blue-900/30">
+                        <span class="text-slate-400 block mb-1">Rastreio de Menções</span>
+                        <strong class="text-white text-lg font-display">Ativado</strong>
                     </div>
-                    <div class="p-3.5 rounded-xl bg-deep-900/70 border border-blue-900/30">
-                        <span class="text-xs font-mono text-slate-400 block mb-1">Dorks de Investigação</span>
-                        <div class="flex items-baseline gap-2">
-                            <span class="text-2xl font-bold font-display text-emerald-300">100% Prontos</span>
-                        </div>
+                    <div class="p-3 rounded-xl bg-deep-900/70 border border-blue-900/30">
+                        <span class="text-slate-400 block mb-1">Processos & Gazetas</span>
+                        <strong class="text-emerald-400 text-lg font-display">Integrado</strong>
                     </div>
                 </div>
             </div>
 
-            <!-- SECTION 1: ALL USERNAME PERMUTATIONS (Variações de Nomes) -->
+            <!-- SECTION: PERMUTAÇÕES DE HANDLES -->
             <div class="glass-panel rounded-2xl p-6 sm:p-7 border border-blue-900/40">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-blue-900/30">
                     <div>
-                        <h3 class="font-display font-bold text-xl text-white flex items-center gap-2.5">
+                        <h3 class="font-display font-bold text-xl text-white flex items-center gap-2">
                             <i data-lucide="at-sign" class="w-5 h-5 text-cyan-400"></i>
-                            Matriz de Variações de Nomes e Usernames (@handles)
+                            Todas as Variações de Nomes e Usernames (@handles)
                         </h3>
                         <p class="text-xs font-mono text-slate-400 mt-1">
-                            Permutações fonéticas, separadores (_ / . / junta) e combinações de primeiro e último nome utilizadas pelo alvo em cadastros.
+                            Combinações geradas automaticamente para encontrar o usuário em qualquer rede social:
                         </p>
                     </div>
-                    <button onclick="copyAllHandles()" class="px-3 py-1.5 rounded-lg bg-deep-900 hover:bg-cyan-950 border border-blue-900 hover:border-cyan-500/50 text-xs font-mono text-cyan-300 flex items-center gap-1.5 transition-all self-start sm:self-auto">
+                    <button onclick="copyAllHandles()" class="px-3 py-1.5 rounded-lg bg-deep-900 hover:bg-cyan-950 border border-blue-900 text-xs font-mono text-cyan-300 flex items-center gap-1.5 transition-all">
                         <i data-lucide="copy" class="w-3.5 h-3.5"></i>
                         <span>Copiar Todas as Variações</span>
                     </button>
                 </div>
 
-                <div id="handlesGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                    <!-- Dynamically populated handles -->
-                </div>
+                <div id="handlesGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3"></div>
             </div>
 
-            <!-- SECTION 2: COMPLETE SOCIAL MEDIA MATRIX (TODAS AS REDES SEM EXCEÇÃO) -->
+            <!-- SECTION: TODAS AS REDES SOCIAIS -->
             <div class="space-y-4">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div>
-                        <h3 class="font-display font-bold text-2xl text-white flex items-center gap-2.5">
-                            <i data-lucide="globe" class="w-6 h-6 text-cyan-400"></i>
-                            Mapeamento Total de Redes Sociais & Perfis
-                        </h3>
-                        <p class="text-xs font-mono text-slate-400">
-                            Links diretos pré-computados para checagem instantânea de perfil, busca de usuário e menções.
-                        </p>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="text-xs font-mono text-cyan-300 px-3 py-1 rounded-full bg-cyan-950 border border-cyan-500/40">
-                            12 Plataformas Integradas
-                        </span>
-                    </div>
+                <div>
+                    <h3 class="font-display font-bold text-2xl text-white flex items-center gap-2">
+                        <i data-lucide="globe" class="w-6 h-6 text-cyan-400"></i>
+                        Varredura em Todas as Redes Sociais (Sem Exceção)
+                    </h3>
+                    <p class="text-xs font-mono text-slate-400 mt-0.5">
+                        Acesse diretamente os perfis, faça buscas de usuários ou rastreie menções em cada plataforma.
+                    </p>
                 </div>
 
-                <div id="socialGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                    <!-- Dynamically filled with TikTok, Facebook, Instagram, YouTube, LinkedIn, X/Twitter, Threads, Pinterest, Reddit, GitHub, Twitch, Kwai -->
-                </div>
+                <div id="socialGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
             </div>
 
-            <!-- SECTION 3: MENTIONS, POSTS & VIDEOS (Onde a pessoa foi mencionada) -->
+            <!-- SECTION: MENÇÕES E POSTS DE TERCEIROS -->
             <div class="glass-panel rounded-2xl p-6 sm:p-7 border border-blue-900/40">
-                <div class="flex items-center justify-between mb-6 pb-4 border-b border-blue-900/30">
-                    <div>
-                        <h3 class="font-display font-bold text-xl text-white flex items-center gap-2.5">
-                            <i data-lucide="message-square" class="w-5 h-5 text-cyan-400"></i>
-                            Rastreador de Menções, Vídeos e Posts Públicos
-                        </h3>
-                        <p class="text-xs font-mono text-slate-400 mt-1">
-                            Varredura direta por publicações de terceiros onde o nome do alvo foi citado, marcado ou entrevistado.
-                        </p>
-                    </div>
+                <div class="mb-6 pb-4 border-b border-blue-900/30">
+                    <h3 class="font-display font-bold text-xl text-white flex items-center gap-2">
+                        <i data-lucide="message-square" class="w-5 h-5 text-cyan-400"></i>
+                        Rastreamento de Menções, Posts e Aparições em Vídeos
+                    </h3>
+                    <p class="text-xs font-mono text-slate-400 mt-1">
+                        Busca direta de publicações onde essa pessoa foi citada ou marcada por amigos, empresas ou criadores.
+                    </p>
                 </div>
 
-                <div id="mentionsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <!-- Filled dynamically -->
-                </div>
+                <div id="mentionsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
             </div>
 
-            <!-- SECTION 4: OFFICIAL GAZETTES, LEGAL, ACADEMIC & DORKS -->
+            <!-- SECTION: REGISTROS PÚBLICOS E DORKS -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-                <!-- Left: Diários Oficiais & Registros Públicos -->
+                
                 <div class="glass-panel rounded-2xl p-6 border border-blue-900/40">
                     <h3 class="font-display font-bold text-lg text-white flex items-center gap-2 mb-4">
                         <i data-lucide="landmark" class="w-5 h-5 text-cyan-400"></i>
                         Diários Oficiais, Processos & CNPJs
                     </h3>
-                    <div id="publicRecordsList" class="space-y-3 font-mono text-xs">
-                        <!-- Filled dynamically -->
-                    </div>
+                    <div id="publicRecordsList" class="space-y-3 font-mono text-xs"></div>
                 </div>
 
-                <!-- Right: Google OSINT Dorks Prontos -->
                 <div class="glass-panel rounded-2xl p-6 border border-blue-900/40">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-display font-bold text-lg text-white flex items-center gap-2">
-                            <i data-lucide="terminal" class="w-5 h-5 text-cyan-400"></i>
-                            Dorks Avançados de Investigação (1-Click)
-                        </h3>
-                        <span class="text-[10px] font-mono text-slate-400">Google Hacking Dorks</span>
-                    </div>
-                    <div id="dorksList" class="space-y-2.5 font-mono text-xs">
-                        <!-- Filled dynamically -->
-                    </div>
+                    <h3 class="font-display font-bold text-lg text-white flex items-center gap-2 mb-4">
+                        <i data-lucide="terminal" class="w-5 h-5 text-cyan-400"></i>
+                        Dorks de Busca Avançada (Google Hacking)
+                    </h3>
+                    <div id="dorksList" class="space-y-2.5 font-mono text-xs"></div>
                 </div>
 
             </div>
@@ -466,101 +409,24 @@
 
     </main>
 
-    <!-- History Modal -->
-    <div id="historyModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
-        <div class="glass-panel-active rounded-2xl max-w-md w-full p-6 border border-cyan-500/40 shadow-2xl">
-            <div class="flex items-center justify-between pb-4 border-b border-blue-900/40 mb-4">
-                <div class="flex items-center gap-2">
-                    <i data-lucide="clock" class="w-5 h-5 text-cyan-300"></i>
-                    <h3 class="font-display font-bold text-lg text-white">Histórico de Pesquisas</h3>
-                </div>
-                <button onclick="closeHistoryModal()" class="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
-
-            <div id="historyList" class="max-h-60 overflow-y-auto space-y-2 mb-4">
-                <!-- Dynamically filled -->
-            </div>
-
-            <div class="flex justify-between items-center pt-2">
-                <button onclick="clearHistory()" class="text-xs font-mono text-red-400 hover:text-red-300">Limpar Histórico</button>
-                <button onclick="closeHistoryModal()" class="px-4 py-2 rounded-xl bg-deep-850 hover:bg-blue-900 border border-blue-800 text-xs font-mono text-slate-200">Fechar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Notification Toast -->
+    <!-- Toast Notification -->
     <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 px-4 py-3 rounded-xl bg-deep-900 border border-cyan-400 text-cyan-200 text-xs font-mono shadow-neon-cyan flex items-center gap-2 pointer-events-none">
         <i data-lucide="check-circle" class="w-4 h-4 text-cyan-400"></i>
         <span id="toastMessage">Operação realizada com sucesso!</span>
     </div>
 
     <!-- Footer -->
-    <footer class="border-t border-blue-900/30 mt-20 py-8 bg-deep-950/80 font-mono text-xs text-slate-500">
-        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
-            <p>Mourisco Founder v3.0 — Motor Universal de Inteligência em Fontes Abertas</p>
-            <p class="text-[11px] text-slate-600">Pesquisa e indexação em tempo real para dados de domínio público e redes sociais.</p>
-        </div>
+    <footer class="border-t border-blue-900/30 mt-20 py-8 bg-deep-950/80 font-mono text-xs text-slate-500 text-center">
+        <p>Mourisco Founder — Sistema Universal de Inteligência OSINT e Mapeamento de Pessoas</p>
     </footer>
 
-    <!-- Logic Script -->
     <script>
-        // Web Audio Synthesizer
-        let audioEnabled = true;
-        const audioCtx = (window.AudioContext || window.webkitAudioContext) ? new (window.AudioContext || window.webkitAudioContext)() : null;
+        // Clear any old stored data
+        try {
+            localStorage.removeItem('mourisco_history');
+            localStorage.removeItem('mourisco_history_v3');
+        } catch(e) {}
 
-        function playBeep(freq = 880, duration = 0.08, type = 'sine') {
-            if (!audioEnabled || !audioCtx) return;
-            try {
-                if (audioCtx.state === 'suspended') audioCtx.resume();
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = type;
-                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + duration);
-            } catch(e) {}
-        }
-
-        function playSuccessChime() {
-            if (!audioEnabled || !audioCtx) return;
-            [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
-                setTimeout(() => playBeep(freq, 0.12, 'triangle'), i * 70);
-            });
-        }
-
-        function toggleAudio() {
-            audioEnabled = !audioEnabled;
-            const icon = document.getElementById('soundIcon');
-            const text = document.getElementById('soundText');
-            if (audioEnabled) {
-                icon.setAttribute('data-lucide', 'volume-2');
-                text.textContent = 'SFX: ON';
-                showToast('Efeitos sonoros ativados');
-                playBeep(880, 0.1);
-            } else {
-                icon.setAttribute('data-lucide', 'volume-x');
-                text.textContent = 'SFX: OFF';
-                showToast('Efeitos sonoros silenciados');
-            }
-            lucide.createIcons();
-        }
-
-        function showToast(msg) {
-            const toast = document.getElementById('toastNotification');
-            document.getElementById('toastMessage').textContent = msg;
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => {
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 3000);
-        }
-
-        // Input Utilities
         const targetInput = document.getElementById('targetInput');
         const clearBtn = document.getElementById('clearBtn');
 
@@ -574,98 +440,72 @@
             targetInput.focus();
         }
 
-        // History Management
-        let searchHistory = JSON.parse(localStorage.getItem('mourisco_history_v3') || '[]');
-
-        function updateHistoryBadge() {
-            document.getElementById('historyCountBadge').textContent = searchHistory.length;
+        function resetToHome() {
+            targetInput.value = '';
+            clearBtn.classList.add('hidden');
+            document.getElementById('initialScreen').classList.remove('hidden');
+            document.getElementById('scanningState').classList.add('hidden');
+            document.getElementById('resultsSection').classList.add('hidden');
+            targetInput.focus();
         }
 
-        function saveToHistory(query) {
-            if (!query) return;
-            searchHistory = searchHistory.filter(item => item.toLowerCase() !== query.toLowerCase());
-            searchHistory.unshift(query);
-            if (searchHistory.length > 30) searchHistory.pop();
-            localStorage.setItem('mourisco_history_v3', JSON.stringify(searchHistory));
-            updateHistoryBadge();
+        function showToast(msg) {
+            const toast = document.getElementById('toastNotification');
+            document.getElementById('toastMessage').textContent = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
         }
 
-        function openHistoryModal() {
-            const list = document.getElementById('historyList');
-            if (searchHistory.length === 0) {
-                list.innerHTML = '<p class="text-xs font-mono text-slate-500 text-center py-4">Nenhuma busca recente.</p>';
-            } else {
-                list.innerHTML = searchHistory.map(q => `
-                    <div class="flex items-center justify-between p-2.5 rounded-lg bg-deep-900 border border-blue-900/40 hover:border-cyan-400/40 transition-all">
-                        <button onclick="document.getElementById('targetInput').value = '${q}'; closeHistoryModal(); handleSearch(event);" class="text-xs font-mono text-cyan-300 hover:underline text-left truncate flex-1">
-                            ${q}
-                        </button>
-                    </div>
-                `).join('');
-            }
-            document.getElementById('historyModal').classList.remove('hidden');
-        }
-
-        function closeHistoryModal() {
-            document.getElementById('historyModal').classList.add('hidden');
-        }
-
-        function clearHistory() {
-            searchHistory = [];
-            localStorage.removeItem('mourisco_history_v3');
-            updateHistoryBadge();
-            openHistoryModal();
-            showToast('Histórico limpo.');
-        }
-
-        // Normalize text (remove accents and clean)
         function normalizeStr(str) {
             return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
         }
 
-        // Generate extensive permutations of handles for ANY given name
+        // Handle variations generator
         function generateHandlePermutations(fullName) {
             const clean = normalizeStr(fullName);
             const stopWords = new Set(['de', 'da', 'do', 'dos', 'das', 'e', 'van', 'von', 'del', 'la', 'le']);
             const words = clean.split(/\s+/).filter(w => w.length > 0 && !stopWords.has(w));
             
-            if (words.length === 0) return ['alvo', 'user'];
+            if (words.length === 0) return ['usuario', 'perfil'];
 
             const first = words[0];
             const last = words[words.length - 1];
-            const middle = words.length > 2 ? words.slice(1, -1).join('') : (words.length === 2 ? '' : '');
+            const middle = words.length > 2 ? words[1] : '';
             const allJoined = words.join('');
 
             const list = new Set();
 
-            // 1. Single / Full Joined
+            // 1. Basic Joined
             list.add(allJoined);
             list.add(`${first}${last}`);
             list.add(`${last}${first}`);
 
-            // 2. Underline variations
+            // 2. Underlines
             if (words.length >= 2) {
                 list.add(`${first}_${last}`);
                 list.add(`${last}_${first}`);
-                if (words.length >= 3) {
-                    list.add(`${words[0]}_${words[1]}_${words[words.length - 1]}`);
-                    list.add(`${words[0]}_${words[words.length - 1]}_${words[1]}`);
+                if (middle) {
+                    list.add(`${first}_${middle}_${last}`);
+                    list.add(`${middle}_${first}`);
+                    list.add(`${first}_${middle}`);
                 }
             } else {
                 list.add(`${first}_`);
                 list.add(`_${first}`);
             }
 
-            // 3. Dot variations
+            // 3. Dots
             if (words.length >= 2) {
                 list.add(`${first}.${last}`);
                 list.add(`${last}.${first}`);
-                if (words.length >= 3) {
-                    list.add(`${first}.${words[1]}.${last}`);
+                if (middle) {
+                    list.add(`${first}.${middle}.${last}`);
                 }
             }
 
-            // 4. Initial combinations
+            // 4. Abbreviations
             if (words.length >= 2) {
                 list.add(`${first}${last[0]}`);
                 list.add(`${first[0]}${last}`);
@@ -674,7 +514,7 @@
                 list.add(`${first}.${last[0]}`);
             }
 
-            // 5. Common suffixes
+            // 5. Common Suffixes
             list.add(`${first}${last}_`);
             list.add(`_${first}${last}`);
             list.add(`${first}${last}oficial`);
@@ -683,22 +523,17 @@
             return Array.from(list).slice(0, 18);
         }
 
-        // Global state for current search
-        let currentDossier = null;
+        let currentTargetData = null;
 
-        // Perform Search
         function handleSearch(e) {
             if (e) e.preventDefault();
             const rawQuery = targetInput.value.trim();
             if (!rawQuery) {
-                showToast('Por favor, digite o nome completo.');
+                showToast('Digite o nome da pessoa para procurar.');
                 return;
             }
 
-            saveToHistory(rawQuery);
-
-            // Hide empty state, show scanning animation
-            document.getElementById('initialEmptyState').classList.add('hidden');
+            document.getElementById('initialScreen').classList.add('hidden');
             document.getElementById('resultsSection').classList.add('hidden');
             const scanningState = document.getElementById('scanningState');
             scanningState.classList.remove('hidden');
@@ -706,24 +541,17 @@
             const terminalLogs = document.getElementById('terminalLogs');
             const progressBar = document.getElementById('scanProgressBar');
             const percentText = document.getElementById('scanPercentText');
-            const elapsedText = document.getElementById('scanElapsedText');
 
             terminalLogs.innerHTML = '';
             progressBar.style.width = '0%';
             percentText.textContent = '0%';
 
-            const startTime = Date.now();
-            const timerInterval = setInterval(() => {
-                elapsedText.textContent = ((Date.now() - startTime) / 1000).toFixed(1) + 's';
-            }, 100);
-
             const steps = [
-                { p: 15, log: `> [PARSER] Decompondo tokens e construindo matriz de permutações para "${rawQuery}"...`, freq: 440 },
-                { p: 30, log: `> [SOCIAL_TIKTOK_INSTA] Gerando links de perfis, tags e menções em TikTok, Instagram e Kwai...`, freq: 580 },
-                { p: 50, log: `> [FACEBOOK_YOUTUBE_X] Rastreando publicações no Facebook, vídeos no YouTube e posts no X...`, freq: 720 },
-                { p: 70, log: `> [PROFESSIONAL_GIT] Mapeando instâncias de LinkedIn, GitHub, Threads, Reddit e Pinterest...`, freq: 880 },
-                { p: 90, log: `> [GAZETTES_LEGAL] Estruturando dorks de Diários Oficiais (DOU/DOE), Jusbrasil e Escavador...`, freq: 1040 },
-                { p: 100, log: `> [COMPLETE] Mapeamento 360° finalizado com sucesso!`, freq: 1200 }
+                { p: 20, log: `> [INICIANDO] Analisando nome "${rawQuery}" e gerando matriz de permutações...` },
+                { p: 40, log: `> [REDES_SOCIAIS] Mapeando TikTok, Facebook, Instagram, YouTube, LinkedIn, X e Threads...` },
+                { p: 65, log: `> [POSTS_MENCOES] Rastreando publicações de terceiros, vídeos e citações públicas...` },
+                { p: 85, log: `> [PROCESSOS_OFICIAIS] Gerando links para Jusbrasil, Escavador, Diários Oficiais e CNPJs...` },
+                { p: 100, log: `> [CONCLUÍDO] Dossiê completo sintetizado com sucesso!` }
             ];
 
             let stepIndex = 0;
@@ -738,59 +566,48 @@
                     logElem.textContent = s.log;
                     terminalLogs.appendChild(logElem);
                     terminalLogs.scrollTop = terminalLogs.scrollHeight;
-                    
-                    playBeep(s.freq, 0.05);
                     stepIndex++;
                 } else {
                     clearInterval(stepInterval);
-                    clearInterval(timerInterval);
-                    
                     setTimeout(() => {
                         scanningState.classList.add('hidden');
-                        buildDynamicDossier(rawQuery);
+                        renderDossier(rawQuery);
                         document.getElementById('resultsSection').classList.remove('hidden');
-                        playSuccessChime();
                         showToast(`Varredura concluída para "${rawQuery}"`);
-                    }, 350);
+                    }, 300);
                 }
-            }, 250);
+            }, 200);
         }
 
-        // Build entire dossier for ANY person dynamically
-        function buildDynamicDossier(name) {
+        function renderDossier(name) {
             const cleanName = name.trim();
             const handles = generateHandlePermutations(cleanName);
+            const primaryHandle = handles[0] || normalizeStr(cleanName).replace(/\s+/g, '');
             const encodedName = encodeURIComponent(`"${cleanName}"`);
             const encodedSimple = encodeURIComponent(cleanName);
-            const primaryHandle = handles[0] || normalizeStr(cleanName).replace(/\s+/g, '');
 
-            currentDossier = {
+            currentTargetData = {
                 name: cleanName,
-                handles: handles,
                 primaryHandle: primaryHandle,
-                generatedAt: new Date().toISOString()
+                handles: handles
             };
 
-            // 1. Update Header Card
+            // Header info
             document.getElementById('resTargetName').textContent = cleanName;
-            document.getElementById('resTargetSubtitle').innerHTML = `
-                <span><strong class="text-slate-300">Username Principal Sugerido:</strong> @${primaryHandle}</span>
-                <span>•</span>
-                <span><strong class="text-slate-300">Permutações Geradas:</strong> ${handles.length} variantes</span>
-            `;
+            document.getElementById('resTargetSubtitle').textContent = `Username sugerido: @${primaryHandle} • ${handles.length} permutações geradas`;
 
-            // 2. Render Handles Grid
+            // Handles Grid
             const handlesGrid = document.getElementById('handlesGrid');
             handlesGrid.innerHTML = handles.map(h => `
-                <div class="p-2.5 rounded-xl bg-deep-900/90 border border-blue-900/50 hover:border-cyan-400/50 transition-all flex items-center justify-between group">
+                <div class="p-2.5 rounded-xl bg-deep-900 border border-blue-900/50 hover:border-cyan-400/50 transition-all flex items-center justify-between group">
                     <span class="text-xs font-mono text-cyan-300 truncate">@${h}</span>
-                    <button onclick="copyText('@${h}')" class="text-slate-500 hover:text-cyan-300 p-1 rounded opacity-60 group-hover:opacity-100 transition-all" title="Copiar Handle">
+                    <button onclick="copyText('@${h}')" class="text-slate-500 hover:text-cyan-300 p-1" title="Copiar">
                         <i data-lucide="copy" class="w-3.5 h-3.5"></i>
                     </button>
                 </div>
             `).join('');
 
-            // 3. Render COMPLETE Social Media Matrix (12 Platforms)
+            // All 12 Social Media Platforms
             const platforms = [
                 {
                     name: "TikTok",
@@ -800,34 +617,34 @@
                     desc: "Perfil direto e busca de criador",
                     directUrl: `https://www.tiktok.com/@${primaryHandle}`,
                     searchUrl: `https://www.tiktok.com/search?q=${encodedSimple}`,
-                    mentionsUrl: `https://www.tiktok.com/search?q=${encodeURIComponent('"' + cleanName + '"')}`
+                    mentionsUrl: `https://www.tiktok.com/search?q=${encodedName}`
+                },
+                {
+                    name: "Facebook",
+                    icon: "facebook",
+                    color: "text-blue-400 bg-blue-950/40 border-blue-500/40",
+                    badge: "Pessoas & Publicações",
+                    desc: "Busca de perfis e posts mencionando o alvo",
+                    directUrl: `https://www.facebook.com/public/${encodeURIComponent(cleanName.replace(/\s+/g, '-'))}`,
+                    searchUrl: `https://www.facebook.com/search/top?q=${encodedSimple}`,
+                    mentionsUrl: `https://www.facebook.com/search/posts?q=${encodedName}`
                 },
                 {
                     name: "Instagram",
                     icon: "camera",
                     color: "text-pink-400 bg-pink-950/40 border-pink-500/40",
                     badge: "Fotos & Reels",
-                    desc: "Perfil direto e hashtag do nome",
+                    desc: "Perfil direto e menções públicas",
                     directUrl: `https://www.instagram.com/${primaryHandle}/`,
                     searchUrl: `https://www.google.com/search?q=site:instagram.com+${encodedName}`,
                     mentionsUrl: `https://www.google.com/search?q=site:instagram.com+${encodeURIComponent('@' + primaryHandle)}`
-                },
-                {
-                    name: "Facebook",
-                    icon: "facebook",
-                    color: "text-blue-400 bg-blue-950/40 border-blue-500/40",
-                    badge: "Pessoas & Posts",
-                    desc: "Busca de pessoas e publicações mencionando o alvo",
-                    directUrl: `https://www.facebook.com/public/${encodeURIComponent(cleanName.replace(/\s+/g, '-'))}`,
-                    searchUrl: `https://www.facebook.com/search/top?q=${encodedSimple}`,
-                    mentionsUrl: `https://www.facebook.com/search/posts?q=${encodedName}`
                 },
                 {
                     name: "YouTube",
                     icon: "play-square",
                     color: "text-red-400 bg-red-950/40 border-red-500/40",
                     badge: "Vídeos & Podcasts",
-                    desc: "Canal do usuário ou aparições em podcasts/vídeos",
+                    desc: "Canal do alvo ou vídeos onde ele aparece",
                     directUrl: `https://www.youtube.com/@${primaryHandle}`,
                     searchUrl: `https://www.youtube.com/results?search_query=${encodedSimple}`,
                     mentionsUrl: `https://www.youtube.com/results?search_query=${encodedName}`
@@ -836,8 +653,8 @@
                     name: "LinkedIn",
                     icon: "linkedin",
                     color: "text-blue-300 bg-blue-950/40 border-blue-500/40",
-                    badge: "Profissional & Currículo",
-                    desc: "Cargos, empresas e histórico acadêmico",
+                    badge: "Carreira & Currículo",
+                    desc: "Perfil profissional, empresas e formação",
                     directUrl: `https://www.linkedin.com/in/${primaryHandle}`,
                     searchUrl: `https://www.linkedin.com/search/results/people/?keywords=${encodedSimple}`,
                     mentionsUrl: `https://www.google.com/search?q=site:linkedin.com/in/+${encodedName}`
@@ -846,8 +663,8 @@
                     name: "X (Twitter)",
                     icon: "twitter",
                     color: "text-cyan-400 bg-cyan-950/40 border-cyan-500/40",
-                    badge: "Tweets & Menções",
-                    desc: "Perfil de usuário e busca de conversas",
+                    badge: "Tweets & Citações",
+                    desc: "Perfil de usuário e tweets com o nome",
                     directUrl: `https://twitter.com/${primaryHandle}`,
                     searchUrl: `https://twitter.com/search?q=${encodedSimple}&f=user`,
                     mentionsUrl: `https://twitter.com/search?q=${encodedName}&f=live`
@@ -857,7 +674,7 @@
                     icon: "at-sign",
                     color: "text-slate-300 bg-slate-900 border-slate-700",
                     badge: "Microblogging",
-                    desc: "Perfil e discussões na rede Threads",
+                    desc: "Perfil e discussões no Threads",
                     directUrl: `https://www.threads.net/@${primaryHandle}`,
                     searchUrl: `https://www.google.com/search?q=site:threads.net+${encodedName}`,
                     mentionsUrl: `https://www.google.com/search?q=site:threads.net+${encodeURIComponent('@' + primaryHandle)}`
@@ -866,8 +683,8 @@
                     name: "Pinterest",
                     icon: "pin",
                     color: "text-rose-400 bg-rose-950/40 border-rose-500/40",
-                    badge: "Painéis & Imagens",
-                    desc: "Perfil do criador e fotos associadas",
+                    badge: "Painéis & Fotos",
+                    desc: "Perfil e fotos associadas",
                     directUrl: `https://www.pinterest.com/${primaryHandle}/`,
                     searchUrl: `https://www.pinterest.com/search/users/?q=${encodedSimple}`,
                     mentionsUrl: `https://www.google.com/search?q=site:pinterest.com+${encodedName}`
@@ -877,7 +694,7 @@
                     icon: "message-circle",
                     color: "text-orange-400 bg-orange-950/40 border-orange-500/40",
                     badge: "Fóruns & Discussões",
-                    desc: "Perfil de usuário e menções em subreddits",
+                    desc: "Usuário e menções em comunidades",
                     directUrl: `https://www.reddit.com/user/${primaryHandle}`,
                     searchUrl: `https://www.reddit.com/search/?q=${encodedSimple}&type=user`,
                     mentionsUrl: `https://www.reddit.com/search/?q=${encodedName}`
@@ -886,8 +703,8 @@
                     name: "GitHub / GitLab",
                     icon: "github",
                     color: "text-slate-200 bg-slate-900 border-slate-700",
-                    badge: "Código & Repositórios",
-                    desc: "Projetos, commits e histórico de desenvolvedor",
+                    badge: "Código & Projetos",
+                    desc: "Projetos e commits de desenvolvedor",
                     directUrl: `https://github.com/${primaryHandle}`,
                     searchUrl: `https://github.com/search?q=${encodedSimple}&type=users`,
                     mentionsUrl: `https://github.com/search?q=${encodedName}&type=commits`
@@ -896,8 +713,8 @@
                     name: "Twitch",
                     icon: "tv",
                     color: "text-purple-400 bg-purple-950/40 border-purple-500/40",
-                    badge: "Streams & Lives",
-                    desc: "Transmissões e chats públicos",
+                    badge: "Transmissões",
+                    desc: "Transmissões e canais de streaming",
                     directUrl: `https://www.twitch.tv/${primaryHandle}`,
                     searchUrl: `https://www.google.com/search?q=site:twitch.tv+${encodedName}`,
                     mentionsUrl: `https://www.google.com/search?q=site:twitch.tv+${encodeURIComponent(primaryHandle)}`
@@ -907,7 +724,7 @@
                     icon: "smartphone",
                     color: "text-amber-400 bg-amber-950/40 border-amber-500/40",
                     badge: "Vídeos Curtos",
-                    desc: "Perfil e vídeos na rede Kwai",
+                    desc: "Perfil e vídeos no Kwai",
                     directUrl: `https://www.kwai.com/@${primaryHandle}`,
                     searchUrl: `https://www.google.com/search?q=site:kwai.com+${encodedName}`,
                     mentionsUrl: `https://www.google.com/search?q=site:kwai.com+${encodeURIComponent('@' + primaryHandle)}`
@@ -916,7 +733,7 @@
 
             const socialGrid = document.getElementById('socialGrid');
             socialGrid.innerHTML = platforms.map(p => `
-                <div class="glass-panel rounded-xl p-5 border border-blue-900/40 hover:border-cyan-400/40 transition-all flex flex-col justify-between group">
+                <div class="glass-panel rounded-xl p-5 border border-blue-900/40 hover:border-cyan-400/40 transition-all flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between mb-3">
                             <div class="flex items-center gap-3">
@@ -935,22 +752,22 @@
                     <div class="space-y-2 pt-2 border-t border-blue-900/30">
                         <div class="flex items-center justify-between text-xs font-mono">
                             <span class="text-slate-400">Perfil Direto:</span>
-                            <a href="${p.directUrl}" target="_blank" class="text-cyan-300 hover:text-cyan-200 hover:underline flex items-center gap-1">
+                            <a href="${p.directUrl}" target="_blank" class="text-cyan-300 hover:underline flex items-center gap-1">
                                 <span>@${primaryHandle}</span>
                                 <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                             </a>
                         </div>
                         <div class="flex items-center justify-between text-xs font-mono">
                             <span class="text-slate-400">Buscar Usuário:</span>
-                            <a href="${p.searchUrl}" target="_blank" class="text-blue-400 hover:text-blue-300 hover:underline flex items-center gap-1">
+                            <a href="${p.searchUrl}" target="_blank" class="text-blue-400 hover:underline flex items-center gap-1">
                                 <span>Checar Busca</span>
                                 <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                             </a>
                         </div>
                         <div class="flex items-center justify-between text-xs font-mono">
-                            <span class="text-slate-400">Ver Menções/Posts:</span>
-                            <a href="${p.mentionsUrl}" target="_blank" class="text-emerald-400 hover:text-emerald-300 hover:underline flex items-center gap-1">
-                                <span>Rastrear Citações</span>
+                            <span class="text-slate-400">Ver Menções:</span>
+                            <a href="${p.mentionsUrl}" target="_blank" class="text-emerald-400 hover:underline flex items-center gap-1">
+                                <span>Rastrear Posts</span>
                                 <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                             </a>
                         </div>
@@ -958,53 +775,53 @@
                 </div>
             `).join('');
 
-            // 4. Render Mentions & Posts Section
+            // Mentions Grid
             const mentionsGrid = document.getElementById('mentionsGrid');
             mentionsGrid.innerHTML = `
-                <div class="p-4 rounded-xl bg-deep-900/80 border border-blue-900/40 space-y-2">
-                    <div class="flex items-center gap-2 text-cyan-400">
-                        <i data-lucide="search" class="w-4 h-4"></i>
+                <div class="p-4 rounded-xl bg-deep-900 border border-blue-900/40 space-y-2">
+                    <div class="flex items-center gap-2 text-blue-400">
+                        <i data-lucide="facebook" class="w-4 h-4"></i>
                         <span class="text-xs font-mono font-bold">Posts no Facebook</span>
                     </div>
-                    <p class="text-[11px] font-mono text-slate-400">Publicações e fotos onde "${cleanName}" foi marcado por terceiros.</p>
-                    <a href="https://www.facebook.com/search/posts?q=${encodedName}" target="_blank" class="mt-2 block w-full text-center py-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 border border-blue-800 text-xs font-mono text-cyan-300 transition-all">Abrir Busca de Posts</a>
+                    <p class="text-[11px] font-mono text-slate-400">Publicações e fotos onde "${cleanName}" foi mencionado.</p>
+                    <a href="https://www.facebook.com/search/posts?q=${encodedName}" target="_blank" class="mt-2 block w-full text-center py-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 border border-blue-800 text-xs font-mono text-cyan-300">Abrir Busca de Posts</a>
                 </div>
 
-                <div class="p-4 rounded-xl bg-deep-900/80 border border-blue-900/40 space-y-2">
+                <div class="p-4 rounded-xl bg-deep-900 border border-blue-900/40 space-y-2">
                     <div class="flex items-center gap-2 text-pink-400">
-                        <i data-lucide="tag" class="w-4 h-4"></i>
+                        <i data-lucide="instagram" class="w-4 h-4"></i>
                         <span class="text-xs font-mono font-bold">Menções no Instagram</span>
                     </div>
-                    <p class="text-[11px] font-mono text-slate-400">Fotos e legendas de amigos ou empresas com @ e nome completo.</p>
-                    <a href="https://www.google.com/search?q=site:instagram.com+${encodedName}" target="_blank" class="mt-2 block w-full text-center py-1.5 rounded-lg bg-pink-950 hover:bg-pink-900 border border-pink-800 text-xs font-mono text-pink-300 transition-all">Ver Menções</a>
+                    <p class="text-[11px] font-mono text-slate-400">Fotos e legendas de terceiros com o nome completo.</p>
+                    <a href="https://www.google.com/search?q=site:instagram.com+${encodedName}" target="_blank" class="mt-2 block w-full text-center py-1.5 rounded-lg bg-pink-950 hover:bg-pink-900 border border-pink-800 text-xs font-mono text-pink-300">Ver Menções</a>
                 </div>
 
-                <div class="p-4 rounded-xl bg-deep-900/80 border border-blue-900/40 space-y-2">
+                <div class="p-4 rounded-xl bg-deep-900 border border-blue-900/40 space-y-2">
                     <div class="flex items-center gap-2 text-red-400">
-                        <i data-lucide="video" class="w-4 h-4"></i>
+                        <i data-lucide="youtube" class="w-4 h-4"></i>
                         <span class="text-xs font-mono font-bold">Vídeos & Podcasts</span>
                     </div>
-                    <p class="text-[11px] font-mono text-slate-400">Aparições em canais do YouTube, entrevistas ou lives gravadas.</p>
-                    <a href="https://www.youtube.com/results?search_query=${encodedName}" target="_blank" class="mt-2 block w-full text-center py-1.5 rounded-lg bg-red-950 hover:bg-red-900 border border-red-800 text-xs font-mono text-red-300 transition-all">Buscar Aparições</a>
+                    <p class="text-[11px] font-mono text-slate-400">Aparições em canais, entrevistas ou vídeos.</p>
+                    <a href="https://www.youtube.com/results?search_query=${encodedName}" target="_blank" class="mt-2 block w-full text-center py-1.5 rounded-lg bg-red-950 hover:bg-red-900 border border-red-800 text-xs font-mono text-red-300">Buscar Vídeos</a>
                 </div>
 
-                <div class="p-4 rounded-xl bg-deep-900/80 border border-blue-900/40 space-y-2">
+                <div class="p-4 rounded-xl bg-deep-900 border border-blue-900/40 space-y-2">
                     <div class="flex items-center gap-2 text-cyan-400">
-                        <i data-lucide="play" class="w-4 h-4"></i>
+                        <i data-lucide="video" class="w-4 h-4"></i>
                         <span class="text-xs font-mono font-bold">Vídeos no TikTok</span>
                     </div>
-                    <p class="text-[11px] font-mono text-slate-400">Vídeos com hashtags do nome ou comentários em alta.</p>
-                    <a href="https://www.tiktok.com/search?q=${encodedName}" target="_blank" class="mt-2 block w-full text-center py-1.5 rounded-lg bg-cyan-950 hover:bg-cyan-900 border border-cyan-800 text-xs font-mono text-cyan-300 transition-all">Explorar TikTok</a>
+                    <p class="text-[11px] font-mono text-slate-400">Hashtags e menções em vídeos do TikTok.</p>
+                    <a href="https://www.tiktok.com/search?q=${encodedName}" target="_blank" class="mt-2 block w-full text-center py-1.5 rounded-lg bg-cyan-950 hover:bg-cyan-900 border border-cyan-800 text-xs font-mono text-cyan-300">Explorar TikTok</a>
                 </div>
             `;
 
-            // 5. Render Public Records & Dorks
+            // Public Records
             const publicRecordsList = document.getElementById('publicRecordsList');
             publicRecordsList.innerHTML = `
-                <div class="p-3 rounded-lg bg-deep-900/70 border border-blue-900/30 flex items-center justify-between">
+                <div class="p-3 rounded-lg bg-deep-900 border border-blue-900/30 flex items-center justify-between">
                     <div>
                         <strong class="text-white block">Jusbrasil (Processos Judiciais)</strong>
-                        <span class="text-slate-400 text-[11px]">Busca em todos os Tribunais de Justiça do Brasil</span>
+                        <span class="text-slate-400 text-[11px]">Tribunais de Justiça de todo o Brasil</span>
                     </div>
                     <a href="https://www.jusbrasil.com.br/busca?q=${encodedName}" target="_blank" class="px-2.5 py-1 rounded bg-deep-850 hover:bg-cyan-950 border border-blue-900 text-cyan-300 text-xs flex items-center gap-1">
                         <span>Consultar</span>
@@ -1012,7 +829,7 @@
                     </a>
                 </div>
 
-                <div class="p-3 rounded-lg bg-deep-900/70 border border-blue-900/30 flex items-center justify-between">
+                <div class="p-3 rounded-lg bg-deep-900 border border-blue-900/30 flex items-center justify-between">
                     <div>
                         <strong class="text-white block">Escavador & Diários Oficiais</strong>
                         <span class="text-slate-400 text-[11px]">DOU, DOE, DOM e publicações oficiais</span>
@@ -1023,10 +840,10 @@
                     </a>
                 </div>
 
-                <div class="p-3 rounded-lg bg-deep-900/70 border border-blue-900/30 flex items-center justify-between">
+                <div class="p-3 rounded-lg bg-deep-900 border border-blue-900/30 flex items-center justify-between">
                     <div>
-                        <strong class="text-white block">Quadro Societário & CNPJ</strong>
-                        <span class="text-slate-400 text-[11px]">Consulta de sócios e empresas na Receita Federal</span>
+                        <strong class="text-white block">Quadro Societário & CNPJs</strong>
+                        <span class="text-slate-400 text-[11px]">Consulta de empresas na Receita Federal</span>
                     </div>
                     <a href="https://www.google.com/search?q=site:consultasocio.com+OR+site:econodata.com.br+${encodedName}" target="_blank" class="px-2.5 py-1 rounded bg-deep-850 hover:bg-cyan-950 border border-blue-900 text-cyan-300 text-xs flex items-center gap-1">
                         <span>Consultar</span>
@@ -1034,10 +851,10 @@
                     </a>
                 </div>
 
-                <div class="p-3 rounded-lg bg-deep-900/70 border border-blue-900/30 flex items-center justify-between">
+                <div class="p-3 rounded-lg bg-deep-900 border border-blue-900/30 flex items-center justify-between">
                     <div>
-                        <strong class="text-white block">Currículo Lattes / CNPq & Acadêmico</strong>
-                        <span class="text-slate-400 text-[11px]">Artigos científicos, faculdade e pesquisas</span>
+                        <strong class="text-white block">Currículo Lattes (CNPq)</strong>
+                        <span class="text-slate-400 text-[11px]">Artigos científicos e histórico acadêmico</span>
                     </div>
                     <a href="https://www.google.com/search?q=site:buscatextual.cnpq.br+OR+site:scholar.google.com+${encodedName}" target="_blank" class="px-2.5 py-1 rounded bg-deep-850 hover:bg-cyan-950 border border-blue-900 text-cyan-300 text-xs flex items-center gap-1">
                         <span>Consultar</span>
@@ -1046,26 +863,26 @@
                 </div>
             `;
 
-            // 6. Render Dorks List
+            // Dorks
             const dorksList = document.getElementById('dorksList');
             const dorks = [
                 { title: "Documentos e PDFs Públicos", dork: `filetype:pdf "${cleanName}"` },
-                { title: "Planilhas e Listas Excel", dork: `(filetype:xls OR filetype:xlsx) "${cleanName}"` },
+                { title: "Planilhas Excel", dork: `(filetype:xls OR filetype:xlsx) "${cleanName}"` },
                 { title: "Todas as Redes Sociais Juntas", dork: `site:instagram.com OR site:tiktok.com OR site:facebook.com OR site:twitter.com "${cleanName}"` },
                 { title: "Vazamentos / Pastes", dork: `site:pastebin.com OR site:throwbin.io "${cleanName}"` }
             ];
 
             dorksList.innerHTML = dorks.map(d => `
-                <div class="p-2.5 rounded-lg bg-deep-900/70 border border-blue-900/30 flex items-center justify-between gap-2">
+                <div class="p-2.5 rounded-lg bg-deep-900 border border-blue-900/30 flex items-center justify-between gap-2">
                     <div class="truncate flex-1">
                         <span class="text-slate-400 text-[10px] block">${d.title}</span>
                         <code class="text-cyan-300 text-[11px] truncate block">${d.dork}</code>
                     </div>
                     <div class="flex items-center gap-1">
-                        <button onclick="copyText('${d.dork.replace(/"/g, '&quot;')}')" class="p-1.5 rounded bg-deep-850 hover:bg-blue-900 text-slate-300 hover:text-cyan-300" title="Copiar Dork">
+                        <button onclick="copyText('${d.dork.replace(/"/g, '&quot;')}')" class="p-1.5 rounded bg-deep-850 text-slate-300 hover:text-cyan-300" title="Copiar Dork">
                             <i data-lucide="copy" class="w-3.5 h-3.5"></i>
                         </button>
-                        <a href="https://www.google.com/search?q=${encodeURIComponent(d.dork)}" target="_blank" class="p-1.5 rounded bg-deep-850 hover:bg-cyan-950 text-cyan-300" title="Executar Dork">
+                        <a href="https://www.google.com/search?q=${encodeURIComponent(d.dork)}" target="_blank" class="p-1.5 rounded bg-deep-850 text-cyan-300" title="Executar Dork">
                             <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                         </a>
                     </div>
@@ -1075,68 +892,64 @@
             lucide.createIcons();
         }
 
-        // Copy Helpers
         function copyText(text) {
             navigator.clipboard.writeText(text).then(() => {
                 showToast(`Copiado: ${text}`);
-                playBeep(900, 0.08);
             });
         }
 
         function copyAllHandles() {
-            if (!currentDossier) return;
-            const text = currentDossier.handles.map(h => `@${h}`).join('\n');
+            if (!currentTargetData) return;
+            const text = currentTargetData.handles.map(h => `@${h}`).join('\n');
             navigator.clipboard.writeText(text).then(() => {
                 showToast('Todas as variações de @handles foram copiadas!');
-                playBeep(900, 0.08);
             });
         }
 
         function generateMarkdownDossier() {
-            if (!currentDossier) return '';
-            const name = currentDossier.name;
-            return `# DOSSIÊ DE INTELIGÊNCIA OSINT — MOURISCO FOUNDER v3.0
+            if (!currentTargetData) return '';
+            const name = currentTargetData.name;
+            return `# DOSSIÊ OSINT — MOURISCO FOUNDER
 **Alvo da Investigação:** ${name}
 **Data de Emissão:** ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR')}
 
 ---
 
-## 1. MATRIZ DE VARIAÇÕES DE USERNAMES (@HANDLES)
-${currentDossier.handles.map(h => `- @${h}`).join('\n')}
+## 1. VARIAÇÕES DE USERNAMES (@HANDLES)
+${currentTargetData.handles.map(h => `- @${h}`).join('\n')}
 
 ---
 
-## 2. REDES SOCIAIS MAPEEADAS (12 PLATAFORMAS)
-1. **TikTok:** Perfil Direto: https://www.tiktok.com/@${currentDossier.primaryHandle} | Busca: https://www.tiktok.com/search?q=${encodeURIComponent(name)}
-2. **Instagram:** Perfil Direto: https://www.instagram.com/${currentDossier.primaryHandle}/ | Menções: https://www.google.com/search?q=site:instagram.com+"${encodeURIComponent(name)}"
-3. **Facebook:** Busca de Perfis: https://www.facebook.com/search/top?q=${encodeURIComponent(name)} | Posts Mencionando: https://www.facebook.com/search/posts?q="${encodeURIComponent(name)}"
-4. **YouTube:** Canal: https://www.youtube.com/@${currentDossier.primaryHandle} | Vídeos/Podcasts: https://www.youtube.com/results?search_query="${encodeURIComponent(name)}"
-5. **LinkedIn:** Perfil: https://www.linkedin.com/in/${currentDossier.primaryHandle} | Busca: https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(name)}
-6. **X (Twitter):** Perfil: https://twitter.com/${currentDossier.primaryHandle} | Citações: https://twitter.com/search?q="${encodeURIComponent(name)}"
-7. **Threads:** Perfil: https://www.threads.net/@${currentDossier.primaryHandle}
-8. **Pinterest:** Perfil: https://www.pinterest.com/${currentDossier.primaryHandle}/
-9. **Reddit:** Perfil: https://www.reddit.com/user/${currentDossier.primaryHandle} | Menções em Fóruns: https://www.reddit.com/search/?q="${encodeURIComponent(name)}"
-10. **GitHub:** Perfil: https://github.com/${currentDossier.primaryHandle} | Commits: https://github.com/search?q="${encodeURIComponent(name)}"&type=commits
-11. **Twitch:** https://www.twitch.tv/${currentDossier.primaryHandle}
-12. **Kwai:** https://www.kwai.com/@${currentDossier.primaryHandle}
+## 2. TODAS AS REDES SOCIAIS MAPEEADAS (12 PLATAFORMAS)
+1. **TikTok:** Perfil Direto: https://www.tiktok.com/@${currentTargetData.primaryHandle} | Busca: https://www.tiktok.com/search?q=${encodeURIComponent(name)}
+2. **Facebook:** Busca de Perfis: https://www.facebook.com/search/top?q=${encodeURIComponent(name)} | Posts Mencionando: https://www.facebook.com/search/posts?q="${encodeURIComponent(name)}"
+3. **Instagram:** Perfil Direto: https://www.instagram.com/${currentTargetData.primaryHandle}/ | Menções: https://www.google.com/search?q=site:instagram.com+"${encodeURIComponent(name)}"
+4. **YouTube:** Canal: https://www.youtube.com/@${currentTargetData.primaryHandle} | Vídeos/Podcasts: https://www.youtube.com/results?search_query="${encodeURIComponent(name)}"
+5. **LinkedIn:** Perfil: https://www.linkedin.com/in/${currentTargetData.primaryHandle} | Busca: https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(name)}
+6. **X (Twitter):** Perfil: https://twitter.com/${currentTargetData.primaryHandle} | Citações: https://twitter.com/search?q="${encodeURIComponent(name)}"
+7. **Threads:** Perfil: https://www.threads.net/@${currentTargetData.primaryHandle}
+8. **Pinterest:** Perfil: https://www.pinterest.com/${currentTargetData.primaryHandle}/
+9. **Reddit:** Perfil: https://www.reddit.com/user/${currentTargetData.primaryHandle} | Menções em Fóruns: https://www.reddit.com/search/?q="${encodeURIComponent(name)}"
+10. **GitHub:** Perfil: https://github.com/${currentTargetData.primaryHandle} | Commits: https://github.com/search?q="${encodeURIComponent(name)}"&type=commits
+11. **Twitch:** https://www.twitch.tv/${currentTargetData.primaryHandle}
+12. **Kwai:** https://www.kwai.com/@${currentTargetData.primaryHandle}
 
 ---
 
 ## 3. REGISTROS PÚBLICOS E PROCESSOS
 - **Jusbrasil:** https://www.jusbrasil.com.br/busca?q="${encodeURIComponent(name)}"
-- **Escavador (Diários Oficiais):** https://www.escavador.com/busca?q="${encodeURIComponent(name)}"
+- **Escavador:** https://www.escavador.com/busca?q="${encodeURIComponent(name)}"
 - **Quadro Societário / CNPJ:** https://www.google.com/search?q=site:consultasocio.com+"${encodeURIComponent(name)}"
 - **Currículo Lattes (CNPq):** https://www.google.com/search?q=site:buscatextual.cnpq.br+"${encodeURIComponent(name)}"
 
 ---
-*Gerado automaticamente pelo Mourisco Founder v3.0 — OSINT Multiplatform Engine.*`;
+*Gerado pelo Mourisco Founder — Motor de Inteligência em Fontes Abertas.*`;
         }
 
         function copyFullReport() {
             const md = generateMarkdownDossier();
             navigator.clipboard.writeText(md).then(() => {
                 showToast('Dossiê completo copiado!');
-                playBeep(900, 0.1);
             });
         }
 
@@ -1146,16 +959,15 @@ ${currentDossier.handles.map(h => `- @${h}`).join('\n')}
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `dossie_${currentDossier.name.toLowerCase().replace(/\s+/g, '_')}.md`;
+            a.download = `dossie_${currentTargetData.name.toLowerCase().replace(/\s+/g, '_')}.md`;
             a.click();
             URL.revokeObjectURL(url);
-            showToast('Relatório .MD baixado com sucesso!');
+            showToast('Arquivo .MD baixado!');
         }
 
-        // Initialize on load
         window.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
-            updateHistoryBadge();
+            targetInput.focus();
         });
     </script>
 </body>
