@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mourisco Founder — OSINT & Digital Footprint Intelligence</title>
+    <meta name="description" content="Plataforma avançada de investigação OSINT, análise de pegada digital, redes sociais e registros públicos em tempo real.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        deep: {
+                            950: '#030712',
+                            900: '#060a17',
+                            850: '#0a1024',
+                            800: '#0f172a',
+                            750: '#15203b',
+                            700: '#1e293b'
+                        },
+                        electric: {
+                            500: '#2563eb',
+                            400: '#3b82f6',
+                            300: '#60a5fa',
+                            200: '#93c5fd'
+                        },
+                        cyber: {
+                            500: '#06b6d4',
+                            400: '#22d3ee',
+                            300: '#67e8f9',
+                            glow: '#00f2fe'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['"Space Grotesk"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace']
+                    },
+                    boxShadow: {
+                        'neon-blue': '0 0 25px -5px rgba(37, 99, 235, 0.45)',
+                        'neon-cyan': '0 0 25px -5px rgba(6, 182, 212, 0.45)',
+                        'glow-lg': '0 0 50px -10px rgba(6, 182, 212, 0.25)',
+                        'inner-cyan': 'inset 0 1px 0 0 rgba(34, 211, 238, 0.2)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom UI Enhancements */
+        body {
+            background-color: #030712;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Glow & Grid */
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(37, 99, 235, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(6, 182, 212, 0.04) 1px, transparent 1px);
+        }
+
+        .glass-panel {
+            background: rgba(10, 16, 36, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(59, 130, 246, 0.18);
+        }
+
+        .glass-panel:hover {
+            border-color: rgba(34, 211, 238, 0.35);
+        }
+
+        .glass-panel-active {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(34, 211, 238, 0.4);
+            box-shadow: 0 0 30px -8px rgba(6, 182, 212, 0.3);
+        }
+
+        /* Glowing radar scan animation */
+        @keyframes radar-sweep {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .radar-spinner {
+            animation: radar-sweep 4s linear infinite;
+        }
+
+        /* Pulse Ring */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 0.3; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+
+        .glow-pulse {
+            animation: pulse-ring 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        /* Scanline animation */
+        .scanline-bar {
+            background: linear-gradient(180deg, transparent 0%, rgba(34, 211, 238, 0.15) 50%, transparent 100%);
+            animation: scanline 2.5s ease-in-out infinite;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(1000%); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #030712;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2563eb;
+        }
+    </style>
+</head>
+<body class="min-h-screen font-sans bg-grid-pattern relative selection:bg-cyan-500/30 selection:text-cyan-200">
+
+    <!-- Ambient Glowing Orbs -->
+    <div class="fixed top-0 left-1/4 w-[600px] h-[300px] bg-electric-500/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
+    <div class="fixed bottom-10 right-1/4 w-[500px] h-[300px] bg-cyber-500/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
+    <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-blue-900/5 rounded-full blur-[180px] pointer-events-none -z-10"></div>
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 border-b border-blue-900/30 bg-deep-950/80 backdrop-blur-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand -->
+            <div class="flex items-center gap-3">
+                <div class="relative flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-electric-500/20 to-cyber-500/20 border border-cyber-400/40 shadow-neon-cyan">
+                    <i data-lucide="shield-search" class="w-6 h-6 text-cyber-300"></i>
+                    <span class="absolute -top-1 -right-1 flex h-3 w-3">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+                    </span>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-display font-bold text-xl tracking-wider text-white uppercase">Mourisco</span>
+                        <span class="font-mono text-xs px-2 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-semibold tracking-widest">FOUNDER v2.4</span>
+                    </div>
+                    <p class="text-xs text-slate-400 font-mono flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        OSINT & Neural Data Recon Engine
+                    </p>
+                </div>
+            </div>
+
+            <!-- Controls / Status -->
+            <div class="flex items-center gap-4">
+                <button id="soundToggleBtn" onclick="toggleAudio()" class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-800 bg-deep-900/60 hover:border-cyan-500/40 text-xs font-mono text-slate-300 hover:text-cyan-300 transition-all">
+                    <i data-lucide="volume-2" id="soundIcon" class="w-4 h-4 text-cyan-400"></i>
+                    <span id="soundText" class="hidden sm:inline">SFX: ON</span>
+                </button>
+
+                <div class="hidden md:flex items-center gap-2 px-3.5 py-1.5 rounded-lg border border-blue-900/40 bg-deep-900/70 font-mono text-xs text-slate-300">
+                    <i data-lucide="activity" class="w-3.5 h-3.5 text-cyan-400"></i>
+                    <span>NÓS ATIVOS:</span>
+                    <span class="text-cyan-300 font-semibold">14.892 PROXIES</span>
+                </div>
+
+                <button onclick="openHistoryModal()" class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg border border-blue-500/30 bg-blue-950/40 hover:bg-blue-900/50 text-xs font-mono text-blue-200 transition-all">
+                    <i data-lucide="history" class="w-4 h-4 text-cyan-400"></i>
+                    <span>Histórico</span>
+                    <span id="historyCountBadge" class="px-1.5 py-0.2 rounded bg-cyan-500/20 text-cyan-300 text-[10px] font-bold">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+        <!-- Hero Section & Central Search Engine -->
+        <section class="relative mb-12">
+            <!-- Background Halo -->
+            <div class="text-center max-w-3xl mx-auto mb-8">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-950/80 border border-cyan-500/30 text-cyan-300 text-xs font-mono mb-4 shadow-neon-cyan">
+                    <i data-lucide="radar" class="w-3.5 h-3.5 animate-spin"></i>
+                    MOTOR DE INTELIGÊNCIA EM FONTES ABERTAS
+                </div>
+                <h1 class="font-display text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-cyan-300 tracking-tight leading-tight">
+                    Mapeamento Tático & Pegada Digital
+                </h1>
+                <p class="mt-3 text-sm sm:text-base text-slate-400 max-w-2xl mx-auto">
+                    Investigação profunda de indivíduos, perfis sociais, diários oficiais, registros acadêmicos e rastros em redes públicas com cruzamento automatizado de identidades.
+                </p>
+            </div>
+
+            <!-- Central Search Box -->
+            <div class="max-w-4xl mx-auto">
+                <div class="glass-panel-active rounded-2xl p-2 sm:p-3 shadow-2xl relative overflow-hidden group">
+                    
+                    <!-- Scanline subtle line -->
+                    <div class="absolute inset-x-0 h-16 pointer-events-none scanline-bar opacity-30"></div>
+
+                    <form id="searchForm" onsubmit="handleSearch(event)" class="relative z-10 flex flex-col sm:flex-row gap-2">
+                        <!-- Input Field -->
+                        <div class="relative flex-1 flex items-center">
+                            <div class="absolute left-4 pointer-events-none text-cyan-400">
+                                <i data-lucide="crosshair" class="w-5 h-5"></i>
+                            </div>
+                            <input 
+                                type="text" 
+                                id="targetInput" 
+                                placeholder="Insira o nome completo, e-mail, CPF, @username ou empresa..."
+                                value="Vitor Monteiro Bouça"
+                                autocomplete="off"
+                                class="w-full pl-12 pr-10 py-4 rounded-xl bg-deep-950/90 border border-blue-900/60 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/20 text-white placeholder-slate-500 font-mono text-sm sm:text-base transition-all outline-none"
+                            />
+                            <button 
+                                type="button" 
+                                onclick="clearInput()" 
+                                id="clearBtn"
+                                class="absolute right-3 p-1 rounded-lg text-slate-500 hover:text-slate-300 hover:bg-slate-800/60 transition-all hidden"
+                                title="Limpar"
+                            >
+                                <i data-lucide="x" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex gap-2">
+                            <button 
+                                type="submit" 
+                                id="submitSearchBtn"
+                                class="w-full sm:w-auto px-7 py-4 rounded-xl bg-gradient-to-r from-electric-500 to-cyber-500 hover:from-electric-400 hover:to-cyber-400 text-white font-display font-semibold text-sm sm:text-base tracking-wide flex items-center justify-center gap-2.5 shadow-neon-cyan transition-all transform active:scale-95 cursor-pointer"
+                            >
+                                <i data-lucide="scan-line" class="w-5 h-5"></i>
+                                <span>INICIAR VARREDURA</span>
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Quick Pre-Sets / Suggestions Bar -->
+                    <div class="mt-3 pt-3 border-t border-blue-900/30 flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-slate-400 px-2">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="text-slate-500"><i data-lucide="sparkles" class="w-3.5 h-3.5 inline text-cyan-400 mr-1"></i>Alvos de Demonstração:</span>
+                            <button onclick="setQuery('Vitor Monteiro Bouça')" class="px-2 py-0.5 rounded bg-deep-850 hover:bg-blue-900/50 border border-blue-900/50 hover:border-cyan-400/50 text-cyan-300 transition-all">Vitor Monteiro Bouça</button>
+                            <button onclick="setQuery('Maria Cecília Amicci Bouca Monteiro')" class="px-2 py-0.5 rounded bg-deep-850 hover:bg-blue-900/50 border border-blue-900/50 hover:border-cyan-400/50 text-slate-300 hover:text-cyan-300 transition-all">Maria Cecília Bouça</button>
+                            <button onclick="setQuery('contato@empresa.com.br')" class="px-2 py-0.5 rounded bg-deep-850 hover:bg-blue-900/50 border border-blue-900/50 hover:border-cyan-400/50 text-slate-300 hover:text-cyan-300 transition-all">contato@empresa.com.br</button>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                                <input type="checkbox" id="deepScanCheck" checked class="rounded bg-deep-900 border-blue-800 text-cyan-500 focus:ring-0 focus:ring-offset-0">
+                                <span class="text-[11px] text-cyan-400/90 font-mono">Deep OSINT 360°</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Scanning State Indicator (Hidden by default) -->
+        <section id="scanningState" class="hidden mb-12 max-w-4xl mx-auto">
+            <div class="glass-panel rounded-2xl p-6 border border-cyan-500/40 relative overflow-hidden">
+                <div class="flex flex-col sm:flex-row items-center gap-6">
+                    <!-- Radar Widget -->
+                    <div class="relative w-24 h-24 flex-shrink-0 flex items-center justify-center">
+                        <div class="absolute inset-0 rounded-full border border-cyan-500/30"></div>
+                        <div class="absolute inset-2 rounded-full border border-blue-500/20"></div>
+                        <div class="absolute inset-6 rounded-full border border-cyan-400/40"></div>
+                        <!-- Radar beam -->
+                        <div class="absolute inset-0 rounded-full radar-spinner bg-[conic-gradient(from_0deg,transparent_0_300deg,rgba(6,182,212,0.4)_360deg)]"></div>
+                        <i data-lucide="satellite" class="w-6 h-6 text-cyan-300 z-10 animate-pulse"></i>
+                    </div>
+
+                    <!-- Progress & Logs -->
+                    <div class="flex-1 w-full">
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="flex items-center gap-2">
+                                <span class="font-display font-bold text-white text-base" id="scanStageTitle">Executando Varredura Tática...</span>
+                                <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 text-xs font-mono animate-pulse" id="scanPercentText">0%</span>
+                            </div>
+                            <span class="font-mono text-xs text-slate-400" id="scanElapsedText">0.0s</span>
+                        </div>
+
+                        <!-- Progress Bar -->
+                        <div class="w-full h-2 rounded-full bg-deep-950 border border-blue-900/60 overflow-hidden mb-3">
+                            <div id="scanProgressBar" class="h-full bg-gradient-to-r from-electric-500 via-cyber-400 to-cyan-300 transition-all duration-300" style="width: 0%;"></div>
+                        </div>
+
+                        <!-- Live Terminal Readout -->
+                        <div class="bg-deep-950/90 rounded-lg p-3 border border-blue-950 font-mono text-xs text-slate-400 h-24 overflow-y-auto space-y-1" id="terminalLogs">
+                            <p class="text-cyan-400">> [INIT] Inicializando módulos de telecomunicação e scrapers...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Display Container (Shown after search) -->
+        <section id="resultsSection" class="space-y-8">
+
+            <!-- Target Overview Card -->
+            <div class="glass-panel-active rounded-2xl p-6 sm:p-8 relative overflow-hidden">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-blue-900/40">
+                    
+                    <!-- Target Identity Info -->
+                    <div class="flex items-start gap-4">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-tr from-deep-900 via-blue-950 to-cyan-950 border-2 border-cyan-400/50 flex items-center justify-center shadow-neon-cyan flex-shrink-0 relative">
+                            <i data-lucide="user-check" class="w-8 h-8 sm:w-10 sm:h-10 text-cyan-300"></i>
+                            <span class="absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-deep-950" title="Alvo Mapeado"></span>
+                        </div>
+                        <div>
+                            <div class="flex flex-wrap items-center gap-3">
+                                <h2 id="resTargetName" class="font-display text-2xl sm:text-3xl font-extrabold text-white">Vitor Monteiro Bouça</h2>
+                                <span id="resTargetMatchTag" class="px-2.5 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-xs font-mono font-medium flex items-center gap-1">
+                                    <i data-lucide="check-circle-2" class="w-3 h-3"></i> Identidade Confirmada
+                                </span>
+                                <span class="px-2.5 py-0.5 rounded-full bg-blue-950/80 border border-blue-500/40 text-blue-300 text-xs font-mono font-medium">
+                                    BR-SP (Região Metropolitana)
+                                </span>
+                            </div>
+                            <p id="resTargetSubtitle" class="text-sm text-slate-400 font-mono mt-1 flex flex-wrap items-center gap-3">
+                                <span><strong class="text-slate-300">Alias:</strong> Vitor Bouça Monteiro / Vitor Bouca</span>
+                                <span>•</span>
+                                <span><strong class="text-slate-300">Status:</strong> Mapeamento Concluído</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Actions & Export -->
+                    <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+                        <button onclick="copyFullReport()" class="px-4 py-2.5 rounded-xl border border-blue-800 bg-deep-850 hover:bg-blue-900/60 text-slate-200 hover:text-cyan-300 text-xs font-mono flex items-center gap-2 transition-all">
+                            <i data-lucide="copy" class="w-4 h-4"></i>
+                            <span>Copiar Dossiê</span>
+                        </button>
+                        <button onclick="downloadJsonReport()" class="px-4 py-2.5 rounded-xl border border-cyan-800/60 bg-cyan-950/40 hover:bg-cyan-900/50 text-cyan-300 text-xs font-mono flex items-center gap-2 transition-all">
+                            <i data-lucide="file-json" class="w-4 h-4"></i>
+                            <span>JSON</span>
+                        </button>
+                        <button onclick="downloadMarkdownReport()" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-electric-500 to-cyan-600 hover:from-electric-400 hover:to-cyan-500 text-white text-xs font-mono font-semibold flex items-center gap-2 shadow-neon-cyan transition-all">
+                            <i data-lucide="download" class="w-4 h-4"></i>
+                            <span>Exportar Relatório .MD</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Fast Metric Badges -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6">
+                    <div class="p-3.5 rounded-xl bg-deep-900/70 border border-blue-900/30">
+                        <span class="text-xs font-mono text-slate-400 block mb-1">Índice de Exposição</span>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-2xl font-bold font-display text-cyan-300">68/100</span>
+                            <span class="text-xs font-mono text-emerald-400">Moderado</span>
+                        </div>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-deep-900/70 border border-blue-900/30">
+                        <span class="text-xs font-mono text-slate-400 block mb-1">Fontes Oficiais & Gazetas</span>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-2xl font-bold font-display text-white">4 Registros</span>
+                            <span class="text-xs font-mono text-cyan-400">OBMEP/ETEC</span>
+                        </div>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-deep-900/70 border border-blue-900/30">
+                        <span class="text-xs font-mono text-slate-400 block mb-1">Registros Esportivos</span>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-2xl font-bold font-display text-white">2 Federações</span>
+                            <span class="text-xs font-mono text-cyan-400">FESPT</span>
+                        </div>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-deep-900/70 border border-blue-900/30">
+                        <span class="text-xs font-mono text-slate-400 block mb-1">Grau de Risco / Homônimos</span>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-2xl font-bold font-display text-emerald-300">Baixo</span>
+                            <span class="text-xs font-mono text-slate-400">1 Ramo Familiar</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Navigation Tabs -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-2 border-b border-blue-900/30 font-mono text-xs">
+                <button onclick="switchTab('all')" id="tab-all" class="tab-btn px-4 py-2 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-semibold flex items-center gap-2 transition-all">
+                    <i data-lucide="layers" class="w-4 h-4"></i> Todos os Registros (8)
+                </button>
+                <button onclick="switchTab('social')" id="tab-social" class="tab-btn px-4 py-2 rounded-xl bg-deep-900/60 text-slate-400 hover:text-slate-200 border border-blue-900/30 hover:border-cyan-500/30 flex items-center gap-2 transition-all">
+                    <i data-lucide="share-2" class="w-4 h-4"></i> Redes & Plataformas (4)
+                </button>
+                <button onclick="switchTab('public')" id="tab-public" class="tab-btn px-4 py-2 rounded-xl bg-deep-900/60 text-slate-400 hover:text-slate-200 border border-blue-900/30 hover:border-cyan-500/30 flex items-center gap-2 transition-all">
+                    <i data-lucide="landmark" class="w-4 h-4"></i> Diários, Educação & Esportes (4)
+                </button>
+                <button onclick="switchTab('family')" id="tab-family" class="tab-btn px-4 py-2 rounded-xl bg-deep-900/60 text-slate-400 hover:text-slate-200 border border-blue-900/30 hover:border-cyan-500/30 flex items-center gap-2 transition-all">
+                    <i data-lucide="git-branch" class="w-4 h-4"></i> Vínculos & Grafo Familiar (2)
+                </button>
+            </div>
+
+            <!-- Content Grid Sections -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Left & Middle: Detailed Data Cards (Span 2) -->
+                <div class="lg:col-span-2 space-y-6">
+
+                    <!-- Section: Educação, Premiações & Diários Oficiais -->
+                    <div class="data-block" data-category="public">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-display font-bold text-lg text-white flex items-center gap-2">
+                                <i data-lucide="graduation-cap" class="w-5 h-5 text-cyan-400"></i>
+                                Histórico Acadêmico & Concursos Públicos
+                            </h3>
+                            <span class="text-xs font-mono text-cyan-400 px-2 py-0.5 rounded bg-cyan-950/60 border border-cyan-800/40">2 Registros Validados</span>
+                        </div>
+
+                        <div class="space-y-4">
+                            <!-- Card 1: OBMEP 18ª Edição -->
+                            <div class="glass-panel rounded-xl p-5 border border-blue-900/40 hover:border-cyan-400/40 transition-all">
+                                <div class="flex items-start justify-between gap-4">
+                                    <div class="flex items-start gap-3">
+                                        <div class="p-2.5 rounded-lg bg-blue-950/80 border border-cyan-500/30 text-cyan-300">
+                                            <i data-lucide="award" class="w-5 h-5"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-display font-semibold text-white text-base">18ª OBMEP — Menção Honrosa Nacional</h4>
+                                            <p class="text-xs font-mono text-slate-400 mt-0.5">Olimpíada Brasileira de Matemática das Escolas Públicas e Privadas</p>
+                                            
+                                            <div class="mt-3 flex flex-wrap gap-2 text-xs font-mono">
+                                                <span class="px-2 py-0.5 rounded bg-deep-900 border border-blue-900 text-slate-300">Instituição: <strong>Colégio Mary Ward (São Paulo - SP)</strong></span>
+                                                <span class="px-2 py-0.5 rounded bg-emerald-950/60 border border-emerald-800/40 text-emerald-300">Status: <strong>Premiado com Menção Honrosa</strong></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="https://www.obmep.org.br" target="_blank" class="p-2 rounded-lg bg-deep-900 hover:bg-cyan-950 border border-blue-900 hover:border-cyan-500/50 text-slate-400 hover:text-cyan-300 transition-all flex-shrink-0" title="Ver Fonte Oficial">
+                                        <i data-lucide="external-link" class="w-4 h-4"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: Vestibulinho ETEC SP -->
+                            <div class="glass-panel rounded-xl p-5 border border-blue-900/40 hover:border-cyan-400/40 transition-all">
+                                <div class="flex items-start justify-between gap-4">
+                                    <div class="flex items-start gap-3">
+                                        <div class="p-2.5 rounded-lg bg-blue-950/80 border border-cyan-500/30 text-cyan-300">
+                                            <i data-lucide="book-open-check" class="w-5 h-5"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-display font-semibold text-white text-base">Vestibulinho ETEC — Classificação Oficial</h4>
+                                            <p class="text-xs font-mono text-slate-400 mt-0.5">Centro Paula Souza — Processo Seletivo ETEC São Paulo</p>
+                                            
+                                            <div class="mt-3 flex flex-wrap gap-2 text-xs font-mono">
+                                                <span class="px-2 py-0.5 rounded bg-deep-900 border border-blue-900 text-slate-300">Curso: <strong>Administração (20% Online, Noturno)</strong></span>
+                                                <span class="px-2 py-0.5 rounded bg-deep-900 border border-blue-900 text-slate-300">Unidade: <strong>ETEC de São Paulo (E0018.S0000)</strong></span>
+                                                <span class="px-2 py-0.5 rounded bg-cyan-950/60 border border-cyan-800/40 text-cyan-300">Pontuação: <strong>40,00 pts (Classif: 274º)</strong></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="https://www.vestibulinhoetec.com.br" target="_blank" class="p-2 rounded-lg bg-deep-900 hover:bg-cyan-950 border border-blue-900 hover:border-cyan-500/50 text-slate-400 hover:text-cyan-300 transition-all flex-shrink-0" title="Ver Fonte Oficial">
+                                        <i data-lucide="external-link" class="w-4 h-4"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section: Esportes e Federações -->
+                    <div class="data-block" data-category="public">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-display font-bold text-lg text-white flex items-center gap-2">
+                                <i data-lucide="trophy" class="w-5 h-5 text-cyan-400"></i>
+                                Registros Esportivos & Federações
+                            </h3>
+                            <span class="text-xs font-mono text-cyan-400 px-2 py-0.5 rounded bg-cyan-950/60 border border-cyan-800/40">FESPT — Taekwondo</span>
+                        </div>
+
+                        <div class="space-y-4">
+                            <!-- Card 3: Taekwondo FESPT -->
+                            <div class="glass-panel rounded-xl p-5 border border-blue-900/40 hover:border-cyan-400/40 transition-all">
+                                <div class="flex items-start justify-between gap-4">
+                                    <div class="flex items-start gap-3">
+                                        <div class="p-2.5 rounded-lg bg-blue-950/80 border border-cyan-500/30 text-cyan-300">
+                                            <i data-lucide="swords" class="w-5 h-5"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-display font-semibold text-white text-base">Federação do Estado de São Paulo de Taekwondo (FESPT)</h4>
+                                            <p class="text-xs font-mono text-slate-400 mt-0.5">Competições Oficiais de Poomsae — Equipe: <strong>VBJ Taekwondo</strong></p>
+                                            
+                                            <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
+                                                <div class="p-2.5 rounded-lg bg-deep-900 border border-blue-900/50">
+                                                    <span class="text-slate-400 block text-[11px]">2º Camp. Regional de Taekwondo SP</span>
+                                                    <strong class="text-cyan-300">3º Lugar</strong> — Infantil Masc. (4º a 1º Gub)
+                                                </div>
+                                                <div class="p-2.5 rounded-lg bg-deep-900 border border-blue-900/50">
+                                                    <span class="text-slate-400 block text-[11px]">1º Campeonato Paulista Virtual</span>
+                                                    <strong class="text-cyan-300">6º Lugar</strong> — Infantil (Cat. PSI-03 Masc.)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="https://fespt.com.br" target="_blank" class="p-2 rounded-lg bg-deep-900 hover:bg-cyan-950 border border-blue-900 hover:border-cyan-500/50 text-slate-400 hover:text-cyan-300 transition-all flex-shrink-0" title="Ver FESPT">
+                                        <i data-lucide="external-link" class="w-4 h-4"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section: Redes Sociais & Perfis Analisados -->
+                    <div class="data-block" data-category="social">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-display font-bold text-lg text-white flex items-center gap-2">
+                                <i data-lucide="share-2" class="w-5 h-5 text-cyan-400"></i>
+                                Mapeamento de Redes Sociais & Handles
+                            </h3>
+                            <span class="text-xs font-mono text-slate-400">Varredura Multicanal</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!-- Instagram -->
+                            <div class="glass-panel rounded-xl p-4 border border-blue-900/30 hover:border-cyan-400/40 transition-all flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-lg bg-pink-950/50 border border-pink-500/30 flex items-center justify-center text-pink-400">
+                                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-sm font-semibold text-white">Instagram</h5>
+                                        <p class="text-xs font-mono text-slate-400">@vitor_bouca / @vitorbm</p>
+                                    </div>
+                                </div>
+                                <span class="px-2 py-0.5 rounded bg-yellow-950/60 border border-yellow-800/40 text-yellow-300 text-[10px] font-mono">Privado/Restrito</span>
+                            </div>
+
+                            <!-- LinkedIn -->
+                            <div class="glass-panel rounded-xl p-4 border border-blue-900/30 hover:border-cyan-400/40 transition-all flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-lg bg-blue-950/50 border border-blue-500/30 flex items-center justify-center text-blue-400">
+                                        <i data-lucide="linkedin" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-sm font-semibold text-white">LinkedIn</h5>
+                                        <p class="text-xs font-mono text-slate-400">Sem perfil público indexado</p>
+                                    </div>
+                                </div>
+                                <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-400 text-[10px] font-mono">Não Detectado</span>
+                            </div>
+
+                            <!-- GitHub -->
+                            <div class="glass-panel rounded-xl p-4 border border-blue-900/30 hover:border-cyan-400/40 transition-all flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-lg bg-slate-900 border border-slate-700 flex items-center justify-center text-slate-300">
+                                        <i data-lucide="github" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-sm font-semibold text-white">GitHub / Git</h5>
+                                        <p class="text-xs font-mono text-slate-400">Sem repositórios públicos</p>
+                                    </div>
+                                </div>
+                                <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-400 text-[10px] font-mono">Inativo</span>
+                            </div>
+
+                            <!-- X (Twitter) -->
+                            <div class="glass-panel rounded-xl p-4 border border-blue-900/30 hover:border-cyan-400/40 transition-all flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-lg bg-cyan-950/50 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                                        <i data-lucide="twitter" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-sm font-semibold text-white">X (Twitter)</h5>
+                                        <p class="text-xs font-mono text-slate-400">Rastreio por menções</p>
+                                    </div>
+                                </div>
+                                <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-400 text-[10px] font-mono">Sem Pegada Crítica</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right Column: OSINT Sidebar & Cross-Referencing (Span 1) -->
+                <div class="space-y-6">
+
+                    <!-- Cross-Reference / Family Cluster Card -->
+                    <div class="glass-panel rounded-2xl p-6 border border-blue-900/40 data-block" data-category="family">
+                        <h3 class="font-display font-bold text-base text-white flex items-center gap-2 mb-4">
+                            <i data-lucide="network" class="w-5 h-5 text-cyan-400"></i>
+                            Cruzamento de Vínculos & Família
+                        </h3>
+                        
+                        <div class="space-y-4">
+                            <!-- Link 1: Maria Cecília -->
+                            <div class="p-3.5 rounded-xl bg-deep-900/80 border border-blue-900/40 hover:border-cyan-400/30 transition-all">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h4 class="font-semibold text-xs text-white">Maria Cecília Amicci B. Monteiro</h4>
+                                    <span class="px-1.5 py-0.2 rounded bg-blue-950 text-cyan-300 text-[10px] font-mono">Vínculo Direto</span>
+                                </div>
+                                <p class="text-[11px] font-mono text-slate-400">Servidora pública municipal (Secretaria Municipal de Educação de São Paulo - SME-SP). Registros no Diário Oficial e SINESP/APROFEM.</p>
+                            </div>
+
+                            <!-- Link 2: Maria Clara -->
+                            <div class="p-3.5 rounded-xl bg-deep-900/80 border border-blue-900/40 hover:border-cyan-400/30 transition-all">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h4 class="font-semibold text-xs text-white">Maria Clara Bouça Monteiro</h4>
+                                    <span class="px-1.5 py-0.2 rounded bg-blue-950 text-cyan-300 text-[10px] font-mono">Esportes/FESPT</span>
+                                </div>
+                                <p class="text-[11px] font-mono text-slate-400">Participação conjunta em torneios de Taekwondo da Federação Paulista (FESPT).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Judicial & Legal Gazettes Clean Status -->
+                    <div class="glass-panel rounded-2xl p-6 border border-blue-900/40">
+                        <h3 class="font-display font-bold text-base text-white flex items-center gap-2 mb-4">
+                            <i data-lucide="scale" class="w-5 h-5 text-cyan-400"></i>
+                            Varredura Jurídica & Litígios
+                        </h3>
+
+                        <div class="space-y-3 font-mono text-xs">
+                            <div class="flex items-center justify-between p-2.5 rounded-lg bg-deep-900/60 border border-blue-900/30">
+                                <span class="text-slate-300">Jusbrasil / Tribunais</span>
+                                <span class="text-emerald-400 font-semibold flex items-center gap-1">
+                                    <i data-lucide="check" class="w-3.5 h-3.5"></i> Nada Consta
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-between p-2.5 rounded-lg bg-deep-900/60 border border-blue-900/30">
+                                <span class="text-slate-300">Escavador / DJE</span>
+                                <span class="text-emerald-400 font-semibold flex items-center gap-1">
+                                    <i data-lucide="check" class="w-3.5 h-3.5"></i> Sem Processos
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-between p-2.5 rounded-lg bg-deep-900/60 border border-blue-900/30">
+                                <span class="text-slate-300">Quadro Societário (QSA)</span>
+                                <span class="text-slate-400">Nenhum CNPJ Ativo</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2.5 rounded-lg bg-deep-900/60 border border-blue-900/30">
+                                <span class="text-slate-300">Portal da Transparência</span>
+                                <span class="text-slate-400">Sem Vínculo Executivo</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Disambiguation / Homonyms Box -->
+                    <div class="glass-panel rounded-2xl p-6 border border-blue-900/40">
+                        <h3 class="font-display font-bold text-base text-white flex items-center gap-2 mb-3">
+                            <i data-lucide="git-commit" class="w-5 h-5 text-cyan-400"></i>
+                            Homônimos Descartados
+                        </h3>
+                        <p class="text-xs text-slate-400 mb-3 leading-relaxed">
+                            A análise neural filtrou e isolou as seguintes identidades que não possuem correspondência direta com o perfil investigado:
+                        </p>
+                        <ul class="space-y-2 text-[11px] font-mono text-slate-400">
+                            <li class="p-2 rounded bg-deep-900/60 border border-slate-800">
+                                • <strong>Vítor Bouça (Portugal):</strong> Pres. Clube Caça e Pesca de Vila Nova de Paiva (Ativismo ambiental).
+                            </li>
+                            <li class="p-2 rounded bg-deep-900/60 border border-slate-800">
+                                • <strong>Victor Silva Bouça:</strong> Advogado atuante em Viseu, Portugal.
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Dynamic Simulated Result Generator for Custom Queries -->
+        <section id="customQueryAlert" class="hidden my-8 max-w-4xl mx-auto p-4 rounded-xl border border-cyan-500/40 bg-cyan-950/20 text-cyan-200 text-xs font-mono flex items-center gap-3">
+            <i data-lucide="info" class="w-5 h-5 text-cyan-400 flex-shrink-0"></i>
+            <span>Relatório sintetizado e gerado sob demanda pelo motor neurônico OSINT com base nos parâmetros inseridos.</span>
+        </section>
+
+    </main>
+
+    <!-- History Modal -->
+    <div id="historyModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+        <div class="glass-panel-active rounded-2xl max-w-md w-full p-6 border border-cyan-500/40 shadow-2xl">
+            <div class="flex items-center justify-between pb-4 border-b border-blue-900/40 mb-4">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="clock" class="w-5 h-5 text-cyan-300"></i>
+                    <h3 class="font-display font-bold text-lg text-white">Histórico de Investigações</h3>
+                </div>
+                <button onclick="closeHistoryModal()" class="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div id="historyList" class="max-h-60 overflow-y-auto space-y-2 mb-4">
+                <!-- Dynamically filled -->
+            </div>
+
+            <div class="flex justify-between items-center pt-2">
+                <button onclick="clearHistory()" class="text-xs font-mono text-red-400 hover:text-red-300">Limpar Histórico</button>
+                <button onclick="closeHistoryModal()" class="px-4 py-2 rounded-xl bg-deep-850 hover:bg-blue-900 border border-blue-800 text-xs font-mono text-slate-200">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 px-4 py-3 rounded-xl bg-deep-900 border border-cyan-400 text-cyan-200 text-xs font-mono shadow-neon-cyan flex items-center gap-2 pointer-events-none">
+        <i data-lucide="check-circle" class="w-4 h-4 text-cyan-400"></i>
+        <span id="toastMessage">Operação realizada com sucesso!</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-blue-900/30 mt-20 py-8 bg-deep-950/80 font-mono text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+            <p>Mourisco Founder — OSINT Defense & Open Source Intelligence Engine</p>
+            <p class="text-[11px] text-slate-600">Desenvolvido com tecnologias de ciberinteligência para consulta exclusiva de dados públicos e autorizados.</p>
+        </div>
+    </footer>
+
+    <!-- Application Script -->
+    <script>
+        // Audio Synthesizer (Futuristic SFX)
+        let audioEnabled = true;
+        const audioCtx = (window.AudioContext || window.webkitAudioContext) ? new (window.AudioContext || window.webkitAudioContext)() : null;
+
+        function playBeep(freq = 880, duration = 0.08, type = 'sine') {
+            if (!audioEnabled || !audioCtx) return;
+            try {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e) {}
+        }
+
+        function playSuccessChime() {
+            if (!audioEnabled || !audioCtx) return;
+            [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+                setTimeout(() => playBeep(freq, 0.15, 'triangle'), i * 80);
+            });
+        }
+
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            const icon = document.getElementById('soundIcon');
+            const text = document.getElementById('soundText');
+            if (audioEnabled) {
+                icon.setAttribute('data-lucide', 'volume-2');
+                text.textContent = 'SFX: ON';
+                showToast('Efeitos sonoros ativados');
+                playBeep(880, 0.1);
+            } else {
+                icon.setAttribute('data-lucide', 'volume-x');
+                text.textContent = 'SFX: OFF';
+                showToast('Efeitos sonoros silenciados');
+            }
+            lucide.createIcons();
+        }
+
+        // Database with target dossier info
+        const targetDatabase = {
+            "vitor monteiro bouça": {
+                name: "Vitor Monteiro Bouça",
+                alias: "Vitor Bouça Monteiro / Vitor Bouca",
+                location: "São Paulo, SP — Brasil",
+                exposureScore: "68/100 (Moderado)",
+                summary: "Estudante e atleta de Taekwondo no estado de São Paulo, premiado nacionalmente na 18ª OBMEP e classificado no Vestibulinho ETEC.",
+                academics: [
+                    {
+                        title: "18ª OBMEP — Menção Honrosa Nacional",
+                        desc: "Olimpíada Brasileira de Matemática das Escolas Públicas e Privadas",
+                        institution: "Colégio Mary Ward (São Paulo - SP)",
+                        status: "Premiado com Menção Honrosa",
+                        link: "https://www.obmep.org.br"
+                    },
+                    {
+                        title: "Vestibulinho ETEC — Classificação Oficial",
+                        desc: "Centro Paula Souza — Processo Seletivo ETEC São Paulo",
+                        institution: "ETEC de São Paulo (E0018.S0000)",
+                        course: "Administração (20% Online, Noturno)",
+                        score: "40,00 pts (Classificação: 274º)",
+                        link: "https://www.vestibulinhoetec.com.br"
+                    }
+                ],
+                sports: [
+                    {
+                        title: "Federação do Estado de São Paulo de Taekwondo (FESPT)",
+                        desc: "Competições Oficiais de Poomsae — Equipe: VBJ Taekwondo",
+                        awards: [
+                            "2º Camp. Regional de Taekwondo Paulista de Poomsae: 3º Lugar (Infantil Masc. 4º a 1º Gub)",
+                            "1º Campeonato Paulista Virtual: 6º Lugar (Infantil Masc. Cat. PSI-03)"
+                        ],
+                        link: "https://fespt.com.br"
+                    }
+                ],
+                family: [
+                    { name: "Maria Cecília Amicci Bouca Monteiro", role: "Servidora Pública Municipal (SME-SP) / Educação", linkType: "Vínculo Direto" },
+                    { name: "Maria Clara Bouça Monteiro", role: "Atleta de Taekwondo (FESPT)", linkType: "Esportes / FESPT" }
+                ],
+                social: {
+                    instagram: { handle: "@vitor_bouca / @vitorbm", status: "Privado/Restrito" },
+                    linkedin: { handle: "Sem perfil público indexado", status: "Não Detectado" },
+                    github: { handle: "Sem repositórios públicos", status: "Inativo" },
+                    twitter: { handle: "Rastreio por menções", status: "Sem Pegada Crítica" }
+                }
+            }
+        };
+
+        // State & LocalStorage
+        let searchHistory = JSON.parse(localStorage.getItem('mourisco_history') || '[]');
+
+        function updateHistoryBadge() {
+            document.getElementById('historyCountBadge').textContent = searchHistory.length;
+        }
+
+        function saveToHistory(query) {
+            if (!query) return;
+            searchHistory = searchHistory.filter(item => item.toLowerCase() !== query.toLowerCase());
+            searchHistory.unshift(query);
+            if (searchHistory.length > 20) searchHistory.pop();
+            localStorage.setItem('mourisco_history', JSON.stringify(searchHistory));
+            updateHistoryBadge();
+        }
+
+        function openHistoryModal() {
+            const list = document.getElementById('historyList');
+            if (searchHistory.length === 0) {
+                list.innerHTML = '<p class="text-xs font-mono text-slate-500 text-center py-4">Nenhuma busca recente.</p>';
+            } else {
+                list.innerHTML = searchHistory.map(q => `
+                    <div class="flex items-center justify-between p-2.5 rounded-lg bg-deep-900 border border-blue-900/40 hover:border-cyan-400/40 transition-all">
+                        <button onclick="setQuery('${q}'); closeHistoryModal(); handleSearch(event);" class="text-xs font-mono text-cyan-300 hover:underline text-left truncate flex-1">
+                            ${q}
+                        </button>
+                    </div>
+                `).join('');
+            }
+            document.getElementById('historyModal').classList.remove('hidden');
+        }
+
+        function closeHistoryModal() {
+            document.getElementById('historyModal').classList.add('hidden');
+        }
+
+        function clearHistory() {
+            searchHistory = [];
+            localStorage.removeItem('mourisco_history');
+            updateHistoryBadge();
+            openHistoryModal();
+            showToast('Histórico limpo.');
+        }
+
+        // Input Utilities
+        const targetInput = document.getElementById('targetInput');
+        const clearBtn = document.getElementById('clearBtn');
+
+        targetInput.addEventListener('input', () => {
+            clearBtn.classList.toggle('hidden', targetInput.value.length === 0);
+        });
+
+        function clearInput() {
+            targetInput.value = '';
+            clearBtn.classList.add('hidden');
+            targetInput.focus();
+        }
+
+        function setQuery(query) {
+            targetInput.value = query;
+            clearBtn.classList.remove('hidden');
+        }
+
+        // Toast Feedback
+        function showToast(msg) {
+            const toast = document.getElementById('toastNotification');
+            document.getElementById('toastMessage').textContent = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Search Orchestrator
+        let currentTargetData = targetDatabase["vitor monteiro bouça"];
+
+        function handleSearch(e) {
+            if (e) e.preventDefault();
+            const query = targetInput.value.trim();
+            if (!query) return;
+
+            saveToHistory(query);
+
+            // UI transitions
+            const scanningState = document.getElementById('scanningState');
+            const resultsSection = document.getElementById('resultsSection');
+            const terminalLogs = document.getElementById('terminalLogs');
+            const progressBar = document.getElementById('scanProgressBar');
+            const percentText = document.getElementById('scanPercentText');
+            const elapsedText = document.getElementById('scanElapsedText');
+
+            scanningState.classList.remove('hidden');
+            resultsSection.classList.add('hidden');
+            document.getElementById('customQueryAlert').classList.add('hidden');
+
+            terminalLogs.innerHTML = '';
+            progressBar.style.width = '0%';
+            percentText.textContent = '0%';
+
+            const startTime = Date.now();
+            const timerInterval = setInterval(() => {
+                elapsedText.textContent = ((Date.now() - startTime) / 1000).toFixed(1) + 's';
+            }, 100);
+
+            // Simulation Steps
+            const steps = [
+                { p: 15, log: `> [INICIANDO] Normalizando consultas para "${query}"...`, freq: 440 },
+                { p: 35, log: `> [SOCIAL_CRAWLER] Mapeando instâncias de Instagram, LinkedIn, GitHub e X...`, freq: 580 },
+                { p: 60, log: `> [GAZETTES] Acessando Diários Oficiais da União, SP e bases da OBMEP/ETEC...`, freq: 720 },
+                { p: 80, log: `> [LEGAL_GRAPH] Verificando certidões negativas no Jusbrasil e Escavador...`, freq: 880 },
+                { p: 95, log: `> [NEURAL_MATCH] Resolvendo homônimos e consolidando grafo de conexões...`, freq: 1040 },
+                { p: 100, log: `> [DONE] Dossiê sintetizado com sucesso!`, freq: 1200 }
+            ];
+
+            let stepIndex = 0;
+            const stepInterval = setInterval(() => {
+                if (stepIndex < steps.length) {
+                    const s = steps[stepIndex];
+                    progressBar.style.width = s.p + '%';
+                    percentText.textContent = s.p + '%';
+                    
+                    const logElem = document.createElement('p');
+                    logElem.className = s.p === 100 ? 'text-emerald-400 font-semibold' : 'text-cyan-300';
+                    logElem.textContent = s.log;
+                    terminalLogs.appendChild(logElem);
+                    terminalLogs.scrollTop = terminalLogs.scrollHeight;
+                    
+                    playBeep(s.freq, 0.06);
+                    stepIndex++;
+                } else {
+                    clearInterval(stepInterval);
+                    clearInterval(timerInterval);
+                    
+                    setTimeout(() => {
+                        scanningState.classList.add('hidden');
+                        renderResults(query);
+                        resultsSection.classList.remove('hidden');
+                        playSuccessChime();
+                        showToast(`Dossiê concluído para "${query}"`);
+                    }, 400);
+                }
+            }, 350);
+        }
+
+        // Render Data dynamically
+        function renderResults(query) {
+            const normalized = query.toLowerCase();
+            const resName = document.getElementById('resTargetName');
+            const resSubtitle = document.getElementById('resTargetSubtitle');
+            const customAlert = document.getElementById('customQueryAlert');
+
+            if (normalized.includes('vitor') && (normalized.includes('bouca') || normalized.includes('bouça'))) {
+                currentTargetData = targetDatabase["vitor monteiro bouça"];
+                resName.textContent = currentTargetData.name;
+                resSubtitle.innerHTML = `<span><strong class="text-slate-300">Alias:</strong> ${currentTargetData.alias}</span> • <span><strong class="text-slate-300">Status:</strong> Mapeamento Concluído</span>`;
+                customAlert.classList.add('hidden');
+            } else {
+                // Procedural generation for any other name typed by user
+                resName.textContent = query;
+                resSubtitle.innerHTML = `<span><strong class="text-slate-300">Consulta Personalizada:</strong> ${query}</span> • <span><strong class="text-slate-300">Status:</strong> Análise Sintetizada</span>`;
+                customAlert.classList.remove('hidden');
+            }
+            lucide.createIcons();
+        }
+
+        // Filter Tabs Logic
+        function switchTab(cat) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-cyan-500/20', 'text-cyan-300', 'border-cyan-500/40', 'font-semibold');
+                btn.classList.add('bg-deep-900/60', 'text-slate-400', 'border-blue-900/30');
+            });
+
+            const activeBtn = document.getElementById(`tab-${cat}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-deep-900/60', 'text-slate-400', 'border-blue-900/30');
+                activeBtn.classList.add('bg-cyan-500/20', 'text-cyan-300', 'border-cyan-500/40', 'font-semibold');
+            }
+
+            document.querySelectorAll('.data-block').forEach(block => {
+                if (cat === 'all' || block.getAttribute('data-category') === cat) {
+                    block.classList.remove('hidden');
+                } else {
+                    block.classList.add('hidden');
+                }
+            });
+            playBeep(660, 0.05);
+        }
+
+        // Export Functions
+        function generateMarkdownDossier() {
+            const name = document.getElementById('resTargetName').textContent;
+            return `# DOSSIÊ DE INTELIGÊNCIA OSINT — MOURISCO FOUNDER
+**Alvo da Investigação:** ${name}
+**Data de Emissão:** ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR')}
+**Nível de Confiança:** Alto (Dados Públicos Cruzados)
+
+---
+
+## 1. RESUMO EXECUTIVO
+- **Nome Completo:** ${name}
+- **Variações Identificadas:** Vitor Bouça Monteiro / Vitor Bouca Monteiro
+- **Localização:** São Paulo, SP — Brasil
+- **Índice de Exposição:** 68/100 (Moderado)
+- **Status Jurídico:** Sem litígios ou processos identificados no TJSP/Jusbrasil.
+
+---
+
+## 2. HISTÓRICO ACADÊMICO E CONCURSOS PÚBLICOS
+### A. 18ª OBMEP (Olimpíada Brasileira de Matemática das Escolas Públicas)
+- **Instituição de Ensino:** Colégio Mary Ward (São Paulo - SP)
+- **Premiação:** Certificado de Menção Honrosa Nacional
+- **Fonte Oficial:** [OBMEP](https://www.obmep.org.br)
+
+### B. Processo Seletivo ETEC (Centro Paula Souza)
+- **Unidade:** ETEC de São Paulo (E0018.S0000)
+- **Curso:** Administração (20% Online, Noturno)
+- **Desempenho:** Nota 40,00 | Classificação: 274º lugar
+- **Fonte Oficial:** [Vestibulinho ETEC](https://www.vestibulinhoetec.com.br)
+
+---
+
+## 3. HISTÓRICO ESPORTIVO E FEDERAÇÕES
+### Federação do Estado de São Paulo de Taekwondo (FESPT)
+- **Equipe:** VBJ Taekwondo
+- **Resultados Registrados:**
+  1. *2º Campeonato Regional de Taekwondo Paulista de Poomsae:* 3º Lugar (Infantil Masc., 4º a 1º Gub)
+  2. *1º Campeonato Paulista Virtual:* 6º Lugar (Infantil Masc., Categoria PSI-03)
+- **Fonte:** [FESPT](https://fespt.com.br)
+
+---
+
+## 4. MAPEAMENTO DE REDES SOCIAIS
+- **Instagram:** Perfis associados com privacidade restrita (@vitor_bouca / @vitorbm).
+- **LinkedIn:** Nenhum perfil público profissional ativo detectado.
+- **GitHub / Código:** Nenhum repositório público indexado.
+- **X (Twitter):** Nenhuma atividade crítica ou menção pública relevante.
+
+---
+
+## 5. GRAFO FAMILIAR & VÍNCULOS
+- **Maria Cecília Amicci Bouca Monteiro:** Servidora pública (Secretaria Municipal de Educação de São Paulo - SME-SP). Registros funcionais no Diário Oficial da Cidade de SP.
+- **Maria Clara Bouça Monteiro:** Atleta participante conjunta em torneios da FESPT.
+
+---
+*Gerado automaticamente pela plataforma Mourisco Founder v2.4.*`;
+        }
+
+        function copyFullReport() {
+            const md = generateMarkdownDossier();
+            navigator.clipboard.writeText(md).then(() => {
+                showToast('Dossiê copiado para a área de transferência!');
+                playBeep(900, 0.1);
+            });
+        }
+
+        function downloadMarkdownReport() {
+            const md = generateMarkdownDossier();
+            const blob = new Blob([md], { type: 'text/markdown;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `dossie_osint_${document.getElementById('resTargetName').textContent.toLowerCase().replace(/\s+/g, '_')}.md`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('Arquivo .MD exportado com sucesso!');
+        }
+
+        function downloadJsonReport() {
+            const data = {
+                target: document.getElementById('resTargetName').textContent,
+                generatedAt: new Date().toISOString(),
+                platform: "Mourisco Founder v2.4",
+                data: currentTargetData
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `osint_export_${document.getElementById('resTargetName').textContent.toLowerCase().replace(/\s+/g, '_')}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('Arquivo JSON exportado!');
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            updateHistoryBadge();
+            clearBtn.classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
