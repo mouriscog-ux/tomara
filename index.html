@@ -16,7 +16,6 @@
             --cyan-accent: #00f0ff;
             --cyan-dim: rgba(0, 240, 255, 0.1);
             --text-primary: #e0e0e0;
-            --text-secondary: #8a8d91;
             --alert-red: #ff3366;
             --success-green: #00ff9d;
         }
@@ -25,8 +24,7 @@
             background-color: var(--bg-deep);
             color: var(--text-primary);
             font-family: 'Inter', sans-serif;
-            margin: 0;
-            min-height: 100vh;
+            margin: 0; min-height: 100vh;
             background-image: 
                 radial-gradient(circle at 50% 0%, rgba(0, 240, 255, 0.05) 0%, transparent 50%),
                 linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
@@ -47,53 +45,26 @@
         .glass-panel:hover {
             border-color: var(--border-glow);
             box-shadow: 0 0 20px var(--cyan-dim);
-            transition: all 0.3s ease;
         }
 
-        .input-glow:focus {
-            outline: none;
-            border-color: var(--cyan-accent);
-            box-shadow: 0 0 15px var(--cyan-dim);
-        }
+        .input-glow:focus { outline: none; border-color: var(--cyan-accent); box-shadow: 0 0 15px var(--cyan-dim); }
 
         .btn-primary {
-            background: transparent;
-            border: 1px solid var(--cyan-accent);
-            color: var(--cyan-accent);
-            transition: all 0.2s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
+            background: transparent; border: 1px solid var(--cyan-accent); color: var(--cyan-accent);
+            transition: all 0.2s; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;
         }
-        .btn-primary:hover {
-            background: var(--cyan-dim);
-            box-shadow: 0 0 15px var(--cyan-dim);
-        }
+        .btn-primary:hover { background: var(--cyan-dim); box-shadow: 0 0 15px var(--cyan-dim); }
 
-        @keyframes scanline {
-            0% { top: -10%; }
-            100% { top: 110%; }
-        }
+        @keyframes scanline { 0% { top: -10%; } 100% { top: 110%; } }
         .scanner-line {
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: var(--cyan-accent);
-            box-shadow: 0 0 10px var(--cyan-accent);
-            opacity: 0.5;
-            animation: scanline 3s linear infinite;
-            z-index: 50;
-            pointer-events: none;
-            display: none;
+            position: absolute; width: 100%; height: 2px; background: var(--cyan-accent);
+            box-shadow: 0 0 10px var(--cyan-accent); opacity: 0.5;
+            animation: scanline 3s linear infinite; z-index: 50; display: none;
         }
 
         .pulse-dot {
-            height: 8px; width: 8px;
-            background-color: var(--cyan-accent);
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 8px var(--cyan-accent);
-            animation: pulse 1.5s infinite;
+            height: 8px; width: 8px; background-color: var(--cyan-accent); border-radius: 50%;
+            display: inline-block; box-shadow: 0 0 8px var(--cyan-accent); animation: pulse 1.5s infinite;
         }
         @keyframes pulse {
             0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.7); }
@@ -105,26 +76,18 @@
         ::-webkit-scrollbar-track { background: var(--bg-deep); }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--cyan-accent); }
-
         .hidden { display: none !important; }
-        
-        .loading-text::after {
-            content: '...';
-            animation: dots 1.5s steps(4, end) infinite;
-        }
+
+        .loading-text::after { content: '...'; animation: dots 1.5s steps(4, end) infinite; }
         @keyframes dots { 0%, 20% { content: ''; } 40% { content: '.'; } 60% { content: '..'; } 80%, 100% { content: '...'; } }
 
-        .tag {
-            font-size: 0.7rem; padding: 2px 6px; border-radius: 4px;
-            background: rgba(255,255,255,0.1); color: #ccc; text-transform: uppercase;
-        }
+        .tag { font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; background: rgba(255,255,255,0.1); color: #ccc; text-transform: uppercase; }
         .tag.tag-adult { background: rgba(0, 240, 255, 0.15); color: var(--cyan-accent); border: 1px solid var(--cyan-accent); }
         .tag.tag-teen { background: rgba(255, 51, 102, 0.15); color: var(--alert-red); border: 1px solid var(--alert-red); }
 
         .validation-item {
             display: flex; align-items: center; justify-content: space-between;
-            padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.05);
-            font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;
+            padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;
         }
         .status-valid { color: var(--success-green); }
         .status-invalid { color: var(--alert-red); text-decoration: line-through; opacity: 0.5; }
@@ -139,20 +102,19 @@
             <i data-lucide="radar" class="text-[#00f0ff] w-8 h-8"></i>
             <div>
                 <h1 class="text-xl md:text-2xl font-bold tracking-widest text-white">MOURISCO<span class="text-[#00f0ff]">_FOUNDER</span></h1>
-                <p class="text-xs text-[#8a8d91] mono uppercase tracking-widest">v5.0 // Python Engine Integrated</p>
+                <p class="text-xs text-[#8a8d91] mono uppercase tracking-widest">V6.0 // CLIENT-SIDE OSINT ENGINE (NO PYTHON REQUIRED)</p>
             </div>
         </div>
         <div class="flex items-center gap-2">
             <span class="pulse-dot" id="serverStatusDot"></span>
-            <span class="text-xs text-[#00f0ff] mono" id="serverStatusText">SERVER ONLINE</span>
+            <span class="text-xs text-[#00f0ff] mono" id="serverStatusText">WEB ENGINE ONLINE</span>
         </div>
     </header>
 
-    <!-- PHASE 1: SEARCH -->
     <section id="phase-search" class="max-w-3xl mx-auto mt-20 transition-all duration-500">
         <div class="text-center mb-8">
             <h2 class="text-3xl md:text-4xl font-bold mb-4">IDENTIFICAÇÃO DE ALVO</h2>
-            <p class="text-[#8a8d91]">O motor Python testará automaticamente milhares de combinações.</p>
+            <p class="text-[#8a8d91]">O motor web testará automaticamente as combinações de nome.</p>
         </div>
         <div class="glass-panel p-2 flex items-center">
             <i data-lucide="search" class="text-[#8a8d91] ml-4 mr-2"></i>
@@ -163,7 +125,6 @@
         </div>
     </section>
 
-    <!-- PHASE 2: DISAMBIGUATION -->
     <section id="phase-disambiguation" class="max-w-5xl mx-auto hidden transition-all duration-500">
         <div class="mb-8 border-b border-gray-800 pb-4">
             <h2 class="text-2xl font-bold text-[#00f0ff] flex items-center gap-2">
@@ -173,30 +134,25 @@
         <div id="disambiguationGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </section>
 
-    <!-- PHASE 3: REAL VALIDATION VIA API -->
     <section id="phase-validation" class="max-w-4xl mx-auto hidden transition-all duration-500">
         <div class="glass-panel p-8">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-bold flex items-center gap-2 text-white">
-                    <i data-lucide="activity" class="text-[#00f0ff] animate-pulse"></i> ENGINE PYTHON EXECUTANDO...
+                    <i data-lucide="activity" class="text-[#00f0ff] animate-pulse"></i> VARREDURA WEB EM ANDAMENTO...
                 </h2>
             </div>
-            <p class="text-sm text-[#8a8d91] mb-6">Realizando requisições HTTP silenciosas. Aguarde a validação real dos links 200 OK...</p>
+            <p class="text-sm text-[#8a8d91] mb-6">Realizando requisições HTTP reais diretamente do seu navegador. Aguarde a validação dos links 200 OK...</p>
             
             <div class="bg-black border border-gray-800 rounded-lg p-4 h-64 overflow-y-auto" id="validationLog">
-                <div class="validation-item status-checking">
-                    <span>[API_CALL] Enviando pacote de dados para localhost:5000</span>
-                    <span class="loading-text">Conectando</span>
-                </div>
+                <!-- Logs will appear here -->
             </div>
             
             <div class="mt-6 w-full bg-gray-900 rounded-full h-1.5">
-                <div class="bg-[#00f0ff] h-1.5 rounded-full transition-all duration-300 w-full animate-pulse" id="validationProgress"></div>
+                <div class="bg-[#00f0ff] h-1.5 rounded-full transition-all duration-300 w-0" id="validationProgress"></div>
             </div>
         </div>
     </section>
 
-    <!-- PHASE 4: DASHBOARD -->
     <section id="phase-dashboard" class="max-w-6xl mx-auto hidden transition-all duration-500">
         <div class="glass-panel p-6 mb-8 flex justify-between items-center gap-4">
             <div>
@@ -293,7 +249,6 @@
             const grid = document.getElementById('disambiguationGrid');
             grid.innerHTML = '';
             
-            // Usando fotos reais geradas aleatoriamente para simular a face da pessoa
             const randomId1 = Math.floor(Math.random() * 90);
             const randomId2 = Math.floor(Math.random() * 90);
 
@@ -328,7 +283,6 @@
 
         async function checkUrlWithProxy(platform, urlTemplate, username) {
             const targetUrl = urlTemplate.replace('{username}', username);
-            // CORS Proxy para permitir requisições reais do navegador
             const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(targetUrl);
             
             try {
@@ -338,12 +292,11 @@
                 const response = await fetch(proxyUrl, { signal: controller.signal });
                 clearTimeout(timeoutId);
 
-                // Algumas plataformas retornam 200 mesmo em 404, mas tentamos o filtro basico
                 if (response.ok) {
                     return { platform: platform.name, url: targetUrl, username: username, status: 'valid' };
                 }
             } catch (e) {
-                // Ignore fetch errors
+                // Ignore errors
             }
             return { platform: platform.name, url: targetUrl, username: username, status: 'invalid' };
         }
@@ -355,6 +308,7 @@
             
             const logContainer = document.getElementById('validationLog');
             logContainer.innerHTML = '';
+            document.getElementById('validationProgress').style.width = '0%';
 
             const usernames = generatePermutations(persona.name);
             const platforms = PLATFORMS[persona.type];
@@ -366,7 +320,6 @@
 
             const progressEl = document.getElementById('validationProgress');
 
-            // Executar verificações em paralelo
             const promises = [];
             for (let platform of platforms) {
                 for (let uname of usernames) {
@@ -411,7 +364,6 @@
             document.getElementById('targetName').textContent = data.target.toUpperCase();
             document.getElementById('targetTypeTag').textContent = `PERMUTAÇÕES TESTADAS: ${data.permutations_tested}`;
 
-            // Valid Links
             const socialList = document.getElementById('socialProfilesList');
             socialList.innerHTML = '';
             if (data.valid_links.length === 0) {
@@ -431,7 +383,6 @@
                 });
             }
 
-            // Invalid Links
             const invalidList = document.getElementById('invalidProfilesList');
             invalidList.innerHTML = '';
             const invalids = data.all_results.filter(r => r.status === 'invalid');
@@ -441,8 +392,6 @@
                 el.innerHTML = `<span class="text-xs text-white">${link.platform}</span><span class="text-[10px] text-gray-500 line-through">@${link.username}</span>`;
                 invalidList.appendChild(el);
             });
-            
-            lucide.createIcons();
         }
 
         function resetApp() {
@@ -450,6 +399,7 @@
             document.getElementById('phase-dashboard').classList.add('hidden');
             document.getElementById('phase-search').classList.remove('hidden');
             document.getElementById('validationLog').innerHTML = '';
+            document.getElementById('validationProgress').style.width = '0%';
             currentTargetName = ""; selectedPersona = null;
         }
     </script>
