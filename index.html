@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mourisco Founder — Sistema de Inteligência e Mapeamento OSINT</title>
-    <meta name="description" content="Varredura completa de redes sociais, usernames, menções públicas e pegada digital para qualquer pessoa.">
+    <title>Mourisco Founder — Dossiê Profissional de Inteligência OSINT</title>
+    <meta name="description" content="Plataforma profissional de investigação OSINT, análise de pegada digital, redes sociais e registros públicos.">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,11 +23,11 @@
                 extend: {
                     colors: {
                         deep: {
-                            950: '#020617',
-                            900: '#050a18',
-                            850: '#0a1024',
-                            800: '#0f172a',
-                            750: '#16223d',
+                            950: '#030712',
+                            900: '#070d1e',
+                            850: '#0c152f',
+                            800: '#111e3f',
+                            750: '#17274f',
                             700: '#1e293b'
                         },
                         electric: {
@@ -50,9 +50,9 @@
                         mono: ['"JetBrains Mono"', 'monospace']
                     },
                     boxShadow: {
-                        'neon-blue': '0 0 25px -5px rgba(37, 99, 235, 0.5)',
-                        'neon-cyan': '0 0 25px -5px rgba(6, 182, 212, 0.5)',
-                        'glow-lg': '0 0 50px -10px rgba(6, 182, 212, 0.35)'
+                        'neon-blue': '0 0 25px -5px rgba(37, 99, 235, 0.4)',
+                        'neon-cyan': '0 0 25px -5px rgba(6, 182, 212, 0.4)',
+                        'glow-panel': '0 0 40px -10px rgba(6, 182, 212, 0.25)'
                     }
                 }
             }
@@ -61,34 +61,34 @@
 
     <style>
         body {
-            background-color: #020617;
-            color: #e2e8f0;
+            background-color: #030712;
+            color: #f1f5f9;
             overflow-x: hidden;
         }
 
         .bg-grid-pattern {
             background-size: 32px 32px;
             background-image: 
-                linear-gradient(to right, rgba(37, 99, 235, 0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+                linear-gradient(to right, rgba(37, 99, 235, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(6, 182, 212, 0.04) 1px, transparent 1px);
         }
 
-        .glass-panel {
-            background: rgba(10, 16, 36, 0.8);
+        .card-surface {
+            background: rgba(12, 21, 47, 0.7);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.18);
         }
 
-        .glass-panel:hover {
-            border-color: rgba(34, 211, 238, 0.4);
+        .card-surface:hover {
+            border-color: rgba(34, 211, 238, 0.35);
         }
 
-        .glass-panel-active {
-            background: rgba(15, 23, 42, 0.9);
+        .card-highlight {
+            background: rgba(15, 26, 56, 0.85);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(34, 211, 238, 0.5);
-            box-shadow: 0 0 35px -8px rgba(6, 182, 212, 0.35);
+            border: 1px solid rgba(34, 211, 238, 0.4);
+            box-shadow: 0 0 35px -8px rgba(6, 182, 212, 0.25);
         }
 
         @keyframes radar-sweep {
@@ -96,18 +96,8 @@
             100% { transform: rotate(360deg); }
         }
 
-        .radar-spinner {
+        .radar-spin {
             animation: radar-sweep 2.5s linear infinite;
-        }
-
-        .scanline-bar {
-            background: linear-gradient(180deg, transparent 0%, rgba(34, 211, 238, 0.2) 50%, transparent 100%);
-            animation: scanline 2s ease-in-out infinite;
-        }
-
-        @keyframes scanline {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(800%); }
         }
 
         ::-webkit-scrollbar {
@@ -115,7 +105,7 @@
             height: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #020617;
+            background: #030712;
         }
         ::-webkit-scrollbar-thumb {
             background: #1e293b;
@@ -128,279 +118,301 @@
 </head>
 <body class="min-h-screen font-sans bg-grid-pattern relative selection:bg-cyan-500/30 selection:text-cyan-200">
 
-    <!-- Ambient Glows -->
+    <!-- Ambient Glow Orbs -->
     <div class="fixed top-0 left-1/3 w-[600px] h-[350px] bg-electric-500/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
     <div class="fixed bottom-10 right-1/4 w-[500px] h-[350px] bg-cyber-500/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
 
     <!-- Header -->
     <header class="sticky top-0 z-40 border-b border-blue-900/30 bg-deep-950/90 backdrop-blur-xl">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-18 py-3.5 flex items-center justify-between">
             <div class="flex items-center gap-3 cursor-pointer" onclick="resetToHome()">
-                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-electric-500/20 to-cyber-500/20 border border-cyber-400/50 flex items-center justify-center shadow-neon-cyan relative">
-                    <i data-lucide="crosshair" class="w-6 h-6 text-cyan-300"></i>
-                    <span class="absolute -top-1 -right-1 flex h-3 w-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-electric-500/20 to-cyber-500/20 border border-cyber-400/50 flex items-center justify-center shadow-neon-cyan relative">
+                    <i data-lucide="shield-check" class="w-5 h-5 text-cyan-300"></i>
+                    <span class="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-500"></span>
                     </span>
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
-                        <span class="font-display font-extrabold text-xl tracking-wider text-white uppercase">Mourisco</span>
-                        <span class="font-mono text-xs px-2 py-0.5 rounded-full bg-cyan-950 border border-cyan-500/50 text-cyan-300 font-semibold tracking-wider">FOUNDER</span>
+                        <span class="font-display font-extrabold text-lg tracking-wider text-white uppercase">Mourisco</span>
+                        <span class="font-mono text-[10px] px-2 py-0.5 rounded-full bg-cyan-950 border border-cyan-500/50 text-cyan-300 font-bold tracking-wider">FOUNDER v3.5</span>
                     </div>
-                    <p class="text-xs text-slate-400 font-mono">Investigação e Mapeamento OSINT</p>
+                    <p class="text-[11px] text-slate-400 font-mono">Dossiê Profissional & Inteligência OSINT</p>
                 </div>
             </div>
 
-            <div class="flex items-center gap-3">
-                <button onclick="resetToHome()" class="px-3.5 py-1.5 rounded-lg border border-blue-900/60 bg-deep-900 hover:border-cyan-500/40 text-xs font-mono text-slate-300 hover:text-cyan-300 transition-all flex items-center gap-2">
-                    <i data-lucide="plus" class="w-4 h-4 text-cyan-400"></i>
-                    <span>Nova Pesquisa</span>
-                </button>
-            </div>
+            <button onclick="resetToHome()" class="px-3.5 py-1.5 rounded-lg border border-blue-900/60 bg-deep-900 hover:border-cyan-500/40 text-xs font-mono text-slate-300 hover:text-cyan-300 transition-all flex items-center gap-2">
+                <i data-lucide="plus" class="w-3.5 h-3.5 text-cyan-400"></i>
+                <span>Nova Pesquisa</span>
+            </button>
         </div>
     </header>
 
     <!-- Main Container -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8">
 
-        <!-- Central Search Hero -->
-        <section class="max-w-4xl mx-auto mb-12 text-center">
+        <!-- Search Bar Section -->
+        <section class="mb-10 text-center">
             
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-950/90 border border-cyan-500/40 text-cyan-300 text-xs font-mono mb-5 shadow-neon-cyan">
-                <i data-lucide="shield-search" class="w-4 h-4 text-cyan-400"></i>
-                VARREDURA UNIVERSAL DE PESSOAS
+            <div id="searchHeroHeader" class="max-w-2xl mx-auto mb-6">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-950/80 border border-cyan-500/30 text-cyan-300 text-xs font-mono mb-3">
+                    <i data-lucide="crosshair" class="w-3.5 h-3.5 text-cyan-400"></i>
+                    INVESTIGAÇÃO DIGITAL DE PESSOAS
+                </div>
+                <h1 class="font-display text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    Quem você deseja procurar?
+                </h1>
+                <p class="mt-2 text-xs sm:text-sm text-slate-400">
+                    Digite o nome completo para gerar o dossiê detalhado com todas as redes sociais, usernames e menções públicas.
+                </p>
             </div>
 
-            <h1 class="font-display text-4xl sm:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-cyan-300 tracking-tight leading-tight">
-                Quem você deseja procurar?
-            </h1>
-            
-            <p class="mt-4 text-sm sm:text-base text-slate-400 max-w-2xl mx-auto leading-relaxed">
-                Digite o nome completo de qualquer pessoa para mapear instantaneamente suas <strong class="text-cyan-300">redes sociais</strong> (TikTok, Facebook, Instagram, YouTube, etc.), <strong class="text-cyan-300">variações de @usernames</strong> e <strong class="text-cyan-300">menções públicas</strong>.
-            </p>
-
-            <!-- Search Bar -->
-            <div class="mt-8">
-                <div class="glass-panel-active rounded-2xl p-3 shadow-2xl relative overflow-hidden text-left">
-                    <div class="absolute inset-x-0 h-16 pointer-events-none scanline-bar opacity-25"></div>
-
-                    <form id="searchForm" onsubmit="handleSearch(event)" class="relative z-10 flex flex-col sm:flex-row gap-2">
+            <!-- Clean Search Input -->
+            <div class="max-w-2xl mx-auto">
+                <div class="card-highlight rounded-2xl p-2.5 shadow-2xl relative">
+                    <form id="searchForm" onsubmit="handleSearch(event)" class="flex flex-col sm:flex-row gap-2">
                         <div class="relative flex-1 flex items-center">
                             <div class="absolute left-4 pointer-events-none text-cyan-400">
-                                <i data-lucide="user-search" class="w-6 h-6"></i>
+                                <i data-lucide="search" class="w-5 h-5"></i>
                             </div>
                             <input 
                                 type="text" 
                                 id="targetInput" 
-                                placeholder="Digite o nome completo de quem você quer procurar..."
+                                placeholder="Digite o nome completo da pessoa..."
                                 value=""
                                 autocomplete="off"
                                 autofocus
-                                class="w-full pl-14 pr-10 py-4.5 rounded-xl bg-deep-950/95 border border-blue-900/60 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/30 text-white placeholder-slate-500 font-mono text-base transition-all outline-none"
+                                class="w-full pl-12 pr-10 py-3.5 rounded-xl bg-deep-950/90 border border-blue-900/50 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/20 text-white placeholder-slate-500 font-mono text-sm sm:text-base transition-all outline-none"
                             />
                             <button 
                                 type="button" 
                                 onclick="clearInput()" 
                                 id="clearBtn"
-                                class="absolute right-3 p-1 rounded-lg text-slate-500 hover:text-slate-300 hover:bg-slate-800 transition-all hidden"
+                                class="absolute right-3 p-1 rounded-lg text-slate-500 hover:text-slate-300 transition-all hidden"
                                 title="Limpar"
                             >
-                                <i data-lucide="x" class="w-5 h-5"></i>
+                                <i data-lucide="x" class="w-4 h-4"></i>
                             </button>
                         </div>
 
                         <button 
                             type="submit" 
-                            class="w-full sm:w-auto px-8 py-4.5 rounded-xl bg-gradient-to-r from-electric-500 to-cyber-500 hover:from-electric-400 hover:to-cyber-400 text-white font-display font-bold text-base tracking-wide flex items-center justify-center gap-3 shadow-neon-cyan transition-all transform active:scale-95 cursor-pointer flex-shrink-0"
+                            class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-electric-500 to-cyber-500 hover:from-electric-400 hover:to-cyber-400 text-white font-display font-bold text-sm tracking-wide flex items-center justify-center gap-2 shadow-neon-cyan transition-all transform active:scale-95 cursor-pointer flex-shrink-0"
                         >
-                            <i data-lucide="search" class="w-5 h-5"></i>
-                            <span>PESQUISAR AGORA</span>
+                            <i data-lucide="scan" class="w-4 h-4"></i>
+                            <span>PESQUISAR</span>
                         </button>
                     </form>
                 </div>
             </div>
-
         </section>
 
-        <!-- Initial Screen: Instructions & Categories -->
-        <section id="initialScreen" class="max-w-4xl mx-auto text-center">
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                <div class="glass-panel rounded-2xl p-6 border border-blue-900/40 text-left space-y-2">
-                    <div class="w-10 h-10 rounded-xl bg-cyan-950/60 border border-cyan-500/30 flex items-center justify-center text-cyan-300 mb-3">
-                        <i data-lucide="share-2" class="w-5 h-5"></i>
-                    </div>
-                    <h3 class="font-display font-bold text-base text-white">Todas as Redes Sociais</h3>
-                    <p class="text-xs font-mono text-slate-400">Varredura simultânea em TikTok, Facebook, Instagram, YouTube, LinkedIn, X, Threads, Reddit, GitHub, Twitch e Kwai.</p>
+        <!-- Initial Screen (Clean visual guide when no search is active) -->
+        <section id="initialGuide" class="max-w-3xl mx-auto my-12 text-center">
+            <div class="card-surface rounded-2xl p-8 border border-blue-900/40 space-y-6">
+                <div class="w-14 h-14 rounded-2xl bg-deep-900 border border-cyan-500/40 flex items-center justify-center mx-auto text-cyan-400 shadow-neon-cyan">
+                    <i data-lucide="file-search" class="w-7 h-7"></i>
+                </div>
+                <div>
+                    <h3 class="font-display font-bold text-lg text-white">Nenhum Alvo em Varredura</h3>
+                    <p class="text-xs sm:text-sm text-slate-400 max-w-lg mx-auto mt-1 leading-relaxed">
+                        Ao inserir o nome de alguém, o sistema irá estruturar um <strong class="text-cyan-300">relatório profissional executivo</strong> organizando tudo o que foi encontrado na web pública sobre essa pessoa.
+                    </p>
                 </div>
 
-                <div class="glass-panel rounded-2xl p-6 border border-blue-900/40 text-left space-y-2">
-                    <div class="w-10 h-10 rounded-xl bg-blue-950/60 border border-blue-500/30 flex items-center justify-center text-blue-300 mb-3">
-                        <i data-lucide="at-sign" class="w-5 h-5"></i>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-left text-xs font-mono">
+                    <div class="p-3 rounded-xl bg-deep-900/80 border border-blue-900/40">
+                        <span class="text-cyan-300 font-bold block mb-0.5">1. Redes Sociais</span>
+                        <span class="text-slate-400 text-[11px]">TikTok, Instagram, Facebook, YouTube, LinkedIn, X e mais.</span>
                     </div>
-                    <h3 class="font-display font-bold text-base text-white">Permutador de @Usernames</h3>
-                    <p class="text-xs font-mono text-slate-400">Gera automaticamente todas as combinações de nomes com underlines, pontos e abreviações utilizadas em cadastros.</p>
-                </div>
-
-                <div class="glass-panel rounded-2xl p-6 border border-blue-900/40 text-left space-y-2">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-950/60 border border-emerald-500/30 flex items-center justify-center text-emerald-300 mb-3">
-                        <i data-lucide="message-square" class="w-5 h-5"></i>
+                    <div class="p-3 rounded-xl bg-deep-900/80 border border-blue-900/40">
+                        <span class="text-cyan-300 font-bold block mb-0.5">2. Usernames (@)</span>
+                        <span class="text-slate-400 text-[11px]">Permutações com pontos, underlines e abreviações.</span>
                     </div>
-                    <h3 class="font-display font-bold text-base text-white">Menções & Posts Públicos</h3>
-                    <p class="text-xs font-mono text-slate-400">Rastreia onde o nome da pessoa foi citado em vídeos, comentários, diários oficiais ou processos judiciais.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Scanning State Indicator -->
-        <section id="scanningState" class="hidden my-8 max-w-4xl mx-auto">
-            <div class="glass-panel rounded-2xl p-6 border border-cyan-500/50">
-                <div class="flex flex-col sm:flex-row items-center gap-6">
-                    <div class="relative w-20 h-20 flex-shrink-0 flex items-center justify-center">
-                        <div class="absolute inset-0 rounded-full border border-cyan-500/30"></div>
-                        <div class="absolute inset-2 rounded-full border border-blue-500/20"></div>
-                        <div class="absolute inset-0 rounded-full radar-spinner bg-[conic-gradient(from_0deg,transparent_0_300deg,rgba(6,182,212,0.4)_360deg)]"></div>
-                        <i data-lucide="satellite" class="w-6 h-6 text-cyan-300 z-10 animate-pulse"></i>
-                    </div>
-
-                    <div class="flex-1 w-full">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="font-display font-bold text-white text-base" id="scanStageTitle">Rastreando Alvo na Web...</span>
-                            <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 text-xs font-mono" id="scanPercentText">0%</span>
-                        </div>
-
-                        <div class="w-full h-2 rounded-full bg-deep-950 border border-blue-900/60 overflow-hidden mb-3">
-                            <div id="scanProgressBar" class="h-full bg-gradient-to-r from-electric-500 via-cyber-400 to-cyan-300 transition-all duration-200" style="width: 0%;"></div>
-                        </div>
-
-                        <div class="bg-deep-950/95 rounded-lg p-3 border border-blue-950 font-mono text-xs text-slate-400 h-24 overflow-y-auto space-y-1" id="terminalLogs">
-                        </div>
+                    <div class="p-3 rounded-xl bg-deep-900/80 border border-blue-900/40">
+                        <span class="text-cyan-300 font-bold block mb-0.5">3. Menções & Registros</span>
+                        <span class="text-slate-400 text-[11px]">Posts de terceiros, vídeos, processos e diários oficiais.</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Dynamic Results Container -->
-        <section id="resultsSection" class="hidden space-y-8">
+        <!-- Scanning State -->
+        <section id="scanningState" class="hidden max-w-2xl mx-auto my-8">
+            <div class="card-highlight rounded-2xl p-6 text-center space-y-4">
+                <div class="w-12 h-12 rounded-full border-2 border-cyan-500/20 border-t-cyan-400 radar-spin mx-auto"></div>
+                <div>
+                    <h4 class="font-display font-bold text-white text-base">Varrendo Bases Públicas & Redes Sociais...</h4>
+                    <p class="text-xs font-mono text-cyan-300 mt-1" id="scanStatusText">Mapeando permutações de nomes e perfis...</p>
+                </div>
+                <div class="w-full h-1.5 rounded-full bg-deep-950 overflow-hidden">
+                    <div id="scanProgressBar" class="h-full bg-gradient-to-r from-electric-500 to-cyan-400 transition-all duration-200" style="width: 0%;"></div>
+                </div>
+            </div>
+        </section>
 
-            <!-- Target Header -->
-            <div class="glass-panel-active rounded-2xl p-6 sm:p-8">
-                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-blue-900/40">
-                    <div class="flex items-start gap-4">
-                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-deep-900 border-2 border-cyan-400/50 flex items-center justify-center shadow-neon-cyan flex-shrink-0">
-                            <i data-lucide="user" class="w-8 h-8 sm:w-10 sm:h-10 text-cyan-300"></i>
+        <!-- Dynamic Professional Dossier Report Container -->
+        <section id="resultsSection" class="hidden space-y-6">
+
+            <!-- MAIN EXECUTIVE HIGHLIGHT: "O QUE ACHAMOS SOBRE..." -->
+            <div class="card-highlight rounded-2xl p-6 sm:p-8 relative overflow-hidden border border-cyan-500/40">
+                
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-blue-900/40">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-deep-900 border-2 border-cyan-400/50 flex items-center justify-center text-cyan-300 shadow-neon-cyan flex-shrink-0">
+                            <i data-lucide="user-check" class="w-7 h-7 sm:w-8 sm:h-8"></i>
                         </div>
                         <div>
-                            <div class="flex flex-wrap items-center gap-3">
-                                <h2 id="resTargetName" class="font-display text-2xl sm:text-3xl font-extrabold text-white">Nome do Alvo</h2>
-                                <span class="px-2.5 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-xs font-mono font-medium flex items-center gap-1">
-                                    <i data-lucide="check-circle" class="w-3 h-3"></i> Mapeamento Ativo
+                            <div class="flex items-center gap-2">
+                                <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-cyan-950 border border-cyan-500/40 text-cyan-300 font-bold uppercase tracking-wider">
+                                    Dossiê OSINT Compilado
                                 </span>
                             </div>
-                            <p id="resTargetSubtitle" class="text-sm text-slate-400 font-mono mt-1"></p>
+                            <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-white mt-1">
+                                O que achamos sobre <span id="resTargetName" class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-400">Nome da Pessoa</span>:
+                            </h2>
                         </div>
                     </div>
 
-                    <div class="flex flex-wrap items-center gap-2">
-                        <button onclick="copyFullReport()" class="px-3.5 py-2.5 rounded-xl border border-blue-800 bg-deep-850 hover:bg-blue-900/60 text-slate-200 hover:text-cyan-300 text-xs font-mono flex items-center gap-2 transition-all">
-                            <i data-lucide="copy" class="w-4 h-4"></i>
-                            <span>Copiar Dossiê</span>
+                    <div class="flex items-center gap-2 flex-shrink-0">
+                        <button onclick="copyFullReport()" class="px-3.5 py-2 rounded-xl border border-blue-800 bg-deep-850 hover:bg-blue-900/60 text-slate-200 hover:text-cyan-300 text-xs font-mono flex items-center gap-1.5 transition-all">
+                            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                            <span>Copiar Relatório</span>
                         </button>
-                        <button onclick="downloadMarkdownReport()" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-electric-500 to-cyan-600 hover:from-electric-400 hover:to-cyan-500 text-white text-xs font-mono font-semibold flex items-center gap-2 shadow-neon-cyan transition-all">
-                            <i data-lucide="download" class="w-4 h-4"></i>
+                        <button onclick="downloadMarkdownReport()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-electric-500 to-cyan-600 hover:from-electric-400 hover:to-cyan-500 text-white text-xs font-mono font-semibold flex items-center gap-1.5 shadow-neon-cyan transition-all">
+                            <i data-lucide="download" class="w-3.5 h-3.5"></i>
                             <span>Exportar .MD</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 text-xs font-mono">
-                    <div class="p-3 rounded-xl bg-deep-900/70 border border-blue-900/30">
-                        <span class="text-slate-400 block mb-1">Redes Mapeadas</span>
-                        <strong class="text-cyan-300 text-lg font-display">12 Plataformas</strong>
+                <!-- Structured Bullet Summary List (Clean & Professional) -->
+                <div class="mt-6 space-y-3 font-mono text-xs sm:text-sm">
+                    <div class="p-3.5 rounded-xl bg-deep-900/80 border border-blue-900/30 flex items-start gap-3">
+                        <div class="p-1 rounded bg-cyan-950 text-cyan-400 flex-shrink-0 mt-0.5">
+                            <i data-lucide="check" class="w-4 h-4"></i>
+                        </div>
+                        <div class="text-slate-300 leading-relaxed">
+                            <strong class="text-white">Identidade & Nomes Mapeados:</strong> Foram geradas <span id="summaryHandlesCount" class="text-cyan-300 font-bold">18 variações</span> de usernames (@handles) prováveis com base na fonética e separadores (_ e .) para busca de cadastros.
+                        </div>
                     </div>
-                    <div class="p-3 rounded-xl bg-deep-900/70 border border-blue-900/30">
-                        <span class="text-slate-400 block mb-1">Permutações de Handles</span>
-                        <strong class="text-white text-lg font-display" id="metricHandlesCount">18 Variações</strong>
+
+                    <div class="p-3.5 rounded-xl bg-deep-900/80 border border-blue-900/30 flex items-start gap-3">
+                        <div class="p-1 rounded bg-cyan-950 text-cyan-400 flex-shrink-0 mt-0.5">
+                            <i data-lucide="check" class="w-4 h-4"></i>
+                        </div>
+                        <div class="text-slate-300 leading-relaxed">
+                            <strong class="text-white">Cobertura Social:</strong> Links de acesso direto e de busca estruturados para <strong class="text-cyan-300">12 plataformas sociais</strong> (TikTok, Facebook, Instagram, YouTube, LinkedIn, X/Twitter, Threads, Pinterest, Reddit, GitHub, Twitch e Kwai).
+                        </div>
                     </div>
-                    <div class="p-3 rounded-xl bg-deep-900/70 border border-blue-900/30">
-                        <span class="text-slate-400 block mb-1">Rastreio de Menções</span>
-                        <strong class="text-white text-lg font-display">Ativado</strong>
+
+                    <div class="p-3.5 rounded-xl bg-deep-900/80 border border-blue-900/30 flex items-start gap-3">
+                        <div class="p-1 rounded bg-cyan-950 text-cyan-400 flex-shrink-0 mt-0.5">
+                            <i data-lucide="check" class="w-4 h-4"></i>
+                        </div>
+                        <div class="text-slate-300 leading-relaxed">
+                            <strong class="text-white">Menções de Terceiros & Aparições:</strong> Mapeamento de publicações onde o nome completo foi citado em postagens do Facebook, fotos do Instagram, podcasts/vídeos no YouTube e vídeos do TikTok.
+                        </div>
                     </div>
-                    <div class="p-3 rounded-xl bg-deep-900/70 border border-blue-900/30">
-                        <span class="text-slate-400 block mb-1">Processos & Gazetas</span>
-                        <strong class="text-emerald-400 text-lg font-display">Integrado</strong>
+
+                    <div class="p-3.5 rounded-xl bg-deep-900/80 border border-blue-900/30 flex items-start gap-3">
+                        <div class="p-1 rounded bg-cyan-950 text-cyan-400 flex-shrink-0 mt-0.5">
+                            <i data-lucide="check" class="w-4 h-4"></i>
+                        </div>
+                        <div class="text-slate-300 leading-relaxed">
+                            <strong class="text-white">Registros Oficiais & Transparência:</strong> Consultas preparadas em 1 clique para certidões nos Tribunais de Justiça (Jusbrasil), Diários Oficiais (Escavador), Quadro Societário / CNPJ e Currículo Lattes (CNPq).
+                        </div>
                     </div>
+                </div>
+
+            </div>
+
+            <!-- SECTION 1: TODAS AS REDES SOCIAIS (LISTA ORGANIZADA EM TABELA / CARDS) -->
+            <div class="card-surface rounded-2xl p-6 border border-blue-900/40">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5 pb-3 border-b border-blue-900/30">
+                    <div>
+                        <h3 class="font-display font-bold text-lg text-white flex items-center gap-2">
+                            <i data-lucide="globe" class="w-5 h-5 text-cyan-400"></i>
+                            1. Redes Sociais & Perfis Digitais
+                        </h3>
+                        <p class="text-xs font-mono text-slate-400 mt-0.5">
+                            Acesse os perfis diretos ou realize buscas de usuários e menções em cada plataforma:
+                        </p>
+                    </div>
+                    <span class="text-xs font-mono text-cyan-300 px-2.5 py-1 rounded bg-cyan-950 border border-cyan-500/30 self-start sm:self-auto">
+                        12 Redes Integradas
+                    </span>
+                </div>
+
+                <div id="socialListTable" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <!-- Dynamically generated clean cards -->
                 </div>
             </div>
 
-            <!-- SECTION: PERMUTAÇÕES DE HANDLES -->
-            <div class="glass-panel rounded-2xl p-6 sm:p-7 border border-blue-900/40">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-blue-900/30">
+            <!-- SECTION 2: MENÇÕES, POSTS E VÍDEOS DE TERCEIROS -->
+            <div class="card-surface rounded-2xl p-6 border border-blue-900/40">
+                <div class="mb-5 pb-3 border-b border-blue-900/30">
+                    <h3 class="font-display font-bold text-lg text-white flex items-center gap-2">
+                        <i data-lucide="message-square" class="w-5 h-5 text-cyan-400"></i>
+                        2. Onde a Pessoa Foi Mencionada (Posts, Vídeos e Terceiros)
+                    </h3>
+                    <p class="text-xs font-mono text-slate-400 mt-0.5">
+                        Rastreio de publicações, marcações de amigos e aparições em mídias públicas:
+                    </p>
+                </div>
+
+                <div id="mentionsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                    <!-- Dynamically generated mention links -->
+                </div>
+            </div>
+
+            <!-- SECTION 3: VARIAÇÕES DE USERNAMES (@HANDLES) -->
+            <div class="card-surface rounded-2xl p-6 border border-blue-900/40">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-blue-900/30">
                     <div>
-                        <h3 class="font-display font-bold text-xl text-white flex items-center gap-2">
+                        <h3 class="font-display font-bold text-lg text-white flex items-center gap-2">
                             <i data-lucide="at-sign" class="w-5 h-5 text-cyan-400"></i>
-                            Todas as Variações de Nomes e Usernames (@handles)
+                            3. Variações de Nomes e Usernames (@handles)
                         </h3>
-                        <p class="text-xs font-mono text-slate-400 mt-1">
-                            Combinações geradas automaticamente para encontrar o usuário em qualquer rede social:
+                        <p class="text-xs font-mono text-slate-400 mt-0.5">
+                            Permutações fonéticas e estruturais para identificação do alvo em cadastros:
                         </p>
                     </div>
-                    <button onclick="copyAllHandles()" class="px-3 py-1.5 rounded-lg bg-deep-900 hover:bg-cyan-950 border border-blue-900 text-xs font-mono text-cyan-300 flex items-center gap-1.5 transition-all">
+                    <button onclick="copyAllHandles()" class="px-3 py-1 rounded-lg bg-deep-900 hover:bg-cyan-950 border border-blue-900 text-xs font-mono text-cyan-300 flex items-center gap-1.5 self-start sm:self-auto transition-all">
                         <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                        <span>Copiar Todas as Variações</span>
+                        <span>Copiar Todos</span>
                     </button>
                 </div>
 
-                <div id="handlesGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3"></div>
-            </div>
-
-            <!-- SECTION: TODAS AS REDES SOCIAIS -->
-            <div class="space-y-4">
-                <div>
-                    <h3 class="font-display font-bold text-2xl text-white flex items-center gap-2">
-                        <i data-lucide="globe" class="w-6 h-6 text-cyan-400"></i>
-                        Varredura em Todas as Redes Sociais (Sem Exceção)
-                    </h3>
-                    <p class="text-xs font-mono text-slate-400 mt-0.5">
-                        Acesse diretamente os perfis, faça buscas de usuários ou rastreie menções em cada plataforma.
-                    </p>
+                <div id="handlesGrid" class="flex flex-wrap gap-2">
+                    <!-- Clean pill tags -->
                 </div>
-
-                <div id="socialGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
             </div>
 
-            <!-- SECTION: MENÇÕES E POSTS DE TERCEIROS -->
-            <div class="glass-panel rounded-2xl p-6 sm:p-7 border border-blue-900/40">
-                <div class="mb-6 pb-4 border-b border-blue-900/30">
-                    <h3 class="font-display font-bold text-xl text-white flex items-center gap-2">
-                        <i data-lucide="message-square" class="w-5 h-5 text-cyan-400"></i>
-                        Rastreamento de Menções, Posts e Aparições em Vídeos
-                    </h3>
-                    <p class="text-xs font-mono text-slate-400 mt-1">
-                        Busca direta de publicações onde essa pessoa foi citada ou marcada por amigos, empresas ou criadores.
-                    </p>
-                </div>
-
-                <div id="mentionsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
-            </div>
-
-            <!-- SECTION: REGISTROS PÚBLICOS E DORKS -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- SECTION 4: DIÁRIOS OFICIAIS, PROCESSOS E DORKS -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 
-                <div class="glass-panel rounded-2xl p-6 border border-blue-900/40">
-                    <h3 class="font-display font-bold text-lg text-white flex items-center gap-2 mb-4">
-                        <i data-lucide="landmark" class="w-5 h-5 text-cyan-400"></i>
-                        Diários Oficiais, Processos & CNPJs
+                <!-- Diários Oficiais & Justiça -->
+                <div class="card-surface rounded-2xl p-6 border border-blue-900/40">
+                    <h3 class="font-display font-bold text-base text-white flex items-center gap-2 mb-3 pb-2 border-b border-blue-900/30">
+                        <i data-lucide="landmark" class="w-4 h-4 text-cyan-400"></i>
+                        4. Diários Oficiais & Processos Judiciais
                     </h3>
-                    <div id="publicRecordsList" class="space-y-3 font-mono text-xs"></div>
+                    <div id="officialRecordsList" class="space-y-2.5 font-mono text-xs">
+                        <!-- Filled dynamically -->
+                    </div>
                 </div>
 
-                <div class="glass-panel rounded-2xl p-6 border border-blue-900/40">
-                    <h3 class="font-display font-bold text-lg text-white flex items-center gap-2 mb-4">
-                        <i data-lucide="terminal" class="w-5 h-5 text-cyan-400"></i>
-                        Dorks de Busca Avançada (Google Hacking)
+                <!-- Google OSINT Dorks -->
+                <div class="card-surface rounded-2xl p-6 border border-blue-900/40">
+                    <h3 class="font-display font-bold text-base text-white flex items-center gap-2 mb-3 pb-2 border-b border-blue-900/30">
+                        <i data-lucide="terminal" class="w-4 h-4 text-cyan-400"></i>
+                        5. Dorks de Investigação (1-Click)
                     </h3>
-                    <div id="dorksList" class="space-y-2.5 font-mono text-xs"></div>
+                    <div id="dorksList" class="space-y-2 font-mono text-xs">
+                        <!-- Filled dynamically -->
+                    </div>
                 </div>
 
             </div>
@@ -409,24 +421,19 @@
 
     </main>
 
-    <!-- Toast Notification -->
+    <!-- Notification Toast -->
     <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 px-4 py-3 rounded-xl bg-deep-900 border border-cyan-400 text-cyan-200 text-xs font-mono shadow-neon-cyan flex items-center gap-2 pointer-events-none">
         <i data-lucide="check-circle" class="w-4 h-4 text-cyan-400"></i>
-        <span id="toastMessage">Operação realizada com sucesso!</span>
+        <span id="toastMessage">Sucesso!</span>
     </div>
 
     <!-- Footer -->
     <footer class="border-t border-blue-900/30 mt-20 py-8 bg-deep-950/80 font-mono text-xs text-slate-500 text-center">
-        <p>Mourisco Founder — Sistema Universal de Inteligência OSINT e Mapeamento de Pessoas</p>
+        <p>Mourisco Founder — Sistema de Inteligência OSINT & Mapeamento de Pessoas</p>
     </footer>
 
+    <!-- Logic Script -->
     <script>
-        // Clear any old stored data
-        try {
-            localStorage.removeItem('mourisco_history');
-            localStorage.removeItem('mourisco_history_v3');
-        } catch(e) {}
-
         const targetInput = document.getElementById('targetInput');
         const clearBtn = document.getElementById('clearBtn');
 
@@ -443,7 +450,8 @@
         function resetToHome() {
             targetInput.value = '';
             clearBtn.classList.add('hidden');
-            document.getElementById('initialScreen').classList.remove('hidden');
+            document.getElementById('searchHeroHeader').classList.remove('hidden');
+            document.getElementById('initialGuide').classList.remove('hidden');
             document.getElementById('scanningState').classList.add('hidden');
             document.getElementById('resultsSection').classList.add('hidden');
             targetInput.focus();
@@ -514,7 +522,7 @@
                 list.add(`${first}.${last[0]}`);
             }
 
-            // 5. Common Suffixes
+            // 5. Suffixes
             list.add(`${first}${last}_`);
             list.add(`_${first}${last}`);
             list.add(`${first}${last}oficial`);
@@ -533,50 +541,40 @@
                 return;
             }
 
-            document.getElementById('initialScreen').classList.add('hidden');
+            document.getElementById('initialGuide').classList.add('hidden');
             document.getElementById('resultsSection').classList.add('hidden');
             const scanningState = document.getElementById('scanningState');
             scanningState.classList.remove('hidden');
 
-            const terminalLogs = document.getElementById('terminalLogs');
             const progressBar = document.getElementById('scanProgressBar');
-            const percentText = document.getElementById('scanPercentText');
+            const statusText = document.getElementById('scanStatusText');
 
-            terminalLogs.innerHTML = '';
             progressBar.style.width = '0%';
-            percentText.textContent = '0%';
+            statusText.textContent = 'Mapeando redes sociais e permutações de usernames...';
 
             const steps = [
-                { p: 20, log: `> [INICIANDO] Analisando nome "${rawQuery}" e gerando matriz de permutações...` },
-                { p: 40, log: `> [REDES_SOCIAIS] Mapeando TikTok, Facebook, Instagram, YouTube, LinkedIn, X e Threads...` },
-                { p: 65, log: `> [POSTS_MENCOES] Rastreando publicações de terceiros, vídeos e citações públicas...` },
-                { p: 85, log: `> [PROCESSOS_OFICIAIS] Gerando links para Jusbrasil, Escavador, Diários Oficiais e CNPJs...` },
-                { p: 100, log: `> [CONCLUÍDO] Dossiê completo sintetizado com sucesso!` }
+                { p: 25, msg: `Mapeando TikTok, Facebook, Instagram e YouTube para "${rawQuery}"...` },
+                { p: 55, msg: `Rastreando menções em publicações, vídeos e posts de terceiros...` },
+                { p: 85, msg: `Consultando bases de Diários Oficiais, Jusbrasil e CNPJs...` },
+                { p: 100, msg: `Dossiê concluído!` }
             ];
 
             let stepIndex = 0;
-            const stepInterval = setInterval(() => {
+            const interval = setInterval(() => {
                 if (stepIndex < steps.length) {
-                    const s = steps[stepIndex];
-                    progressBar.style.width = s.p + '%';
-                    percentText.textContent = s.p + '%';
-                    
-                    const logElem = document.createElement('p');
-                    logElem.className = s.p === 100 ? 'text-emerald-400 font-semibold' : 'text-cyan-300';
-                    logElem.textContent = s.log;
-                    terminalLogs.appendChild(logElem);
-                    terminalLogs.scrollTop = terminalLogs.scrollHeight;
+                    progressBar.style.width = steps[stepIndex].p + '%';
+                    statusText.textContent = steps[stepIndex].msg;
                     stepIndex++;
                 } else {
-                    clearInterval(stepInterval);
+                    clearInterval(interval);
                     setTimeout(() => {
                         scanningState.classList.add('hidden');
                         renderDossier(rawQuery);
                         document.getElementById('resultsSection').classList.remove('hidden');
-                        showToast(`Varredura concluída para "${rawQuery}"`);
+                        showToast(`Dossiê pronto para "${rawQuery}"`);
                     }, 300);
                 }
-            }, 200);
+            }, 220);
         }
 
         function renderDossier(name) {
@@ -592,29 +590,17 @@
                 handles: handles
             };
 
-            // Header info
+            // Main Title
             document.getElementById('resTargetName').textContent = cleanName;
-            document.getElementById('resTargetSubtitle').textContent = `Username sugerido: @${primaryHandle} • ${handles.length} permutações geradas`;
+            document.getElementById('summaryHandlesCount').textContent = `${handles.length} variações`;
 
-            // Handles Grid
-            const handlesGrid = document.getElementById('handlesGrid');
-            handlesGrid.innerHTML = handles.map(h => `
-                <div class="p-2.5 rounded-xl bg-deep-900 border border-blue-900/50 hover:border-cyan-400/50 transition-all flex items-center justify-between group">
-                    <span class="text-xs font-mono text-cyan-300 truncate">@${h}</span>
-                    <button onclick="copyText('@${h}')" class="text-slate-500 hover:text-cyan-300 p-1" title="Copiar">
-                        <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                    </button>
-                </div>
-            `).join('');
-
-            // All 12 Social Media Platforms
+            // 1. Social Media List (Organized Cards)
             const platforms = [
                 {
                     name: "TikTok",
                     icon: "video",
-                    color: "text-cyan-300 bg-cyan-950/40 border-cyan-500/40",
                     badge: "Vídeos & Perfis",
-                    desc: "Perfil direto e busca de criador",
+                    color: "text-cyan-400 bg-cyan-950/50 border-cyan-500/30",
                     directUrl: `https://www.tiktok.com/@${primaryHandle}`,
                     searchUrl: `https://www.tiktok.com/search?q=${encodedSimple}`,
                     mentionsUrl: `https://www.tiktok.com/search?q=${encodedName}`
@@ -622,9 +608,8 @@
                 {
                     name: "Facebook",
                     icon: "facebook",
-                    color: "text-blue-400 bg-blue-950/40 border-blue-500/40",
-                    badge: "Pessoas & Publicações",
-                    desc: "Busca de perfis e posts mencionando o alvo",
+                    badge: "Pessoas & Posts",
+                    color: "text-blue-400 bg-blue-950/50 border-blue-500/30",
                     directUrl: `https://www.facebook.com/public/${encodeURIComponent(cleanName.replace(/\s+/g, '-'))}`,
                     searchUrl: `https://www.facebook.com/search/top?q=${encodedSimple}`,
                     mentionsUrl: `https://www.facebook.com/search/posts?q=${encodedName}`
@@ -632,9 +617,8 @@
                 {
                     name: "Instagram",
                     icon: "camera",
-                    color: "text-pink-400 bg-pink-950/40 border-pink-500/40",
                     badge: "Fotos & Reels",
-                    desc: "Perfil direto e menções públicas",
+                    color: "text-pink-400 bg-pink-950/50 border-pink-500/30",
                     directUrl: `https://www.instagram.com/${primaryHandle}/`,
                     searchUrl: `https://www.google.com/search?q=site:instagram.com+${encodedName}`,
                     mentionsUrl: `https://www.google.com/search?q=site:instagram.com+${encodeURIComponent('@' + primaryHandle)}`
@@ -642,9 +626,8 @@
                 {
                     name: "YouTube",
                     icon: "play-square",
-                    color: "text-red-400 bg-red-950/40 border-red-500/40",
                     badge: "Vídeos & Podcasts",
-                    desc: "Canal do alvo ou vídeos onde ele aparece",
+                    color: "text-red-400 bg-red-950/50 border-red-500/30",
                     directUrl: `https://www.youtube.com/@${primaryHandle}`,
                     searchUrl: `https://www.youtube.com/results?search_query=${encodedSimple}`,
                     mentionsUrl: `https://www.youtube.com/results?search_query=${encodedName}`
@@ -652,9 +635,8 @@
                 {
                     name: "LinkedIn",
                     icon: "linkedin",
-                    color: "text-blue-300 bg-blue-950/40 border-blue-500/40",
                     badge: "Carreira & Currículo",
-                    desc: "Perfil profissional, empresas e formação",
+                    color: "text-blue-300 bg-blue-950/50 border-blue-500/30",
                     directUrl: `https://www.linkedin.com/in/${primaryHandle}`,
                     searchUrl: `https://www.linkedin.com/search/results/people/?keywords=${encodedSimple}`,
                     mentionsUrl: `https://www.google.com/search?q=site:linkedin.com/in/+${encodedName}`
@@ -662,9 +644,8 @@
                 {
                     name: "X (Twitter)",
                     icon: "twitter",
-                    color: "text-cyan-400 bg-cyan-950/40 border-cyan-500/40",
                     badge: "Tweets & Citações",
-                    desc: "Perfil de usuário e tweets com o nome",
+                    color: "text-cyan-400 bg-cyan-950/50 border-cyan-500/30",
                     directUrl: `https://twitter.com/${primaryHandle}`,
                     searchUrl: `https://twitter.com/search?q=${encodedSimple}&f=user`,
                     mentionsUrl: `https://twitter.com/search?q=${encodedName}&f=live`
@@ -672,9 +653,8 @@
                 {
                     name: "Threads",
                     icon: "at-sign",
+                    badge: "Discussões & Posts",
                     color: "text-slate-300 bg-slate-900 border-slate-700",
-                    badge: "Microblogging",
-                    desc: "Perfil e discussões no Threads",
                     directUrl: `https://www.threads.net/@${primaryHandle}`,
                     searchUrl: `https://www.google.com/search?q=site:threads.net+${encodedName}`,
                     mentionsUrl: `https://www.google.com/search?q=site:threads.net+${encodeURIComponent('@' + primaryHandle)}`
@@ -682,9 +662,8 @@
                 {
                     name: "Pinterest",
                     icon: "pin",
-                    color: "text-rose-400 bg-rose-950/40 border-rose-500/40",
                     badge: "Painéis & Fotos",
-                    desc: "Perfil e fotos associadas",
+                    color: "text-rose-400 bg-rose-950/50 border-rose-500/30",
                     directUrl: `https://www.pinterest.com/${primaryHandle}/`,
                     searchUrl: `https://www.pinterest.com/search/users/?q=${encodedSimple}`,
                     mentionsUrl: `https://www.google.com/search?q=site:pinterest.com+${encodedName}`
@@ -692,9 +671,8 @@
                 {
                     name: "Reddit",
                     icon: "message-circle",
-                    color: "text-orange-400 bg-orange-950/40 border-orange-500/40",
-                    badge: "Fóruns & Discussões",
-                    desc: "Usuário e menções em comunidades",
+                    badge: "Fóruns & Comunidades",
+                    color: "text-orange-400 bg-orange-950/50 border-orange-500/30",
                     directUrl: `https://www.reddit.com/user/${primaryHandle}`,
                     searchUrl: `https://www.reddit.com/search/?q=${encodedSimple}&type=user`,
                     mentionsUrl: `https://www.reddit.com/search/?q=${encodedName}`
@@ -702,9 +680,8 @@
                 {
                     name: "GitHub / GitLab",
                     icon: "github",
-                    color: "text-slate-200 bg-slate-900 border-slate-700",
                     badge: "Código & Projetos",
-                    desc: "Projetos e commits de desenvolvedor",
+                    color: "text-slate-200 bg-slate-900 border-slate-700",
                     directUrl: `https://github.com/${primaryHandle}`,
                     searchUrl: `https://github.com/search?q=${encodedSimple}&type=users`,
                     mentionsUrl: `https://github.com/search?q=${encodedName}&type=commits`
@@ -712,9 +689,8 @@
                 {
                     name: "Twitch",
                     icon: "tv",
-                    color: "text-purple-400 bg-purple-950/40 border-purple-500/40",
-                    badge: "Transmissões",
-                    desc: "Transmissões e canais de streaming",
+                    badge: "Streams & Transmissões",
+                    color: "text-purple-400 bg-purple-950/50 border-purple-500/30",
                     directUrl: `https://www.twitch.tv/${primaryHandle}`,
                     searchUrl: `https://www.google.com/search?q=site:twitch.tv+${encodedName}`,
                     mentionsUrl: `https://www.google.com/search?q=site:twitch.tv+${encodeURIComponent(primaryHandle)}`
@@ -722,168 +698,164 @@
                 {
                     name: "Kwai",
                     icon: "smartphone",
-                    color: "text-amber-400 bg-amber-950/40 border-amber-500/40",
                     badge: "Vídeos Curtos",
-                    desc: "Perfil e vídeos no Kwai",
+                    color: "text-amber-400 bg-amber-950/50 border-amber-500/30",
                     directUrl: `https://www.kwai.com/@${primaryHandle}`,
                     searchUrl: `https://www.google.com/search?q=site:kwai.com+${encodedName}`,
                     mentionsUrl: `https://www.google.com/search?q=site:kwai.com+${encodeURIComponent('@' + primaryHandle)}`
                 }
             ];
 
-            const socialGrid = document.getElementById('socialGrid');
-            socialGrid.innerHTML = platforms.map(p => `
-                <div class="glass-panel rounded-xl p-5 border border-blue-900/40 hover:border-cyan-400/40 transition-all flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-3">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-lg ${p.color} border flex items-center justify-center">
-                                    <i data-lucide="${p.icon}" class="w-5 h-5"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-display font-bold text-white text-base">${p.name}</h4>
-                                    <span class="text-[10px] font-mono text-cyan-300">${p.badge}</span>
-                                </div>
+            const socialListTable = document.getElementById('socialListTable');
+            socialListTable.innerHTML = platforms.map(p => `
+                <div class="p-3.5 rounded-xl bg-deep-900/80 border border-blue-900/40 hover:border-cyan-400/40 transition-all flex flex-col justify-between gap-2.5">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg ${p.color} border flex items-center justify-center">
+                                <i data-lucide="${p.icon}" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-display font-bold text-white text-sm">${p.name}</h4>
+                                <span class="text-[10px] font-mono text-slate-400">${p.badge}</span>
                             </div>
                         </div>
-                        <p class="text-xs font-mono text-slate-400 mb-4">${p.desc}</p>
+                        <a href="${p.directUrl}" target="_blank" class="px-2.5 py-1 rounded bg-deep-850 hover:bg-cyan-950 border border-blue-900 hover:border-cyan-500 text-cyan-300 text-xs font-mono flex items-center gap-1">
+                            <span>@${primaryHandle}</span>
+                            <i data-lucide="external-link" class="w-3 h-3"></i>
+                        </a>
                     </div>
 
-                    <div class="space-y-2 pt-2 border-t border-blue-900/30">
-                        <div class="flex items-center justify-between text-xs font-mono">
-                            <span class="text-slate-400">Perfil Direto:</span>
-                            <a href="${p.directUrl}" target="_blank" class="text-cyan-300 hover:underline flex items-center gap-1">
-                                <span>@${primaryHandle}</span>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                            </a>
-                        </div>
-                        <div class="flex items-center justify-between text-xs font-mono">
-                            <span class="text-slate-400">Buscar Usuário:</span>
-                            <a href="${p.searchUrl}" target="_blank" class="text-blue-400 hover:underline flex items-center gap-1">
-                                <span>Checar Busca</span>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                            </a>
-                        </div>
-                        <div class="flex items-center justify-between text-xs font-mono">
-                            <span class="text-slate-400">Ver Menções:</span>
-                            <a href="${p.mentionsUrl}" target="_blank" class="text-emerald-400 hover:underline flex items-center gap-1">
-                                <span>Rastrear Posts</span>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                            </a>
-                        </div>
+                    <div class="flex items-center justify-between pt-2 border-t border-blue-900/30 text-[11px] font-mono">
+                        <a href="${p.searchUrl}" target="_blank" class="text-blue-400 hover:text-blue-300 hover:underline flex items-center gap-1">
+                            <span>Buscar Usuários</span>
+                            <i data-lucide="search" class="w-3 h-3"></i>
+                        </a>
+                        <a href="${p.mentionsUrl}" target="_blank" class="text-emerald-400 hover:text-emerald-300 hover:underline flex items-center gap-1">
+                            <span>Ver Menções/Posts</span>
+                            <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+                        </a>
                     </div>
                 </div>
             `).join('');
 
-            // Mentions Grid
-            const mentionsGrid = document.getElementById('mentionsGrid');
-            mentionsGrid.innerHTML = `
-                <div class="p-4 rounded-xl bg-deep-900 border border-blue-900/40 space-y-2">
-                    <div class="flex items-center gap-2 text-blue-400">
+            // 2. Mentions Section
+            const mentionsContainer = document.getElementById('mentionsContainer');
+            mentionsContainer.innerHTML = `
+                <div class="p-3.5 rounded-xl bg-deep-900/70 border border-blue-900/30 space-y-2">
+                    <div class="flex items-center gap-2 text-blue-400 text-xs font-mono font-bold">
                         <i data-lucide="facebook" class="w-4 h-4"></i>
-                        <span class="text-xs font-mono font-bold">Posts no Facebook</span>
+                        <span>Posts no Facebook</span>
                     </div>
-                    <p class="text-[11px] font-mono text-slate-400">Publicações e fotos onde "${cleanName}" foi mencionado.</p>
-                    <a href="https://www.facebook.com/search/posts?q=${encodedName}" target="_blank" class="mt-2 block w-full text-center py-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 border border-blue-800 text-xs font-mono text-cyan-300">Abrir Busca de Posts</a>
+                    <p class="text-[11px] font-mono text-slate-400">Publicações e fotos onde "${cleanName}" foi citado por terceiros.</p>
+                    <a href="https://www.facebook.com/search/posts?q=${encodedName}" target="_blank" class="block w-full text-center py-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 border border-blue-800 text-xs font-mono text-cyan-300">Abrir Busca de Posts</a>
                 </div>
 
-                <div class="p-4 rounded-xl bg-deep-900 border border-blue-900/40 space-y-2">
-                    <div class="flex items-center gap-2 text-pink-400">
+                <div class="p-3.5 rounded-xl bg-deep-900/70 border border-blue-900/30 space-y-2">
+                    <div class="flex items-center gap-2 text-pink-400 text-xs font-mono font-bold">
                         <i data-lucide="instagram" class="w-4 h-4"></i>
-                        <span class="text-xs font-mono font-bold">Menções no Instagram</span>
+                        <span>Menções no Instagram</span>
                     </div>
-                    <p class="text-[11px] font-mono text-slate-400">Fotos e legendas de terceiros com o nome completo.</p>
-                    <a href="https://www.google.com/search?q=site:instagram.com+${encodedName}" target="_blank" class="mt-2 block w-full text-center py-1.5 rounded-lg bg-pink-950 hover:bg-pink-900 border border-pink-800 text-xs font-mono text-pink-300">Ver Menções</a>
+                    <p class="text-[11px] font-mono text-slate-400">Fotos e legendas de amigos/páginas com o nome completo.</p>
+                    <a href="https://www.google.com/search?q=site:instagram.com+${encodedName}" target="_blank" class="block w-full text-center py-1.5 rounded-lg bg-pink-950 hover:bg-pink-900 border border-pink-800 text-xs font-mono text-pink-300">Ver Menções</a>
                 </div>
 
-                <div class="p-4 rounded-xl bg-deep-900 border border-blue-900/40 space-y-2">
-                    <div class="flex items-center gap-2 text-red-400">
+                <div class="p-3.5 rounded-xl bg-deep-900/70 border border-blue-900/30 space-y-2">
+                    <div class="flex items-center gap-2 text-red-400 text-xs font-mono font-bold">
                         <i data-lucide="youtube" class="w-4 h-4"></i>
-                        <span class="text-xs font-mono font-bold">Vídeos & Podcasts</span>
+                        <span>Vídeos & Podcasts</span>
                     </div>
-                    <p class="text-[11px] font-mono text-slate-400">Aparições em canais, entrevistas ou vídeos.</p>
-                    <a href="https://www.youtube.com/results?search_query=${encodedName}" target="_blank" class="mt-2 block w-full text-center py-1.5 rounded-lg bg-red-950 hover:bg-red-900 border border-red-800 text-xs font-mono text-red-300">Buscar Vídeos</a>
+                    <p class="text-[11px] font-mono text-slate-400">Aparições em canais, entrevistas ou vídeos no YouTube.</p>
+                    <a href="https://www.youtube.com/results?search_query=${encodedName}" target="_blank" class="block w-full text-center py-1.5 rounded-lg bg-red-950 hover:bg-red-900 border border-red-800 text-xs font-mono text-red-300">Buscar Vídeos</a>
                 </div>
 
-                <div class="p-4 rounded-xl bg-deep-900 border border-blue-900/40 space-y-2">
-                    <div class="flex items-center gap-2 text-cyan-400">
+                <div class="p-3.5 rounded-xl bg-deep-900/70 border border-blue-900/30 space-y-2">
+                    <div class="flex items-center gap-2 text-cyan-400 text-xs font-mono font-bold">
                         <i data-lucide="video" class="w-4 h-4"></i>
-                        <span class="text-xs font-mono font-bold">Vídeos no TikTok</span>
+                        <span>Vídeos no TikTok</span>
                     </div>
-                    <p class="text-[11px] font-mono text-slate-400">Hashtags e menções em vídeos do TikTok.</p>
-                    <a href="https://www.tiktok.com/search?q=${encodedName}" target="_blank" class="mt-2 block w-full text-center py-1.5 rounded-lg bg-cyan-950 hover:bg-cyan-900 border border-cyan-800 text-xs font-mono text-cyan-300">Explorar TikTok</a>
+                    <p class="text-[11px] font-mono text-slate-400">Hashtags e citações em comentários/vídeos do TikTok.</p>
+                    <a href="https://www.tiktok.com/search?q=${encodedName}" target="_blank" class="block w-full text-center py-1.5 rounded-lg bg-cyan-950 hover:bg-cyan-900 border border-cyan-800 text-xs font-mono text-cyan-300">Explorar TikTok</a>
                 </div>
             `;
 
-            // Public Records
-            const publicRecordsList = document.getElementById('publicRecordsList');
-            publicRecordsList.innerHTML = `
-                <div class="p-3 rounded-lg bg-deep-900 border border-blue-900/30 flex items-center justify-between">
+            // 3. Usernames Grid
+            const handlesGrid = document.getElementById('handlesGrid');
+            handlesGrid.innerHTML = handles.map(h => `
+                <button onclick="copyText('@${h}')" class="px-2.5 py-1.5 rounded-lg bg-deep-900 border border-blue-900/50 hover:border-cyan-400 text-cyan-300 text-xs font-mono flex items-center gap-1.5 group transition-all" title="Clique para copiar">
+                    <span>@${h}</span>
+                    <i data-lucide="copy" class="w-3 h-3 text-slate-500 group-hover:text-cyan-300"></i>
+                </button>
+            `).join('');
+
+            // 4. Official Records
+            const officialRecordsList = document.getElementById('officialRecordsList');
+            officialRecordsList.innerHTML = `
+                <div class="p-2.5 rounded-lg bg-deep-900/60 border border-blue-900/30 flex items-center justify-between">
                     <div>
                         <strong class="text-white block">Jusbrasil (Processos Judiciais)</strong>
-                        <span class="text-slate-400 text-[11px]">Tribunais de Justiça de todo o Brasil</span>
+                        <span class="text-slate-400 text-[10px]">Tribunais de Justiça e processos públicos</span>
                     </div>
-                    <a href="https://www.jusbrasil.com.br/busca?q=${encodedName}" target="_blank" class="px-2.5 py-1 rounded bg-deep-850 hover:bg-cyan-950 border border-blue-900 text-cyan-300 text-xs flex items-center gap-1">
+                    <a href="https://www.jusbrasil.com.br/busca?q=${encodedName}" target="_blank" class="px-2 py-1 rounded bg-deep-850 hover:bg-cyan-950 border border-blue-900 text-cyan-300 text-[11px] flex items-center gap-1">
                         <span>Consultar</span>
                         <i data-lucide="external-link" class="w-3 h-3"></i>
                     </a>
                 </div>
 
-                <div class="p-3 rounded-lg bg-deep-900 border border-blue-900/30 flex items-center justify-between">
+                <div class="p-2.5 rounded-lg bg-deep-900/60 border border-blue-900/30 flex items-center justify-between">
                     <div>
-                        <strong class="text-white block">Escavador & Diários Oficiais</strong>
-                        <span class="text-slate-400 text-[11px]">DOU, DOE, DOM e publicações oficiais</span>
+                        <strong class="text-white block">Escavador (Diários Oficiais)</strong>
+                        <span class="text-slate-400 text-[10px]">Publicações no DOU, DOE e municípios</span>
                     </div>
-                    <a href="https://www.escavador.com/busca?q=${encodedName}" target="_blank" class="px-2.5 py-1 rounded bg-deep-850 hover:bg-cyan-950 border border-blue-900 text-cyan-300 text-xs flex items-center gap-1">
+                    <a href="https://www.escavador.com/busca?q=${encodedName}" target="_blank" class="px-2 py-1 rounded bg-deep-850 hover:bg-cyan-950 border border-blue-900 text-cyan-300 text-[11px] flex items-center gap-1">
                         <span>Consultar</span>
                         <i data-lucide="external-link" class="w-3 h-3"></i>
                     </a>
                 </div>
 
-                <div class="p-3 rounded-lg bg-deep-900 border border-blue-900/30 flex items-center justify-between">
+                <div class="p-2.5 rounded-lg bg-deep-900/60 border border-blue-900/30 flex items-center justify-between">
                     <div>
-                        <strong class="text-white block">Quadro Societário & CNPJs</strong>
-                        <span class="text-slate-400 text-[11px]">Consulta de empresas na Receita Federal</span>
+                        <strong class="text-white block">Quadro Societário / CNPJ</strong>
+                        <span class="text-slate-400 text-[10px]">Participações societárias e empresas</span>
                     </div>
-                    <a href="https://www.google.com/search?q=site:consultasocio.com+OR+site:econodata.com.br+${encodedName}" target="_blank" class="px-2.5 py-1 rounded bg-deep-850 hover:bg-cyan-950 border border-blue-900 text-cyan-300 text-xs flex items-center gap-1">
+                    <a href="https://www.google.com/search?q=site:consultasocio.com+OR+site:econodata.com.br+${encodedName}" target="_blank" class="px-2 py-1 rounded bg-deep-850 hover:bg-cyan-950 border border-blue-900 text-cyan-300 text-[11px] flex items-center gap-1">
                         <span>Consultar</span>
                         <i data-lucide="external-link" class="w-3 h-3"></i>
                     </a>
                 </div>
 
-                <div class="p-3 rounded-lg bg-deep-900 border border-blue-900/30 flex items-center justify-between">
+                <div class="p-2.5 rounded-lg bg-deep-900/60 border border-blue-900/30 flex items-center justify-between">
                     <div>
                         <strong class="text-white block">Currículo Lattes (CNPq)</strong>
-                        <span class="text-slate-400 text-[11px]">Artigos científicos e histórico acadêmico</span>
+                        <span class="text-slate-400 text-[10px]">Artigos e produção acadêmica</span>
                     </div>
-                    <a href="https://www.google.com/search?q=site:buscatextual.cnpq.br+OR+site:scholar.google.com+${encodedName}" target="_blank" class="px-2.5 py-1 rounded bg-deep-850 hover:bg-cyan-950 border border-blue-900 text-cyan-300 text-xs flex items-center gap-1">
+                    <a href="https://www.google.com/search?q=site:buscatextual.cnpq.br+OR+site:scholar.google.com+${encodedName}" target="_blank" class="px-2 py-1 rounded bg-deep-850 hover:bg-cyan-950 border border-blue-900 text-cyan-300 text-[11px] flex items-center gap-1">
                         <span>Consultar</span>
                         <i data-lucide="external-link" class="w-3 h-3"></i>
                     </a>
                 </div>
             `;
 
-            // Dorks
+            // 5. Dorks List
             const dorksList = document.getElementById('dorksList');
             const dorks = [
                 { title: "Documentos e PDFs Públicos", dork: `filetype:pdf "${cleanName}"` },
                 { title: "Planilhas Excel", dork: `(filetype:xls OR filetype:xlsx) "${cleanName}"` },
-                { title: "Todas as Redes Sociais Juntas", dork: `site:instagram.com OR site:tiktok.com OR site:facebook.com OR site:twitter.com "${cleanName}"` },
+                { title: "Todas as Redes Juntas", dork: `site:instagram.com OR site:tiktok.com OR site:facebook.com OR site:twitter.com "${cleanName}"` },
                 { title: "Vazamentos / Pastes", dork: `site:pastebin.com OR site:throwbin.io "${cleanName}"` }
             ];
 
             dorksList.innerHTML = dorks.map(d => `
-                <div class="p-2.5 rounded-lg bg-deep-900 border border-blue-900/30 flex items-center justify-between gap-2">
+                <div class="p-2 rounded-lg bg-deep-900/60 border border-blue-900/30 flex items-center justify-between gap-2">
                     <div class="truncate flex-1">
                         <span class="text-slate-400 text-[10px] block">${d.title}</span>
                         <code class="text-cyan-300 text-[11px] truncate block">${d.dork}</code>
                     </div>
                     <div class="flex items-center gap-1">
-                        <button onclick="copyText('${d.dork.replace(/"/g, '&quot;')}')" class="p-1.5 rounded bg-deep-850 text-slate-300 hover:text-cyan-300" title="Copiar Dork">
-                            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                        <button onclick="copyText('${d.dork.replace(/"/g, '&quot;')}')" class="p-1 rounded bg-deep-850 text-slate-300 hover:text-cyan-300" title="Copiar">
+                            <i data-lucide="copy" class="w-3 h-3"></i>
                         </button>
-                        <a href="https://www.google.com/search?q=${encodeURIComponent(d.dork)}" target="_blank" class="p-1.5 rounded bg-deep-850 text-cyan-300" title="Executar Dork">
-                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                        <a href="https://www.google.com/search?q=${encodeURIComponent(d.dork)}" target="_blank" class="p-1 rounded bg-deep-850 text-cyan-300" title="Executar Dork">
+                            <i data-lucide="external-link" class="w-3 h-3"></i>
                         </a>
                     </div>
                 </div>
@@ -902,25 +874,32 @@
             if (!currentTargetData) return;
             const text = currentTargetData.handles.map(h => `@${h}`).join('\n');
             navigator.clipboard.writeText(text).then(() => {
-                showToast('Todas as variações de @handles foram copiadas!');
+                showToast('Todas as variações copiadas!');
             });
         }
 
         function generateMarkdownDossier() {
             if (!currentTargetData) return '';
             const name = currentTargetData.name;
-            return `# DOSSIÊ OSINT — MOURISCO FOUNDER
-**Alvo da Investigação:** ${name}
+            return `# DOSSIÊ OSINT — O QUE ACHAMOS SOBRE ${name.toUpperCase()}
 **Data de Emissão:** ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR')}
+**Plataforma:** Mourisco Founder v3.5
 
 ---
 
-## 1. VARIAÇÕES DE USERNAMES (@HANDLES)
+## 1. RESUMO EXECUTIVO
+- **Alvo:** ${name}
+- **Username Principal Sugerido:** @${currentTargetData.primaryHandle}
+- **Permutações Identificadas:** ${currentTargetData.handles.length} variantes
+
+---
+
+## 2. VARIAÇÕES DE USERNAMES (@HANDLES)
 ${currentTargetData.handles.map(h => `- @${h}`).join('\n')}
 
 ---
 
-## 2. TODAS AS REDES SOCIAIS MAPEEADAS (12 PLATAFORMAS)
+## 3. REDES SOCIAIS MAPEEADAS (12 PLATAFORMAS)
 1. **TikTok:** Perfil Direto: https://www.tiktok.com/@${currentTargetData.primaryHandle} | Busca: https://www.tiktok.com/search?q=${encodeURIComponent(name)}
 2. **Facebook:** Busca de Perfis: https://www.facebook.com/search/top?q=${encodeURIComponent(name)} | Posts Mencionando: https://www.facebook.com/search/posts?q="${encodeURIComponent(name)}"
 3. **Instagram:** Perfil Direto: https://www.instagram.com/${currentTargetData.primaryHandle}/ | Menções: https://www.google.com/search?q=site:instagram.com+"${encodeURIComponent(name)}"
@@ -936,14 +915,14 @@ ${currentTargetData.handles.map(h => `- @${h}`).join('\n')}
 
 ---
 
-## 3. REGISTROS PÚBLICOS E PROCESSOS
+## 4. REGISTROS PÚBLICOS E PROCESSOS
 - **Jusbrasil:** https://www.jusbrasil.com.br/busca?q="${encodeURIComponent(name)}"
 - **Escavador:** https://www.escavador.com/busca?q="${encodeURIComponent(name)}"
 - **Quadro Societário / CNPJ:** https://www.google.com/search?q=site:consultasocio.com+"${encodeURIComponent(name)}"
 - **Currículo Lattes (CNPq):** https://www.google.com/search?q=site:buscatextual.cnpq.br+"${encodeURIComponent(name)}"
 
 ---
-*Gerado pelo Mourisco Founder — Motor de Inteligência em Fontes Abertas.*`;
+*Gerado pelo Mourisco Founder v3.5 — OSINT Intelligence System.*`;
         }
 
         function copyFullReport() {
@@ -962,7 +941,7 @@ ${currentTargetData.handles.map(h => `- @${h}`).join('\n')}
             a.download = `dossie_${currentTargetData.name.toLowerCase().replace(/\s+/g, '_')}.md`;
             a.click();
             URL.revokeObjectURL(url);
-            showToast('Arquivo .MD baixado!');
+            showToast('Arquivo .MD baixado com sucesso!');
         }
 
         window.addEventListener('DOMContentLoaded', () => {
